@@ -11,7 +11,8 @@ function About() {
         { name: 'Java', value: 50 },
         { name: 'HTML', value: 75 },
         { name: 'CSS', value: 70 },
-        { name: 'Django', value: 0 },
+        { name: 'Django', value: 60 },
+        { name: 'Fastapi', value: 50 },
         
       ];
       
