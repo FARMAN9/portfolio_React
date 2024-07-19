@@ -11,10 +11,12 @@ function About() {
         { name: 'Java', value: 50 },
         { name: 'HTML', value: 75 },
         { name: 'CSS', value: 70 },
+        { name: 'Django', value: 0 },
+        
       ];
       
   return (
-    <div className='about'>
+    <div id='about' className='about'>
         <div className="about-title">
             <h1>About me</h1>
             <img src={bac} alt="" />
@@ -23,7 +25,7 @@ function About() {
         <div className="about-left">
         <img src={profile} alt="" /> 
        </div>
-       <div className="about-left">
+       <div className="about-right">
        <div className="about-para">
         <p>I am an experienced Full Stack Developer with over a 1 year of professional expertise in the field. Throughout my career, I have had the privilege of collaborating with prestigious organizations, contributing to their success and growth.</p>
         <p>My passion for frontend development is not only reflected in my extensive experience but also in the enthusiasm and dedication I bring to each project.</p>
