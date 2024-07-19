@@ -16,17 +16,17 @@ function App() {
       smooth: true
     });
     const tl = gsap.timeline();
-    tl.to("#page1",{
+    tl.to("#home",{
       y:"100vh",
       scale:0.5,
       duration:0
   })
-  tl.to("#page1",{
+  tl.to("#home",{
       y:"40vh",
       duration:1,
       delay:1
   })
-  tl.to("#page1",{
+  tl.to("#home",{
       y:"0vh",
       rotate:360,
       scale:1,
@@ -40,19 +40,13 @@ function App() {
   }, []);
   return (
   <div id='main'>
-    <div id='page1'>
-
-   
   <NavBar/>
   <Hero/>
   <About/>
   <MyWork/>
   <Contact/>
   <Footer/>
-  
-
  </div>
-  </div>
   )
 }
 
