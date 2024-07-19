@@ -45,14 +45,13 @@ function App() {
    
   <NavBar/>
   <Hero/>
-  </div>
   <About/>
   <MyWork/>
   <Contact/>
   <Footer/>
   
 
-
+ </div>
   </div>
   )
 }
