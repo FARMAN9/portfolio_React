@@ -5,16 +5,16 @@ import profile from '../../assets/profile.jpg'
 
 
 function About() {
-    const skills = [
-        { name: 'JavaScript', value: 70 },
-        { name: 'Python', value: 80 },
-        { name: 'Java', value: 50 },
-        { name: 'HTML', value: 75 },
-        { name: 'CSS', value: 70 },
-        { name: 'Django', value: 60 },
-        { name: 'Fastapi', value: 50 },
-        
-      ];
+  const skills = [
+    { name: 'JavaScript', value: 70 },
+    { name: 'Python', value: 80 },
+    { name: 'Java', value: 50 },
+    { name: 'HTML', value: 75 },
+    { name: 'CSS', value: 70 },
+    { name: 'Django', value: 60 },
+    { name: 'Fastapi', value: 50 },
+    
+  ]; 
       
   return (
     <div id='about' className='about'>

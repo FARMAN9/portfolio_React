@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState,useEffect } from 'react';
 import './Navbar.css';
 import ali from '../../assets/ali.png'
 import backgound from '../../assets/nav_underline.svg'
@@ -9,6 +9,9 @@ import menu_close from '../../assets/menu_close.svg'
 
 
 function NavBar() {
+ 
+
+
   const [menu,setMenu]=useState('home')
   const menuRef =useRef();
   const openMenu=()=>{
