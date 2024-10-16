@@ -12,12 +12,13 @@ gsap.registerPlugin(ScrollTrigger);
 function Hero() {
   return (
     <div id="home" className="hero">
-      <img
-        // Reference for the image
-        src={profile}
-        alt="profile"
-      />
-
+      
+        <img
+          // Reference for the image
+          src={profile}
+          alt="profile"
+        />
+      </div>
       <h1>
         <span className="myname">I'm Syed Farman Ali,</span> full stack
         developer based in India
