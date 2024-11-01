@@ -65,9 +65,11 @@ function MyWork() {
         {mywork_data.map((data, index) => {
           return (
             <div key={index}>
+              <p className="name" style={{ fontSize: '1rem', color: '#333', zIndex:12 }}>{data.name}</p>
               <a href={data.link}>
                 <img src={data.w_img} alt="" />
               </a>
+              
             </div>
           );
         })}

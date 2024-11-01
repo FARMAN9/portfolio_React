@@ -18,6 +18,7 @@ function About() {
       
   return (
     <div id='about' className='about'>
+      
         <div className="about-title">
             <h1>About me</h1>
             <img src={bac} alt="" />
