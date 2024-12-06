@@ -58,7 +58,7 @@ function MyWork() {
       w_no: 8,
       w_name: "soon",
       w_img: soon,
-      link: "/",
+      link: "",
     },
   ];
   return (

@@ -8,7 +8,6 @@ import youtube from "../../assets/projects/yt.png";
 import djano_port from "../../assets/projects/django_port.png";
 import dpt from "../../assets/projects/dpt.png";
 import nws from "../../assets/projects/news.png";
-import citycabs from "../../assets/projects/citycabs.png";
 
 function MyWork() {
   const mywork_data = [
@@ -50,15 +49,15 @@ function MyWork() {
     },
     {
       w_no: 7,
-      w_name: "citycabs",
-      w_img: citycabs,
-      link: "https://www.citycabs.live/",
+      w_name: "Blogging_website",
+      w_img: bac,
+      link: "https://github.com/FARMAN9/blogging_website",
     },
     {
       w_no: 8,
       w_name: "soon",
       w_img: soon,
-      link: "/",
+      link: "",
     },
   ];
   return (
@@ -72,14 +71,11 @@ function MyWork() {
         {mywork_data.map((data, index) => {
           return (
             <div key={index}>
-              <p
-                className="name"
-                style={{ fontSize: "1rem", color: "#333", zIndex: 12 }}>
-                {data.name}
-              </p>
+              <p className="name" style={{ fontSize: '1rem', color: '#333', zIndex:12 }}>{data.name}</p>
               <a href={data.link}>
                 <img src={data.w_img} alt="" />
               </a>
+              
             </div>
           );
         })}

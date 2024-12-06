@@ -52,13 +52,13 @@ function MyWork() {
       w_no: 7,
       w_name: "citycabs",
       w_img: citycabs,
-      link: "https://www.citycabs.live/",
+      link: "https://github.com/FARMAN9/blogging_website",
     },
     {
       w_no: 8,
       w_name: "soon",
       w_img: soon,
-      link: "/",
+      link: "",
     },
   ];
   return (

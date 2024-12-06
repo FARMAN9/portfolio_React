@@ -8,7 +8,6 @@ import youtube from "../../assets/projects/yt.png";
 import djano_port from "../../assets/projects/django_port.png";
 import dpt from "../../assets/projects/dpt.png";
 import nws from "../../assets/projects/news.png";
-import citycabs from "../../assets/projects/citycabs.png";
 
 function MyWork() {
   const mywork_data = [
@@ -51,14 +50,14 @@ function MyWork() {
     {
       w_no: 7,
       w_name: "citycabs",
-      w_img: citycabs,
-      link: "https://www.citycabs.live/",
+      w_img: bac,
+      link: "https://github.com/FARMAN9/blogging_website",
     },
     {
       w_no: 8,
       w_name: "soon",
       w_img: soon,
-      link: "/",
+      link: "",
     },
   ];
   return (

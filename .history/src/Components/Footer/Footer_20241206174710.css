@@ -28,8 +28,7 @@
 .footer-top-left {
   display: flex;
   align-items: center;
-  margin-top: 1rem;
-  margin-bottom: 0%;
+  margin-bottom: 5rem;
 }
 .footer-top-left p {
   font-size: 15px;
