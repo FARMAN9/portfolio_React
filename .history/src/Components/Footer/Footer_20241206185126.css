@@ -19,7 +19,7 @@
   margin: 50px 170px;
   display: flex;
   flex-direction: column;
-  gap: 0px;
+  gap: 30px;
 }
 .footer-top {
   display: flex;
@@ -34,6 +34,7 @@
 .footer-top-left p {
   font-size: 15px;
   max-width: 500px;
+  line-height: 30px;
 }
 
 .footer-bottom {

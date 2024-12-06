@@ -131,9 +131,8 @@
   }
   .hero p {
     width: 97%;
-
     font-size: 1rem;
-    line-height: 30px;
+    line-height: 20px;
   }
   .hero-action {
     width: 97%;
@@ -156,7 +155,7 @@
   }
 
   .hero-resume {
-    /* Optional: Style for differentiation */
+    background-color: #d9d9d9; /* Optional: Style for differentiation */
   }
 
   .hero-socials {

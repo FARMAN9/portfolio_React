@@ -3,6 +3,9 @@
   flex-direction: column;
   align-items: center;
   gap: 35px;
+ 
+ 
+
 }
 .hero img {
   margin-top: 50px;
@@ -88,9 +91,10 @@
 }
 .hero-connect {
   padding: 25px 45px;
-  border-radius: 50px;
+  border-radius: 0px;
   background: linear-gradient(267deg, #da7c25 0.36%, #b923e1 102%);
   cursor: pointer;
+  
 }
 .hero-resume {
   padding: 25px 75px;
@@ -121,6 +125,7 @@
   color: #b415ff; /* You can change this color to match the theme */
 }
 @media (max-width: 768px) {
+ 
   .hero img {
     margin-top: 10px;
   }
@@ -131,9 +136,8 @@
   }
   .hero p {
     width: 97%;
-
     font-size: 1rem;
-    line-height: 30px;
+    line-height: 20px;
   }
   .hero-action {
     width: 97%;
@@ -142,23 +146,20 @@
     font-weight: 500;
     margin-bottom: 40px;
   }
-  .hero-connect,
-  .hero-resume {
-    padding: 0.5rem 3rem; /* Use the same padding for both */
-    text-align: center;
-    border-radius: 30px; /* Consistent border-radius */
-    cursor: pointer;
-    display: inline-block; /* Ensure the buttons behave the same way */
-  }
-
   .hero-connect {
-    background-color: #f0f0f0; /* Optional: Style for differentiation */
+    padding: 0.1rem 2rem;
+    
+    text-align:center;
+    border-radius: 30px;
+    cursor: pointer;
   }
-
   .hero-resume {
-    /* Optional: Style for differentiation */
-  }
+    padding: 0.1rem 3rem;
+    text-align:center;
+    border-radius: 30px;
+    cursor: pointer;
 
+  }
   .hero-socials {
     margin-top: 5px;
   }

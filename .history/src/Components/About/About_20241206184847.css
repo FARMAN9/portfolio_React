@@ -98,9 +98,8 @@
 
 .about-achievement p {
   font-size: 22px;
-
-  font-weight: 500;
   line-height: 30px;
+  font-weight: 500;
 }
 .about-skill:hover {
   transform: scale(1.05);
@@ -135,7 +134,7 @@
   .about-para {
     width: 97%;
     font-size: 1rem;
-    line-height: 30px;
+    line-height: 20px;
   }
   .about-skill {
     width: 97%;

@@ -131,9 +131,9 @@
   }
   .hero p {
     width: 97%;
-
+    gap
     font-size: 1rem;
-    line-height: 30px;
+    line-height: 20px;
   }
   .hero-action {
     width: 97%;
@@ -157,6 +157,7 @@
 
   .hero-resume {
     /* Optional: Style for differentiation */
+
   }
 
   .hero-socials {
