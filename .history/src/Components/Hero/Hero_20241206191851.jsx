@@ -2,7 +2,7 @@ import "./Hero.css";
 import profile from "../../assets/profile.jpg";
 import AnchorLink from "react-anchor-link-smooth-scroll";
 import { FaGithub, FaLinkedin, FaCode } from "react-icons/fa";
-import React, { useRef, useEffect } from "react";
+import React from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
@@ -13,12 +13,11 @@ function Hero() {
   return (
     <div id="home" className="hero">
       <img
+        // Reference for the image
         src={profile}
         alt="profile"
-        style={{
-          borderRadius: "56px 78px 90px 20px",
-        }}
       />
+
       <h1>
         <span className="myname">I'm Syed Farman Ali,</span> full stack
         developer based in India

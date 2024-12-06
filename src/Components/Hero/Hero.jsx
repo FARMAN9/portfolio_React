@@ -2,7 +2,7 @@ import "./Hero.css";
 import profile from "../../assets/profile.jpg";
 import AnchorLink from "react-anchor-link-smooth-scroll";
 import { FaGithub, FaLinkedin, FaCode } from "react-icons/fa";
-import React, { useRef, useEffect } from "react";
+import React from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 

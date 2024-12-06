@@ -1,16 +1,26 @@
-import React from "react";
 import "./Hero.css";
 import profile from "../../assets/profile.jpg";
 import AnchorLink from "react-anchor-link-smooth-scroll";
 import { FaGithub, FaLinkedin, FaCode } from "react-icons/fa";
+import React,from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+// Register ScrollTrigger plugin
+gsap.registerPlugin(ScrollTrigger);
 
 function Hero() {
   return (
     <div id="home" className="hero">
-      <img src={profile} alt="profile" />
+      <img
+        // Reference for the image
+        src={profile}
+        alt="profile"
+      />
+
       <h1>
-        <span className="my">I'm Syed Farman Ali,</span> full stack developer
-        based in India
+        <span className="myname">I'm Syed Farman Ali,</span> full stack
+        developer based in India
       </h1>
       <p>
         I am from Jammu and Kashmir, with 1 year of experience in multiple

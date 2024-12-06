@@ -2,7 +2,7 @@ import "./Hero.css";
 import profile from "../../assets/profile.jpg";
 import AnchorLink from "react-anchor-link-smooth-scroll";
 import { FaGithub, FaLinkedin, FaCode } from "react-icons/fa";
-import React, { useRef, useEffect } from "react";
+import React from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
@@ -10,27 +10,14 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 gsap.registerPlugin(ScrollTrigger);
 
 function Hero() {
-  const hero = useRef(null);
-
-  useEffect(() => {
-    gsap.to(hero.current, {
-      x: 100,
-      ease: "back.out()",
-      duration: 0.5,
-      repeat: -1,
-      yoyo: true,
-      scrollTrigger: {
-        trigger: hero.current,
-        start: "top bottom",
-        end: "top 50%",
-        scrub: true,
-      },
-    });
-  }, []);
-
   return (
-    <div id="home" className="hero" ref={hero}>
-      <img src={profile} alt="profile" />
+    <div id="home" className="hero">
+      <img
+        // Reference for the image
+        src={profile}
+        alt="profile"
+      />
+
       <h1>
         <span className="myname">I'm Syed Farman Ali,</span> full stack
         developer based in India
