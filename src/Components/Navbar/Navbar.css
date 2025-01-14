@@ -3,14 +3,16 @@ display: flex ;
 align-items: center;
 justify-content: space-between;
 margin: 20px 170px;
+
+
 }
 .nav-menu{
-    display: flex;
+  display: flex;
     align-items: center;
     list-style: none;
     gap:60px;
     font-size: 20px;
-
+   
 }
 .nav-connect
 {
@@ -46,7 +48,6 @@ margin: 20px 170px;
     position: absolute;
     bottom:0;
     right: 0;
-
     width: 150px;
     height: 150px;
    
@@ -63,7 +64,6 @@ margin: 20px 170px;
 .nav-mob-open{
     display: none;
 }
-
 
 @media(max-width:768px) {
     .navbar{
@@ -92,7 +92,12 @@ margin: 20px 170px;
         align-items: center;
         top:0;
         gap:30px;
-        background-color: #1f0016;
+        background: rgba( 255, 255, 255, 0 );
+box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37 );
+backdrop-filter: blur( 20px );
+-webkit-backdrop-filter: blur( 20px );
+border-radius: 10px;
+border: 1px solid rgba( 255, 255, 255, 0.18 );
         width: 350px;
         height: 100%;
         z-index: 2;
@@ -107,5 +112,22 @@ margin: 20px 170px;
         gap:20px;
 
     }
+    .logo{
+        position: relative;
+        
+        }
+    .logo h1{
+        padding: 0px 30px;
+        font-size: 50px;        
+        z-index: -1;
+        }
+    .logo img{
+        position: absolute;
+        bottom:0;
+        right: 0;
+        width: 150px;
+        height: 150px;
+        }
+    
     
 }

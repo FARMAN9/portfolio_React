@@ -3,11 +3,11 @@ import profile from "../../assets/profile.jpg";
 import AnchorLink from "react-anchor-link-smooth-scroll";
 import { FaGithub, FaLinkedin, FaCode } from "react-icons/fa";
 import React from "react";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
 
-// Register ScrollTrigger plugin
-gsap.registerPlugin(ScrollTrigger);
+import 'animate.css';
+
+
+
 
 function Hero() {
   return (
@@ -19,7 +19,7 @@ function Hero() {
       />
 
       <h1>
-        <span className="myname">I'm Syed Farman Ali,</span> full stack
+        <span className="myname animate__zoomInDown animate__animated">I'm Syed Farman Ali,</span> full stack
         developer based in India
       </h1>
       <p>
