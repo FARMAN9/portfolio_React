@@ -88,13 +88,10 @@ margin: 20px 170px;
         align-items: center;
         top:0;
         gap:30px;
-        background: rgba( 255, 255, 255, 0 );
-box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37 );
-backdrop-filter: blur( 20px );
--webkit-backdrop-filter: blur( 20px );
-border-radius: 10px;
-border: 1px solid rgba( 255, 255, 255, 0.18 );
-        width: 350px;
+        background: #070713;
+        opacity: 0.9;
+
+        width: 320px;
         height: 100%;
         z-index: 2;
         transition: right 0.5s;
