@@ -1,31 +1,29 @@
 import "./Hero.css";
-import profile from "../../assets/profile.jpg";
+import profileImg from "../../assets/profile.jpg";
 import AnchorLink from "react-anchor-link-smooth-scroll";
 import { FaGithub, FaLinkedin, FaCode } from "react-icons/fa";
 import React from "react";
-
+import { useSelector } from 'react-redux';
 import 'animate.css';
-
-
-
+import ThreeModel from '../ThreeModel/ThreeModel';
 
 function Hero() {
+  const profileData = useSelector((state) => state.profile.data) || {};
+
   return (
     <div id="home" className="hero">
-      <img
-        // Reference for the image
-        src={profile}
-        alt="profile"
-      />
+      <div className="hero-images">
+        <img src={profileImg} alt="profile" />
+        <div className="hero-3d">
+          <ThreeModel />
+        </div>
+      </div>
 
       <h1>
-        <span className="myname animate__zoomInDown animate__animated">I'm Syed Farman Ali,</span> full stack
-        developer based in India
+        <span className="myname animate__zoomInDown animate__animated">{profileData.name}</span> {profileData.heroTitle}
       </h1>
       <p>
-        I am from Jammu and Kashmir, with 1 year of experience in multiple
-        companies and organizations like Jammu and Kashmir Police (CID) and
-        Aharbal.
+        {profileData.heroDescription}
       </p>
       <div className="hero-action">
         <div className="hero-connect">
@@ -33,29 +31,18 @@ function Hero() {
             Connect with me
           </AnchorLink>
         </div>
-        <a
-          className="hero-resume"
-          href="https://rxresu.me/farman9/python-django-developer">
+        <a className="hero-resume" href={profileData.resumeUrl} target="_blank" rel="noopener noreferrer">
           My resume
         </a>
       </div>
       <div className="hero-socials">
-        <a
-          href="https://github.com/farman9"
-          target="_blank"
-          rel="noopener noreferrer">
+        <a href={profileData.githubUrl} target="_blank" rel="noopener noreferrer">
           <FaGithub size={30} />
         </a>
-        <a
-          href="https://www.linkedin.com/in/farman9"
-          target="_blank"
-          rel="noopener noreferrer">
+        <a href={profileData.linkedinUrl} target="_blank" rel="noopener noreferrer">
           <FaLinkedin size={30} />
         </a>
-        <a
-          href="https://leetcode.com/u/saeedfarman9/"
-          target="_blank"
-          rel="noopener noreferrer">
+        <a href={profileData.leetcodeUrl} target="_blank" rel="noopener noreferrer">
           <FaCode size={30} />
         </a>
       </div>
@@ -64,3 +51,4 @@ function Hero() {
 }
 
 export default Hero;
+

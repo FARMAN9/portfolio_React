@@ -2,6 +2,7 @@ import React from "react";
 import "./Footer.css";
 import ali from "../../assets/ali.png";
 import AnchorLink from "react-anchor-link-smooth-scroll";
+import { Link } from "react-router-dom";
 
 function Footer() {
   return (
@@ -29,12 +30,12 @@ function Footer() {
       <div className="footer-bottom">
         <p className="footer-bottm-left">
           {" "}
-          © 2024 Syed Farman Ali. All rights reserved.{" "}
+          © {new Date().getFullYear()} Syed Farman Ali. All rights reserved.{" "}
         </p>
 
         <div className="footer-bottom-right">
-          <p>Term of Services</p>
-          <p>Privacy Policy</p>
+          <Link to="/terms" style={{ color: 'inherit', textDecoration: 'none' }}><p>Term of Services</p></Link>
+          <Link to="/privacy" style={{ color: 'inherit', textDecoration: 'none' }}><p>Privacy Policy</p></Link>
           <AnchorLink className="anchor-link" offset={50} href="#contact">
             {" "}
             <p>Connect with me</p>

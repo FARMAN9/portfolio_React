@@ -26,16 +26,22 @@
 .about-sections {
   display: flex;
   gap: 80px;
+  padding: 60px;
+  border-radius: 30px;
+  margin-top: 20px;
+  align-items: center;
 }
 
 .about-left img {
   width: 25rem;
   height: 25rem;
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.5);
 }
 .about-right {
   display: flex;
   flex-direction: column;
-  gap: 80px;
+  gap: 60px;
 }
 
 .about-para {

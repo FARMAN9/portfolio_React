@@ -3,14 +3,25 @@
 * {
   margin: 0;
   padding: 0;
-
+  box-sizing: border-box;
 }
+
 html, body {
   font-family: "Outfit", sans-serif;
-  margin: 0;
-  padding: 0;
   color: aliceblue;
-  height: 100vh;
+  background-color: #0b0914; /* Deep premium dark background */
+  overflow-x: hidden;
+  scroll-behavior: smooth;
+}
+
+/* Premium Glassmorphism Utility */
+.glass-panel {
+  background: rgba(20, 18, 28, 0.6);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+  border-radius: 20px;
 }
 
 .background {

@@ -4,17 +4,31 @@
   align-items: center;
   gap: 35px;
 }
-.hero img {
+.hero-images {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   margin-top: 50px;
+}
+
+.hero-3d {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 0;
+  pointer-events: auto;
+}
+
+.hero img {
   border-radius: 50% 60%;
   width: 20rem;
   height: 20rem;
   position: relative;
-
-  overflow: hidden; /* Hide overflow */
-
-  z-index: 1; /* Make sure the image appears above the border */
-  animation: borderchange 10s infinite; /* Animation duration and repetition */
+  overflow: hidden;
+  z-index: 1;
+  animation: borderchange 10s infinite;
 }
 
 /* Animated border wrapper */
@@ -82,43 +96,55 @@
   display: flex;
   align-items: center;
   gap: 25px;
-  font-size: 24px;
+  font-size: 20px;
   font-weight: 500;
   margin-bottom: 50px;
 }
 .hero-connect {
-  padding: 25px 45px;
+  padding: 20px 45px;
   border-radius: 50px;
   background: linear-gradient(267deg, #da7c25 0.36%, #b923e1 102%);
   cursor: pointer;
+  transition: all 0.4s ease;
+  box-shadow: 0 4px 15px rgba(185, 35, 225, 0.2);
 }
 .hero-resume {
-  padding: 25px 75px;
+  padding: 20px 75px;
   border-radius: 50px;
-  border: 2px solid #fff;
+  border: 2px solid rgba(255, 255, 255, 0.3);
   cursor: pointer;
   color: aliceblue;
   text-decoration: none;
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  transition: all 0.4s ease;
 }
 
 .hero-connect:hover {
-  border: 2px solid white;
+  transform: translateY(-5px);
+  box-shadow: 0 10px 30px rgba(185, 35, 225, 0.6);
 }
 .hero-resume:hover {
   border-color: #b415ff;
+  background: rgba(255, 255, 255, 0.1);
+  transform: translateY(-5px);
+  box-shadow: 0 10px 30px rgba(255, 255, 255, 0.1);
 }
 .hero-socials {
   margin-top: 20px;
+  display: flex;
+  gap: 20px;
 }
 
 .hero-socials a {
-  margin: 0 10px;
-  color: #d1d0d0;
-  transition: color 0.3s;
+  color: rgba(255, 255, 255, 0.6);
+  transition: all 0.3s ease;
 }
 
 .hero-socials a:hover {
-  color: #b415ff; /* You can change this color to match the theme */
+  color: #b415ff;
+  transform: scale(1.2) translateY(-3px);
+  filter: drop-shadow(0 0 10px rgba(180, 21, 255, 0.8));
 }
 @media (max-width: 768px) {
   .hero img {

@@ -1,20 +1,12 @@
-import React from 'react'
-import'./About.css'
-import bac from '../../assets/bac.svg'
-import profile from '../../assets/profile.jpg'
-
+import React from 'react';
+import { useSelector } from 'react-redux';
+import './About.css';
+import bac from '../../assets/bac.svg';
+import profileImg from '../../assets/profile.jpg';
 
 function About() {
-  const skills = [
-    { name: 'JavaScript', value: 70 },
-    { name: 'Python', value: 80 },
-    { name: 'Java', value: 50 },
-    { name: 'HTML', value: 75 },
-    { name: 'CSS', value: 70 },
-    { name: 'Django', value: 60 },
-    { name: 'Fastapi', value: 50 },
-    
-  ]; 
+  const skills = useSelector((state) => state.skills.items);
+  const profileData = useSelector((state) => state.profile.data) || {};
       
   return (
     <div id='about' className='about'>
@@ -23,14 +15,14 @@ function About() {
             <h1>About me</h1>
             <img src={bac} alt="" />
         </div>
-        <div className="about-sections">
+        <div className="about-sections glass-panel">
         <div className="about-left">
-        <img src={profile} alt="" /> 
+        <img src={profileImg} alt="" /> 
        </div>
        <div className="about-right">
        <div className="about-para">
-        <p>I am an experienced Full Stack Developer with over a 1 year of professional expertise in the field. Throughout my career, I have had the privilege of collaborating with prestigious organizations, contributing to their success and growth.</p>
-        <p>My passion for frontend development is not only reflected in my extensive experience but also in the enthusiasm and dedication I bring to each project.</p>
+        <p>{profileData.aboutPara1}</p>
+        <p>{profileData.aboutPara2}</p>
        </div>
        <div className="about-skills">
         {
@@ -42,17 +34,17 @@ function About() {
         </div>
         <div className="about-achievements">
 <div className="about-achievement">
-<h1>1</h1>
+<h1>{profileData.experienceYears}</h1>
 <p>YEAR OF EXPERIENCE</p>
 </div>
 <hr />
 <div className="about-achievement">
-<h1>4+</h1>
+<h1>{profileData.projectsCompleted}</h1>
 <p>PROJECTS COMPLETED</p>
 </div>
 <hr />
 <div className="about-achievement">
-<h1>2+</h1>
+<h1>{profileData.happyClients}</h1>
 <p>HAPPY CLIENTS</p>
 </div>
 </div>
@@ -60,4 +52,4 @@ function About() {
   )
 }
 
-export default About
+export default About;

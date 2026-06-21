@@ -23,28 +23,83 @@
 
 .mywork-container {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
   gap: 40px;
+  width: 100%;
 }
 
-.mywork-container img {
+.project-card {
+  position: relative;
+  border-radius: 20px;
+  overflow: hidden;
   box-sizing: border-box;
-  width: 500px;
   height: 300px;
-  transition: 0.3s;
   cursor: pointer;
+  transition: all 0.4s ease;
 }
-.mywork-container img:hover {
+
+.project-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: all 0.4s ease;
+}
+
+.project-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(18, 11, 35, 0.85);
+  backdrop-filter: blur(5px);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+  opacity: 0;
+  transition: all 0.4s ease;
+  padding: 20px;
+  text-align: center;
+}
+
+.project-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 15px 40px rgba(185, 35, 225, 0.4);
+  border: 1px solid #b415ff;
+}
+
+.project-card:hover .project-img {
   transform: scale(1.1);
-  transform: rotate3d(0, 0, 1,5deg);
-  border: 0.5rem solid #ff00ff;
-  border-radius: 10px;
-  transition: 0.3s;
 }
-.name{
-  margin-top: 0.5rem;
-  font-size: 1rem;
-  color: #333;
+
+.project-card:hover .project-overlay {
+  opacity: 1;
+}
+
+.project-overlay h3 {
+  color: #fff;
+  font-size: 24px;
+}
+
+.project-overlay p {
+  color: #d1d0d0;
+  font-size: 16px;
+}
+
+.project-link {
+  padding: 12px 30px;
+  border-radius: 30px;
+  background: linear-gradient(267deg, #da7c25 0.36%, #b923e1 102%);
+  color: white;
+  text-decoration: none;
+  font-weight: 500;
+  transition: transform 0.3s;
+}
+
+.project-link:hover {
+  transform: scale(1.1);
 }
 
 @media (max-width: 768px) {
