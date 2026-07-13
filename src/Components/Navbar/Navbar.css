@@ -1,125 +1,141 @@
-.navbar{
-display: flex ;
-align-items: center;
-justify-content: space-between;
-margin: 20px 170px;
-}
-.nav-menu{
+/* ======== NAVBAR ======== */
+.navbar {
   display: flex;
-    align-items: center;
-    list-style: none;
-    gap:60px;
-    font-size: 20px;
-   
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 6%;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(11, 9, 20, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
 }
-.nav-connect
-{
-    padding: 20px;
-    border-radius: 50px;
-    background: linear-gradient(267deg,#DA7C25 0.36%,#B923E1 102.0% );
-    font-size:22px ;
+
+/* Logo */
+.logo {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.logo h1 {
+  font-size: 2rem;
+  font-weight: 700;
+  letter-spacing: 2px;
+  z-index: 1;
+  padding: 0 8px;
+}
+
+.logo img {
+  position: absolute;
+  bottom: -10px;
+  right: -10px;
+  width: 80px;
+  height: 80px;
+  opacity: 0.7;
+  pointer-events: none;
+}
+
+/* Nav menu */
+.nav-menu {
+  display: flex;
+  align-items: center;
+  list-style: none;
+  gap: 48px;
+  font-size: 17px;
+}
+
+.nav-menu li {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+}
+
+.nav-menu li img {
+  width: 100%;
+  position: absolute;
+  bottom: -6px;
+}
+
+/* Connect button */
+.nav-connect {
+  padding: 12px 28px;
+  border-radius: 50px;
+  background: linear-gradient(267deg, #da7c25 0.36%, #b923e1 102%);
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.4s ease;
+  box-shadow: 0 4px 15px rgba(185, 35, 225, 0.2);
+}
+
+.nav-connect:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(185, 35, 225, 0.5);
+}
+
+.anchor-link {
+  text-decoration: none;
+  color: aliceblue;
+}
+
+/* Mobile controls */
+.nav-mob-open,
+.nav-mob-close {
+  display: none;
+}
+
+/* ======== RESPONSIVE ======== */
+@media (max-width: 900px) {
+  .navbar {
+    padding: 16px 5%;
+  }
+
+  .nav-connect {
+    display: none;
+  }
+
+  .nav-mob-open {
+    display: block;
+    position: fixed;
+    right: 24px;
+    top: 20px;
+    z-index: 200;
     cursor: pointer;
-    transition: 0.5s;
+  }
 
-}
-.nav-connect:hover
-{
-   transform: scale(1.05);
-
-}
-
-.logo{
+  .nav-mob-close {
+    display: block;
     position: relative;
-    }
-.logo h1{
-    padding: 0px 30px;
-    font-size: 50px;
-    font-weight: 600%;
-    z-index: -1;
+    top: 20px;
+    left: 100px;
+    width: 28px;
+    cursor: pointer;
+  }
 
-    }
+  .nav-menu {
+    position: fixed;
+    flex-direction: column;
+    align-items: center;
+    top: 0;
+    right: -350px;
+    gap: 32px;
+    background: #0d0b1a;
+    border-left: 1px solid rgba(255,255,255,0.07);
+    width: 300px;
+    height: 100vh;
+    z-index: 150;
+    transition: right 0.4s ease;
+    padding-top: 80px;
+  }
 
-
-.logo img{
-    position: absolute;
-    bottom:0;
-    right: 0;
-    width: 150px;
-    height: 150px;
-   
-}  
-
-.anchor-link{
-   text-decoration: none;
-   color: aliceblue; 
-}
-.nav-mob-close
-{
-    display: none;
-}
-.nav-mob-open{
-    display: none;
-}
-
-@media(max-width:768px) {
-    .navbar{
-        margin: 20px 50px;
-    }
-    .nav-connect{
-        display: none;
-    }
-    .nav-mob-open{
-        display: block;
-        position: fixed;
-        right: 30px;
-    }
-    .nav-mob-close{
-        display: block;
-        position: relative;
-        top: 30px;
-        left: 110px;
-        width: 30px;
-
-   
-    }
-    .nav-menu{
-         position: fixed;
-        flex-direction: column;
-        align-items: center;
-        top:0;
-        gap:30px;
-        background: #070713;
-        opacity: 0.9;
-
-        width: 320px;
-        height: 100%;
-        z-index: 2;
-        transition: right 0.5s;
-        right: -350px;
-    }
-    .nav-menu li{
-        font-size: 30px;
-        padding-left: 0;
-        flex-direction: row;
-        gap:10px;
-
-    }
-    .logo{
-        position: relative;
-        
-        }
-    .logo h1{
-        padding: 0px 30px;
-        font-size: 50px;        
-        z-index: -1;
-        }
-    .logo img{
-        position: absolute;
-        bottom:0;
-        right: 0;
-        width: 150px;
-        height: 150px;
-        }
-    
-    
+  .nav-menu li {
+    font-size: 22px;
+    flex-direction: row;
+    gap: 8px;
+  }
 }

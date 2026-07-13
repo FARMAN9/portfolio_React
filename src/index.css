@@ -9,9 +9,11 @@
 html, body {
   font-family: "Outfit", sans-serif;
   color: aliceblue;
-  background-color: #0b0914; /* Deep premium dark background */
+  background-color: #0b0914;
   overflow-x: hidden;
   scroll-behavior: smooth;
+  width: 100%;
+  max-width: 100vw;
 }
 
 /* Premium Glassmorphism Utility */

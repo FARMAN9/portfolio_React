@@ -15,7 +15,6 @@ function Contact() {
     event.preventDefault();
     setResult("Sending....");
     const formData = new FormData(event.target);
-
     formData.append("access_key", mykey);
 
     const response = await fetch("https://api.web3forms.com/submit", {
@@ -26,7 +25,7 @@ function Contact() {
     const data = await response.json();
 
     if (data.success) {
-      setResult("Email Send Successfully \n Thanks😇");
+      setResult("Message sent successfully! Thanks 😇");
       setAlertVisible(true);
       event.target.reset();
     } else {
@@ -43,42 +42,62 @@ function Contact() {
 
   return (
     <div id='contact' className='contact'>
+      {/* Section heading */}
       <div className='contact-title'>
         <h1>Get in touch</h1>
         <img src={bac} alt="" />
       </div>
-      <div className='contact-section'>
+
+      {/* Card wrapper */}
+      <div className='contact-card glass-panel'>
+        {/* Left info column */}
         <div className='contact-left'>
-          <h1>Let's talk</h1>
+          <h2>Let's talk</h2>
           <p>I'm currently available to take on new projects, so feel free to send me a message about anything that you want me to work on. You can contact anytime.</p>
           <div className="contact-details">
             <div className="contact-detail">
-              <img src={mail} alt="" /> <p>saeedfarman9@gmail.com</p>
+              <img src={mail} alt="email" />
+              <p>saeedfarman9@gmail.com</p>
             </div>
             <div className="contact-detail">
-              <img src={call} alt="" /><p>+916005943382</p>
+              <img src={call} alt="phone" />
+              <p>+916005943382</p>
             </div>
             <div className="contact-detail">
-              <img src={loc} alt="" /><p>Jammu & Kashmir, India</p>
+              <img src={loc} alt="location" />
+              <p>Jammu &amp; Kashmir, India</p>
             </div>
           </div>
         </div>
-        <div>
-          <form onSubmit={onSubmit} className='contact-right'>
-            <label htmlFor=""> Your Name</label>
-            <input type="text" placeholder='Enter your name' name='name' />
-            <label htmlFor=""> Your Email</label>
-            <input type="email" placeholder='Enter your email' name='email' />
-            <label htmlFor=""> Write your message here</label>
-            <textarea placeholder='Enter your message' rows='8' name='message'></textarea>
-            <button className='contact-submit' type='submit'>Submit now</button>
-          </form>
-        </div>
+
+        {/* Divider */}
+        <div className="contact-divider" />
+
+        {/* Right form column */}
+        <form onSubmit={onSubmit} className='contact-right'>
+          <div className="contact-field">
+            <label htmlFor="name">Your Name</label>
+            <input id="name" type="text" placeholder='Enter your name' name='name' required />
+          </div>
+          <div className="contact-field">
+            <label htmlFor="email">Your Email</label>
+            <input id="email" type="email" placeholder='Enter your email' name='email' required />
+          </div>
+          <div className="contact-field">
+            <label htmlFor="message">Your Message</label>
+            <textarea id="message" placeholder='Write your message here...' rows='6' name='message' required></textarea>
+          </div>
+          <button className='contact-submit' type='submit'>
+            {result === "Sending...." ? "Sending..." : "Send Message →"}
+          </button>
+        </form>
       </div>
-      
+
+      {/* Success / error modal */}
       {alertVisible && (
-        <div className="custom-alert">
-          <div className="custom-alert-content">
+        <div className="custom-alert" onClick={closeAlert}>
+          <div className="custom-alert-content" onClick={e => e.stopPropagation()}>
+            <div className="alert-icon">✉️</div>
             <p>{result}</p>
             <button onClick={closeAlert}>Close</button>
           </div>

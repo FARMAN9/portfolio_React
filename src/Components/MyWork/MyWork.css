@@ -1,19 +1,22 @@
+/* ======== MY WORK SECTION ======== */
 .mywork {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  gap: 80px;
-  margin: 80px 170px;
+  gap: 60px;
+  padding: 80px 6%;
 }
+
 .mywork-title {
   position: relative;
 }
+
 .mywork-title h1 {
-  padding: 0px 30px;
-  font-size: 80px;
-  font-weight: 600%;
+  font-size: clamp(2.5rem, 5vw, 5rem);
+  font-weight: 700;
+  padding: 0 30px;
 }
+
 .mywork-title img {
   position: absolute;
   bottom: 0;
@@ -21,57 +24,58 @@
   z-index: -1;
 }
 
+/* Responsive grid */
 .mywork-container {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-  gap: 40px;
+  grid-template-columns: repeat(auto-fill, minmax(min(300px, 100%), 1fr));
+  gap: 28px;
   width: 100%;
 }
 
+/* Project cards */
 .project-card {
   position: relative;
-  border-radius: 20px;
+  border-radius: 16px;
   overflow: hidden;
-  box-sizing: border-box;
-  height: 300px;
+  height: 260px;
   cursor: pointer;
   transition: all 0.4s ease;
+  background: rgba(20, 18, 28, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.06);
 }
 
 .project-img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: all 0.4s ease;
+  transition: transform 0.4s ease;
+  display: block;
 }
 
 .project-overlay {
   position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(18, 11, 35, 0.85);
-  backdrop-filter: blur(5px);
+  inset: 0;
+  background: rgba(14, 8, 28, 0.88);
+  backdrop-filter: blur(6px);
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 15px;
+  gap: 12px;
   opacity: 0;
-  transition: all 0.4s ease;
+  transition: opacity 0.4s ease;
   padding: 20px;
   text-align: center;
 }
 
 .project-card:hover {
-  transform: translateY(-10px);
-  box-shadow: 0 15px 40px rgba(185, 35, 225, 0.4);
-  border: 1px solid #b415ff;
+  transform: translateY(-8px);
+  box-shadow: 0 16px 40px rgba(180, 21, 255, 0.35);
+  border-color: rgba(180, 21, 255, 0.5);
 }
 
 .project-card:hover .project-img {
-  transform: scale(1.1);
+  transform: scale(1.08);
 }
 
 .project-card:hover .project-overlay {
@@ -80,49 +84,70 @@
 
 .project-overlay h3 {
   color: #fff;
-  font-size: 24px;
+  font-size: clamp(1rem, 1.5vw, 1.3rem);
+  font-weight: 600;
 }
 
 .project-overlay p {
-  color: #d1d0d0;
-  font-size: 16px;
+  color: rgba(255,255,255,0.75);
+  font-size: 14px;
+  line-height: 1.5;
 }
 
 .project-link {
-  padding: 12px 30px;
+  padding: 10px 26px;
   border-radius: 30px;
   background: linear-gradient(267deg, #da7c25 0.36%, #b923e1 102%);
   color: white;
   text-decoration: none;
+  font-size: 14px;
   font-weight: 500;
   transition: transform 0.3s;
 }
 
 .project-link:hover {
-  transform: scale(1.1);
+  transform: scale(1.07);
 }
 
+/* Error / loading states */
+.mywork-error {
+  color: rgba(255,100,100,0.85);
+  font-size: 14px;
+  background: rgba(255,50,50,0.08);
+  border: 1px solid rgba(255,50,50,0.2);
+  border-radius: 8px;
+  padding: 10px 18px;
+}
+
+/* ======== RESPONSIVE ======== */
 @media (max-width: 768px) {
   .mywork {
-    gap: 50px;
-    margin: 10px 20px;
-    align-items: start;
+    padding: 60px 5%;
+    gap: 40px;
+    align-items: flex-start;
   }
+
   .mywork-title h1 {
-    padding: 0;
     font-size: 2rem;
-    font-weight: 600;
+    padding: 0;
   }
+
   .mywork-title img {
     width: 90%;
-    margin-right: -20px;
   }
+
   .mywork-container {
     grid-template-columns: 1fr;
-    gap: 20px;
+    gap: 18px;
   }
-  .mywork-container img {
-    width: 100%;
-    height: 100%;
+
+  .project-card {
+    height: 220px;
+  }
+}
+
+@media (max-width: 480px) {
+  .project-card {
+    height: 190px;
   }
 }

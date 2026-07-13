@@ -25,7 +25,7 @@ function MyWork() {
 
       <div className="mywork-container">
         {isLoading && <p style={{ color: "#fff" }}>Loading projects...</p>}
-        {error && <p style={{ color: "red" }}>Warning: {error}</p>}
+        {error && <p className="mywork-error">⚠ {error}</p>}
         {!isLoading && mywork_data.map((data, index) => {
           return (
             <div className="project-card glass-panel" key={index}>

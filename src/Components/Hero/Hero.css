@@ -1,117 +1,99 @@
+/* ======== HERO SECTION ======== */
 .hero {
+  min-height: 100vh;
   display: flex;
-  flex-direction: column;
   align-items: center;
-  gap: 35px;
-}
-.hero-images {
-  position: relative;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-top: 50px;
-}
-
-.hero-3d {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 0;
-  pointer-events: auto;
-}
-
-.hero img {
-  border-radius: 50% 60%;
-  width: 20rem;
-  height: 20rem;
+  padding: 0 6%;
+  box-sizing: border-box;
   position: relative;
   overflow: hidden;
+}
+
+/* Fullscreen background video */
+.hero-bg-video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* Dark overlay over video */
+.hero-video-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(7, 5, 16, 0.65);
   z-index: 1;
-  animation: borderchange 10s infinite;
 }
 
-/* Animated border wrapper */
-
-/* Animated border effect */
-
-/* Keyframes for border animation */
-/* Animated border effect */
-
-/* Keyframes for border animation */
-@keyframes borderchange {
-  0% {
-    border-radius: 20% 40%; /* Initial radius */ /* Initial width */
-    border-color: rgba(255, 255, 255, 0.5); /* Initial color */
-    /* No scaling */
-  }
-  25% {
-    border-radius: 30% 50%; /* Slightly increase radius */
-    border-color: rgba(255, 200, 0, 0.7); /* Change color */
-    /* Slightly scale up */
-  }
-  50% {
-    border-radius: 50%; /* Fully rounded */
-    border-color: rgba(0, 200, 255, 0.7); /* Another color change */
-    border-width: 25px; /* Slightly increase width */ /* Scale up further */
-  }
-  75% {
-    border-radius: 40% 60%; /* Return to less rounded */
-    border-color: rgba(255, 0, 150, 0.7); /* Change color again */
-    /* Scale back down */
-  }
-  100% {
-    border-radius: 20% 40%; /* Back to initial radius */
-    border-width: 20px; /* Back to initial width */
-    border-color: rgba(255, 255, 255, 0.5); /* Return to initial color */
-    /* Reset scaling */
-  }
+/* Two-column layout */
+.hero-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  gap: 40px;
+  position: relative;
+  z-index: 2;
 }
 
-.hero h1 {
-  text-align: center;
-
-  font-weight: 600;
-  width: 70%;
-  font-size: 70px;
+/* ---- LEFT: text content ---- */
+.hero-left {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  z-index: 2;
+  max-width: 580px;
 }
-.hero h1 span {
+
+.hero-left h1 {
+  font-weight: 700;
+  font-size: clamp(2rem, 3.5vw, 3.5rem);
+  line-height: 1.2;
+  margin: 0;
+}
+
+.hero-left h1 span {
   background: linear-gradient(270deg, #df8908 10%, #b415ff 100%);
   background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
-.hero-socials img {
-  width: 30px;
-  height: 30px;
-  cursor: pointer;
+
+.hero-left p {
+  font-size: clamp(1rem, 1.3vw, 1.2rem);
+  line-height: 1.8;
+  color: rgba(255, 255, 255, 0.72);
+  margin: 0;
 }
-.hero p {
-  width: 50%;
-  text-align: center;
-  font-size: 24px;
-  line-height: 40px;
-}
+
+/* ---- Buttons ---- */
 .hero-action {
   display: flex;
   align-items: center;
-  gap: 25px;
-  font-size: 20px;
+  gap: 16px;
+  flex-wrap: wrap;
+  font-size: 17px;
   font-weight: 500;
-  margin-bottom: 50px;
 }
+
 .hero-connect {
-  padding: 20px 45px;
+  padding: 14px 36px;
   border-radius: 50px;
   background: linear-gradient(267deg, #da7c25 0.36%, #b923e1 102%);
   cursor: pointer;
   transition: all 0.4s ease;
-  box-shadow: 0 4px 15px rgba(185, 35, 225, 0.2);
+  box-shadow: 0 4px 15px rgba(185, 35, 225, 0.25);
 }
+
 .hero-resume {
-  padding: 20px 75px;
+  padding: 14px 42px;
   border-radius: 50px;
-  border: 2px solid rgba(255, 255, 255, 0.3);
+  border: 2px solid rgba(255, 255, 255, 0.25);
   cursor: pointer;
   color: aliceblue;
   text-decoration: none;
@@ -121,23 +103,25 @@
 }
 
 .hero-connect:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 10px 30px rgba(185, 35, 225, 0.6);
+  transform: translateY(-4px);
+  box-shadow: 0 10px 28px rgba(185, 35, 225, 0.55);
 }
+
 .hero-resume:hover {
   border-color: #b415ff;
   background: rgba(255, 255, 255, 0.1);
-  transform: translateY(-5px);
-  box-shadow: 0 10px 30px rgba(255, 255, 255, 0.1);
+  transform: translateY(-4px);
 }
+
+/* ---- Social Icons ---- */
 .hero-socials {
-  margin-top: 20px;
   display: flex;
-  gap: 20px;
+  gap: 18px;
+  align-items: center;
 }
 
 .hero-socials a {
-  color: rgba(255, 255, 255, 0.6);
+  color: rgba(255, 255, 255, 0.55);
   transition: all 0.3s ease;
 }
 
@@ -146,48 +130,101 @@
   transform: scale(1.2) translateY(-3px);
   filter: drop-shadow(0 0 10px rgba(180, 21, 255, 0.8));
 }
-@media (max-width: 768px) {
-  .hero img {
-    margin-top: 10px;
-  }
-  .hero h1 {
-    margin-top: 40px;
-    width: 96%;
-    font-size: 2rem;
-  }
-  .hero p {
-    width: 97%;
 
-    font-size: 1rem;
-    line-height: 30px;
+/* ---- RIGHT: profile image + 3D orb ---- */
+.hero-right {
+  flex: 1;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 520px;
+  max-width: 540px;
+}
+
+.hero-img-wrapper {
+  position: relative;
+  z-index: 2;
+}
+
+.hero-img-wrapper img {
+  width: 17rem;
+  height: 17rem;
+  border-radius: 50%;
+  object-fit: cover;
+  animation: borderchange 10s infinite;
+  position: relative;
+  z-index: 2;
+  display: block;
+}
+
+.hero-3d {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+  pointer-events: auto;
+}
+
+/* Animated border */
+@keyframes borderchange {
+  0%   { border-radius: 20% 40%; }
+  25%  { border-radius: 30% 50%; }
+  50%  { border-radius: 50%; }
+  75%  { border-radius: 40% 60%; }
+  100% { border-radius: 20% 40%; }
+}
+
+/* ======== RESPONSIVE ======== */
+@media (max-width: 900px) {
+  .hero {
+    padding: 80px 6% 60px;
+    align-items: flex-start;
   }
-  .hero-action {
-    width: 97%;
-    gap: 10px;
-    font-size: 18px;
-    font-weight: 500;
-    margin-bottom: 40px;
-  }
-  .hero-connect,
-  .hero-resume {
-    padding: 0.5rem 3rem; /* Use the same padding for both */
+
+  .hero-top {
+    flex-direction: column-reverse;
+    align-items: center;
     text-align: center;
-    border-radius: 30px; /* Consistent border-radius */
-    cursor: pointer;
-    display: inline-block; /* Ensure the buttons behave the same way */
   }
 
-  .hero-connect {
-    background-color: #f0f0f0; /* Optional: Style for differentiation */
+  .hero-left {
+    align-items: center;
+    max-width: 100%;
   }
 
-  .hero-resume {
-    /* Optional: Style for differentiation */
+  .hero-right {
+    min-height: 340px;
+    max-width: 100%;
+    width: 100%;
+  }
+
+  .hero-img-wrapper img {
+    width: 13rem;
+    height: 13rem;
+  }
+
+  .hero-action {
+    justify-content: center;
   }
 
   .hero-socials {
-    margin-top: 5px;
+    justify-content: center;
   }
 }
 
+@media (max-width: 480px) {
+  .hero-left h1 {
+    font-size: 1.7rem;
+  }
 
+  .hero-img-wrapper img {
+    width: 10rem;
+    height: 10rem;
+  }
+
+  .hero-right {
+    min-height: 260px;
+  }
+}
