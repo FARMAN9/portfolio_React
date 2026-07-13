@@ -1,19 +1,29 @@
 import "./Hero.css";
 import profileImg from "../../assets/profile.jpg";
 import AnchorLink from "react-anchor-link-smooth-scroll";
-import { FaGithub, FaLinkedin, FaCode } from "react-icons/fa";
-import React from "react";
+import { FaGithub, FaLinkedin, FaCode, FaVolumeMute, FaVolumeUp } from "react-icons/fa";
+import React, { useState, useRef } from "react";
 import { useSelector } from 'react-redux';
 import 'animate.css';
 import HeroModel from '../HeroModel/HeroModel';
 
 function Hero() {
   const profileData = useSelector((state) => state.profile.data) || {};
+  const [isMuted, setIsMuted] = useState(true);
+  const videoRef = useRef(null);
+
+  const toggleMute = () => {
+    if (videoRef.current) {
+      videoRef.current.muted = !videoRef.current.muted;
+      setIsMuted(videoRef.current.muted);
+    }
+  };
 
   return (
     <div id="home" className="hero">
       {/* Fullscreen background video */}
       <video
+        ref={videoRef}
         className="hero-bg-video"
         autoPlay
         loop
@@ -25,6 +35,15 @@ function Hero() {
 
       {/* Dark overlay so text stays readable */}
       <div className="hero-video-overlay" />
+
+      {/* Mute/Unmute audio control */}
+      <button 
+        className="hero-mute-btn" 
+        onClick={toggleMute} 
+        aria-label={isMuted ? "Unmute video" : "Mute video"}
+      >
+        {isMuted ? <FaVolumeMute size={18} /> : <FaVolumeUp size={18} />}
+      </button>
 
       <div className="hero-top">
         {/* Left: Text content */}

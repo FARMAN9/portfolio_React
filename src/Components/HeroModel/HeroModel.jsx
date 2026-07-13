@@ -1,6 +1,18 @@
-import React, { useRef } from 'react';
+import React, { useRef, Suspense } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
-import { OrbitControls, Sphere, MeshDistortMaterial } from '@react-three/drei';
+import { OrbitControls, Sphere, MeshDistortMaterial, Html, useProgress } from '@react-three/drei';
+
+function CanvasLoader() {
+  const { progress } = useProgress();
+  return (
+    <Html center>
+      <div className="three-loader-container">
+        <div className="three-loader-spinner"></div>
+        <div className="three-loader-text">{progress.toFixed(0)}% Loading</div>
+      </div>
+    </Html>
+  );
+}
 
 function AnimatedSphere() {
   const sphereRef = useRef();
@@ -37,7 +49,9 @@ export default function HeroModel() {
         <ambientLight intensity={0.5} />
         <directionalLight position={[10, 10, 5]} intensity={1} />
         <pointLight position={[-10, -10, -5]} color="#df8908" intensity={2} />
-        <AnimatedSphere />
+        <Suspense fallback={<CanvasLoader />}>
+          <AnimatedSphere />
+        </Suspense>
         <OrbitControls enableZoom={false} autoRotate autoRotateSpeed={1} />
       </Canvas>
     </div>
