@@ -1,32 +1,25 @@
 import pkg from '@prisma/client';
+import { portfolioProfile, portfolioSkills } from '../src/data/portfolioKnowledge.js';
 const { PrismaClient } = pkg;
 
 const prisma = new PrismaClient();
 
 const initialProfile = {
-  name: "I'm Syed Farman Ali,",
-  heroTitle: "full stack developer based in India",
-  heroDescription: "I am from Jammu and Kashmir, with 1 year of experience in multiple companies and organizations like Jammu and Kashmir Police (CID) and Aharbal.",
-  aboutPara1: "I am an experienced Full Stack Developer with over a 1 year of professional expertise in the field. Throughout my career, I have had the privilege of collaborating with prestigious organizations, contributing to their success and growth.",
-  aboutPara2: "My passion for frontend development is not only reflected in my extensive experience but also in the enthusiasm and dedication I bring to each project.",
-  experienceYears: "1",
-  projectsCompleted: "4+",
-  happyClients: "2+",
-  githubUrl: "https://github.com/farman9",
-  linkedinUrl: "https://www.linkedin.com/in/farman9",
-  leetcodeUrl: "https://leetcode.com/u/saeedfarman9/",
-  resumeUrl: "https://rxresu.me/farman9/python-django-developer"
+  name: portfolioProfile.name,
+  heroTitle: portfolioProfile.title,
+  heroDescription: "I build responsive React and React Native interfaces, Python/Django backends, and data-driven projects with a focus on clean delivery, fast learning, and useful user experiences.",
+  aboutPara1: "I am an aspiring full-stack developer from Jammu and Kashmir, India, with hands-on work across React, React Native, Node.js, Django, Python, and machine-learning projects.",
+  aboutPara2: `${portfolioProfile.experience} Education: ${portfolioProfile.education[0].institution}.`,
+  experienceYears: portfolioProfile.experienceYears,
+  projectsCompleted: portfolioProfile.projectsCompleted,
+  happyClients: portfolioProfile.happyClients,
+  githubUrl: portfolioProfile.githubUrl,
+  linkedinUrl: portfolioProfile.linkedinUrl,
+  leetcodeUrl: portfolioProfile.leetcodeUrl,
+  resumeUrl: portfolioProfile.resumeUrl
 };
 
-const initialSkills = [
-  { name: 'JavaScript', value: 70 },
-  { name: 'Python', value: 80 },
-  { name: 'Java', value: 50 },
-  { name: 'HTML', value: 75 },
-  { name: 'CSS', value: 70 },
-  { name: 'Django', value: 60 },
-  { name: 'Fastapi', value: 50 },
-];
+const initialSkills = portfolioSkills;
 
 async function main() {
   console.log("Start seeding profile and skills...");

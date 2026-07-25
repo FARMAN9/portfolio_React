@@ -31,6 +31,7 @@
 }
 
 .footer .logo h1 {
+  font-family: "Outfit", sans-serif;
   font-size: 2rem;
   font-weight: 700;
   letter-spacing: 2px;
@@ -77,8 +78,20 @@
   transition: color 0.3s;
 }
 
-.footer-bottom-right p:hover {
-  color: #b415ff;
+.footer-link-button {
+  appearance: none;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+  padding: 0;
+  transition: color 0.3s;
+}
+
+.footer-bottom-right p:hover,
+.footer-link-button:hover {
+  color: #9fe7d7;
 }
 
 /* ======== RESPONSIVE ======== */

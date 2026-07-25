@@ -14,8 +14,8 @@
 }
 
 .contact-title h1 {
-  font-size: clamp(2.5rem, 5vw, 5rem);
-  font-weight: 700;
+  font-size: clamp(2rem, 3.5vw, 3.6rem);
+  font-weight: 800;
   padding: 0 30px;
 }
 
@@ -31,13 +31,13 @@
   display: flex;
   width: 100%;
   max-width: 1100px;
-  border-radius: 28px;
+  border-radius: 8px;
   overflow: hidden;
-  background: rgba(18, 14, 32, 0.7);
+  background: rgba(10, 18, 26, 0.76);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   border: 1px solid rgba(255, 255, 255, 0.07);
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(180,21,255,0.07);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(159, 231, 215, 0.06);
 }
 
 /* ---- Left: info panel ---- */
@@ -47,14 +47,14 @@
   gap: 28px;
   flex: 0 0 38%;
   padding: 52px 44px;
-  background: rgba(180, 21, 255, 0.06);
+  background: rgba(159, 231, 215, 0.05);
   border-right: 1px solid rgba(255, 255, 255, 0.06);
 }
 
 .contact-left h2 {
   font-size: clamp(1.6rem, 2.5vw, 2.4rem);
-  font-weight: 700;
-  background: linear-gradient(267deg, #da7c25 30%, #b923e1 100%);
+  font-weight: 800;
+  background: linear-gradient(90deg, #9fe7d7 0%, #f4c76b 100%);
   background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -131,10 +131,10 @@
   width: 100%;
   box-sizing: border-box;
   border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 12px;
+  border-radius: 8px;
   background: rgba(255, 255, 255, 0.04);
   color: #fff;
-  font-family: 'Outfit', sans-serif;
+  font-family: 'Manrope', 'Outfit', sans-serif;
   font-size: 15px;
   transition: all 0.3s ease;
   outline: none;
@@ -153,8 +153,8 @@
 
 .contact-field input:focus,
 .contact-field textarea:focus {
-  border-color: #b415ff;
-  box-shadow: 0 0 0 3px rgba(180, 21, 255, 0.15);
+  border-color: #9fe7d7;
+  box-shadow: 0 0 0 3px rgba(159, 231, 215, 0.12);
   background: rgba(255, 255, 255, 0.07);
 }
 
@@ -167,22 +167,22 @@
 .contact-submit {
   align-self: flex-start;
   border: none;
-  color: #fff;
-  border-radius: 50px;
-  background: linear-gradient(267deg, #da7c25 0.36%, #b923e1 102%);
+  color: #071018;
+  border-radius: 8px;
+  background: #9fe7d7;
   font-size: 16px;
-  font-weight: 600;
-  font-family: 'Outfit', sans-serif;
+  font-weight: 800;
+  font-family: 'Manrope', 'Outfit', sans-serif;
   padding: 14px 44px;
   cursor: pointer;
   transition: all 0.4s ease;
-  box-shadow: 0 4px 20px rgba(185, 35, 225, 0.25);
+  box-shadow: 0 14px 28px rgba(67, 197, 176, 0.16);
   margin-top: 4px;
 }
 
 .contact-submit:hover {
   transform: translateY(-3px);
-  box-shadow: 0 10px 30px rgba(185, 35, 225, 0.5);
+  box-shadow: 0 18px 32px rgba(67, 197, 176, 0.24);
 }
 
 .contact-submit:active {
@@ -202,18 +202,21 @@
 }
 
 .custom-alert-content {
-  background: linear-gradient(135deg, #1a0a2e, #2a1050);
-  border: 1px solid rgba(180, 21, 255, 0.25);
+  background: #0a121a;
+  border: 1px solid rgba(159, 231, 215, 0.25);
   padding: 40px 48px;
-  border-radius: 20px;
+  border-radius: 8px;
   text-align: center;
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5), 0 0 40px rgba(180, 21, 255, 0.15);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5), 0 0 40px rgba(159, 231, 215, 0.1);
   max-width: 420px;
   width: 90%;
 }
 
 .alert-icon {
-  font-size: 2.5rem;
+  color: #9fe7d7;
+  font-size: 1rem;
+  font-weight: 800;
+  text-transform: uppercase;
   margin-bottom: 16px;
 }
 
@@ -226,19 +229,19 @@
 
 .custom-alert-content button {
   padding: 12px 36px;
-  background: linear-gradient(267deg, #da7c25 0%, #b923e1 100%);
+  background: #9fe7d7;
   border: none;
-  color: white;
-  border-radius: 50px;
+  color: #071018;
+  border-radius: 8px;
   font-size: 15px;
-  font-family: 'Outfit', sans-serif;
+  font-family: 'Manrope', 'Outfit', sans-serif;
   cursor: pointer;
   transition: all 0.3s;
 }
 
 .custom-alert-content button:hover {
   transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(185, 35, 225, 0.4);
+  box-shadow: 0 6px 20px rgba(67, 197, 176, 0.24);
 }
 
 /* ======== RESPONSIVE ======== */
@@ -261,7 +264,7 @@
 
   .contact-card {
     flex-direction: column;
-    border-radius: 20px;
+    border-radius: 8px;
   }
 
   .contact-left {
@@ -287,15 +290,27 @@
 }
 
 @media (max-width: 480px) {
+  .contact {
+    padding: 52px 4.5% 74px;
+  }
+
   .contact-left {
-    padding: 28px 20px;
+    padding: 24px 18px;
   }
 
   .contact-right {
-    padding: 28px 20px;
+    padding: 24px 18px;
   }
 
   .contact-left h2 {
-    font-size: 1.5rem;
+    font-size: 1.42rem;
+  }
+
+  .contact-detail {
+    align-items: flex-start;
+  }
+
+  .contact-submit {
+    padding: 13px 18px;
   }
 }

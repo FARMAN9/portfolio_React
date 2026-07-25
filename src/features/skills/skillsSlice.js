@@ -2,20 +2,24 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
 export const fetchSkills = createAsyncThunk('skills/fetchSkills', async (_, { rejectWithValue }) => {
   try {
-    const response = await fetch('http://localhost:5000/api/skills');
+    const apiUrl = import.meta.env.VITE_API_URL;
+    if (!apiUrl) throw new Error('No API URL configured');
+
+    const response = await fetch(`${apiUrl}/api/skills`);
     if (!response.ok) throw new Error('Failed to fetch skills');
     return await response.json();
   } catch (err) { return rejectWithValue(err.message); }
 });
 
 const fallbackData = [
-  { name: 'JavaScript', value: 70 },
-  { name: 'Python', value: 80 },
-  { name: 'Java', value: 50 },
-  { name: 'HTML', value: 75 },
-  { name: 'CSS', value: 70 },
-  { name: 'Django', value: 60 },
-  { name: 'Fastapi', value: 50 },
+  { name: 'Python', value: 84 },
+  { name: 'React', value: 78 },
+  { name: 'React Native', value: 66 },
+  { name: 'JavaScript', value: 76 },
+  { name: 'Django', value: 68 },
+  { name: 'Node.js / MERN', value: 64 },
+  { name: 'HTML / CSS', value: 82 },
+  { name: 'Machine Learning', value: 58 },
 ];
 
 const skillsSlice = createSlice({

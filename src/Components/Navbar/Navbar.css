@@ -7,7 +7,7 @@
   position: sticky;
   top: 0;
   z-index: 100;
-  background: rgba(11, 9, 20, 0.85);
+  background: rgba(7, 16, 24, 0.86);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   border-bottom: 1px solid rgba(255, 255, 255, 0.05);
@@ -21,9 +21,10 @@
 }
 
 .logo h1 {
+  font-family: "Outfit", sans-serif;
   font-size: 2rem;
-  font-weight: 700;
-  letter-spacing: 2px;
+  font-weight: 800;
+  letter-spacing: 0;
   z-index: 1;
   padding: 0 8px;
 }
@@ -55,6 +56,16 @@
   cursor: pointer;
 }
 
+.nav-link-button {
+  appearance: none;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+  padding: 0;
+}
+
 .nav-menu li img {
   width: 100%;
   position: absolute;
@@ -63,24 +74,26 @@
 
 /* Connect button */
 .nav-connect {
+  border: 0;
   padding: 12px 28px;
-  border-radius: 50px;
-  background: linear-gradient(267deg, #da7c25 0.36%, #b923e1 102%);
+  border-radius: 8px;
+  background: #9fe7d7;
+  color: #071018;
   font-size: 16px;
-  font-weight: 500;
+  font-weight: 800;
   cursor: pointer;
   transition: all 0.4s ease;
-  box-shadow: 0 4px 15px rgba(185, 35, 225, 0.2);
+  box-shadow: 0 14px 28px rgba(67, 197, 176, 0.16);
 }
 
 .nav-connect:hover {
   transform: translateY(-3px);
-  box-shadow: 0 8px 25px rgba(185, 35, 225, 0.5);
+  box-shadow: 0 18px 32px rgba(67, 197, 176, 0.24);
 }
 
 .anchor-link {
   text-decoration: none;
-  color: aliceblue;
+  color: inherit;
 }
 
 /* Mobile controls */
@@ -102,7 +115,7 @@
   .nav-mob-open {
     display: block;
     position: fixed;
-    right: 24px;
+    right: 5%;
     top: 20px;
     z-index: 200;
     cursor: pointer;
@@ -124,9 +137,10 @@
     top: 0;
     right: -350px;
     gap: 32px;
-    background: #0d0b1a;
+    background: #071018;
     border-left: 1px solid rgba(255,255,255,0.07);
     width: 300px;
+    max-width: 82vw;
     height: 100vh;
     z-index: 150;
     transition: right 0.4s ease;
@@ -137,5 +151,20 @@
     font-size: 22px;
     flex-direction: row;
     gap: 8px;
+  }
+}
+
+@media (max-width: 420px) {
+  .logo h1 {
+    font-size: 1.65rem;
+  }
+
+  .logo img {
+    width: 62px;
+    height: 62px;
+  }
+
+  .nav-menu {
+    width: 280px;
   }
 }

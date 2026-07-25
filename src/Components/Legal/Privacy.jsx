@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import NavBar from '../Navbar/NavBar';
 import Footer from '../Footer/Footer';
@@ -14,7 +14,7 @@ function Privacy() {
     <>
       <NavBar />
       <div className="legal-container">
-        <Link to="/" className="back-button">&larr; Back to Home</Link>
+        <Link to="/" className="back-button">Back to Home</Link>
         <div className="legal-title">
           <h1 className="animate__animated animate__fadeInDown">Privacy <span>Policy</span></h1>
         </div>
@@ -31,7 +31,7 @@ function Privacy() {
           </ul>
 
           <h2>3. Cookies and Tracking</h2>
-          <p>This website may use "cookies" to enhance user experience. Your web browser places cookies on their hard drive for record-keeping purposes and sometimes to track information about them. You may choose to set your web browser to refuse cookies, or to alert you when cookies are being sent.</p>
+          <p>This website may use &quot;cookies&quot; to enhance user experience. Your web browser places cookies on their hard drive for record-keeping purposes and sometimes to track information about them. You may choose to set your web browser to refuse cookies, or to alert you when cookies are being sent.</p>
 
           <h2>4. Third-Party Services</h2>
           <p>I do not sell, trade, or otherwise transfer to outside parties your personally identifiable information. This does not include trusted third parties who assist me in operating my website, conducting my business, or servicing you, so long as those parties agree to keep this information confidential.</p>
@@ -40,7 +40,7 @@ function Privacy() {
           <p>This site features an AI Chatbot powered by Google Gemini. Please do not submit any sensitive or confidential personal information to the chatbot, as interactions may be processed by third-party AI services to generate responses.</p>
 
           <h2>6. Consent</h2>
-          <p>By using my site, you consent to this website's privacy policy.</p>
+          <p>By using my site, you consent to this website&apos;s privacy policy.</p>
 
           <p><em>Last updated: {new Date().toLocaleDateString()}</em></p>
         </div>

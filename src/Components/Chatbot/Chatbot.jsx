@@ -1,5 +1,6 @@
-import React, { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import './Chatbot.css';
+import { answerPortfolioQuestion } from '../../data/portfolioKnowledge';
 
 function Chatbot() {
   const [isOpen, setIsOpen] = useState(false);
@@ -28,7 +29,10 @@ function Chatbot() {
     setIsLoading(true);
 
     try {
-      const response = await fetch('http://localhost:5000/api/chat', {
+      const apiUrl = import.meta.env.VITE_API_URL;
+      if (!apiUrl) throw new Error('No API URL configured');
+
+      const response = await fetch(`${apiUrl}/api/chat`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ message: userMessage.text })
@@ -42,7 +46,7 @@ function Chatbot() {
         setMessages(prev => [...prev, { sender: 'ai', text: `Error: ${data.error}` }]);
       }
     } catch (err) {
-      setMessages(prev => [...prev, { sender: 'ai', text: "Sorry, I'm having trouble connecting right now." }]);
+      setMessages(prev => [...prev, { sender: 'ai', text: answerPortfolioQuestion(userMessage.text) }]);
     } finally {
       setIsLoading(false);
     }

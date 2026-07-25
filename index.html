@@ -1,44 +1,106 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" href="/src/assets/farman.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Portfoilo</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Dongle:wght@700&display=swap" rel="stylesheet">
+    <meta name="theme-color" content="#071018" />
+    <meta name="robots" content="index, follow" />
+    <meta
+      name="description"
+      content="Portfolio of Syed Farman Ali, a MERN, React Native, and Python/Django developer from Kashmir building responsive web apps, mobile interfaces, and machine-learning projects."
+    />
+    <meta
+      name="keywords"
+      content="Syed Farman Ali, Farman9, MERN developer, Python developer, Django developer, React Native developer, React developer, Kashmir developer, portfolio"
+    />
+    <meta name="author" content="Syed Farman Ali" />
+    <link rel="canonical" href="https://portfolio-react-theta-steel.vercel.app/" />
+    <link rel="icon" href="/src/assets/farman.png" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Syed Farman Ali | MERN, React Native & Python Developer" />
+    <meta
+      property="og:description"
+      content="Explore projects, skills, education, and contact details for Syed Farman Ali, a full-stack developer focused on MERN, React Native, Python/Django, and machine learning."
+    />
+    <meta property="og:url" content="https://portfolio-react-theta-steel.vercel.app/" />
+    <meta property="og:site_name" content="Syed Farman Ali Portfolio" />
+
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="Syed Farman Ali | MERN, React Native & Python Developer" />
+    <meta
+      name="twitter:description"
+      content="Full-stack portfolio featuring React, React Native, MERN, Python/Django, and machine-learning projects."
+    />
+
+    <title>Syed Farman Ali | MERN, React Native & Python Developer</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Outfit&display=swap"
-      rel="stylesheet" />
+      href="https://fonts.googleapis.com/css2?family=Dongle:wght@700&family=Manrope:wght@400;500;600;700;800&family=Outfit:wght@700;800&display=swap"
+      rel="stylesheet"
+    />
+
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Syed Farman Ali",
+        "url": "https://portfolio-react-theta-steel.vercel.app/",
+        "sameAs": [
+          "https://github.com/FARMAN9",
+          "https://www.linkedin.com/in/farman9",
+          "https://leetcode.com/saeedfarman9/"
+        ],
+        "jobTitle": "MERN, React Native and Python Developer",
+        "email": "mailto:saeedfarman9@gmail.com",
+        "telephone": "+916005943382",
+        "address": {
+          "@type": "PostalAddress",
+          "addressRegion": "Jammu and Kashmir",
+          "addressCountry": "IN"
+        },
+        "alumniOf": {
+          "@type": "CollegeOrUniversity",
+          "name": "University of Kashmir"
+        },
+        "knowsAbout": [
+          "React",
+          "React Native",
+          "MERN",
+          "Python",
+          "Django",
+          "Machine Learning",
+          "JavaScript"
+        ]
+      }
+    </script>
   </head>
   <body>
-      <div class="background" >
-        <div id="root"></div>
-        </div>
-    <div class="gradient-bg" >
-        <svg xmlns="http://www.w3.org/2000/svg">
-          <defs>
-            <filter id="goo">
-              <feGaussianBlur in="SourceGraphic" stdDeviation="10" result="blur" />
-              <feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 18 -8" result="goo" />
-              <feBlend in="SourceGraphic" in2="goo" />
-            </filter>
-          </defs>
-        </svg>
-        <div class="gradients-container">
-          <div class="g1"></div>
-          <div class="g2"></div>
-          <div class="g3"></div>
-          <div class="g4"></div>
-          <div class="g5"></div>
-          <div class="interactive"></div>
-        </div>
+    <div class="background">
+      <div id="root"></div>
+    </div>
+    <div class="gradient-bg" aria-hidden="true">
+      <svg xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <filter id="goo">
+            <feGaussianBlur in="SourceGraphic" stdDeviation="10" result="blur" />
+            <feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 18 -8" result="goo" />
+            <feBlend in="SourceGraphic" in2="goo" />
+          </filter>
+        </defs>
+      </svg>
+      <div class="gradients-container">
+        <div class="g1"></div>
+        <div class="g2"></div>
+        <div class="g3"></div>
+        <div class="g4"></div>
+        <div class="g5"></div>
+        <div class="interactive"></div>
       </div>
-    
-</div>
-
-</div>
+    </div>
+    <noscript>This portfolio needs JavaScript enabled to show the interactive experience.</noscript>
     <script type="module" src="/src/main.jsx"></script>
   </body>
 </html>

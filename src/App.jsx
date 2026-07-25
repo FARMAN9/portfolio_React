@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { lazy, Suspense, useEffect, useState } from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchProfile } from './features/profile/profileSlice';
@@ -9,12 +9,13 @@ import About from './Components/About/About';
 import MyWork from './Components/MyWork/MyWork';
 import Contact from './Components/Contact/Contact';
 import Footer from './Components/Footer/Footer';
-import Login from './Components/Admin/Login';
-import Dashboard from './Components/Admin/Dashboard';
-import Chatbot from './Components/Chatbot/Chatbot';
-import Terms from './Components/Legal/Terms';
-import Privacy from './Components/Legal/Privacy';
 import Loader from './Components/Loader/Loader';
+
+const Login = lazy(() => import('./Components/Admin/Login'));
+const Dashboard = lazy(() => import('./Components/Admin/Dashboard'));
+const Chatbot = lazy(() => import('./Components/Chatbot/Chatbot'));
+const Terms = lazy(() => import('./Components/Legal/Terms'));
+const Privacy = lazy(() => import('./Components/Legal/Privacy'));
 
 function Home() {
   const dispatch = useDispatch();
@@ -30,8 +31,8 @@ function Home() {
   useEffect(() => {
     if (profileStatus === 'succeeded' || profileStatus === 'failed') {
       if (skillsStatus === 'succeeded' || skillsStatus === 'failed') {
-        // Small delay to ensure smooth transition
-        setTimeout(() => setShowLoader(false), 800);
+        const timer = setTimeout(() => setShowLoader(false), 450);
+        return () => clearTimeout(timer);
       }
     }
   }, [profileStatus, skillsStatus]);
@@ -46,12 +47,15 @@ function Home() {
         <MyWork />
         <Contact />
         <Footer />
-        <Chatbot />
+        <Suspense fallback={null}>
+          <Chatbot />
+        </Suspense>
       </div>
     </>
   );
 }
 
+// eslint-disable-next-line react/prop-types
 const ProtectedRoute = ({ children }) => {
   const token = localStorage.getItem('token');
   if (!token) return <Navigate to="/login" />;
@@ -61,20 +65,22 @@ const ProtectedRoute = ({ children }) => {
 const App = () => {
   return (
     <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/login" element={<Login />} />
-        <Route 
-          path="/dashboard" 
-          element={
-            <ProtectedRoute>
-              <Dashboard />
-            </ProtectedRoute>
-          } 
-        />
-        <Route path="/terms" element={<Terms />} />
-        <Route path="/privacy" element={<Privacy />} />
-      </Routes>
+      <Suspense fallback={<Loader />}>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/login" element={<Login />} />
+          <Route 
+            path="/dashboard" 
+            element={
+              <ProtectedRoute>
+                <Dashboard />
+              </ProtectedRoute>
+            } 
+          />
+          <Route path="/terms" element={<Terms />} />
+          <Route path="/privacy" element={<Privacy />} />
+        </Routes>
+      </Suspense>
     </BrowserRouter>
   );
 };

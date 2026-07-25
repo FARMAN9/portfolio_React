@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import NavBar from '../Navbar/NavBar';
 import Footer from '../Footer/Footer';
@@ -14,7 +14,7 @@ function Terms() {
     <>
       <NavBar />
       <div className="legal-container">
-        <Link to="/" className="back-button">&larr; Back to Home</Link>
+        <Link to="/" className="back-button">Back to Home</Link>
         <div className="legal-title">
           <h1 className="animate__animated animate__fadeInDown">Terms & <span>Conditions</span></h1>
         </div>
@@ -36,7 +36,7 @@ function Terms() {
           </ul>
 
           <h2>4. No Warranties</h2>
-          <p>This Website is provided "as is," with all faults, and I express no representations or warranties, of any kind related to this Website or the materials contained on this Website.</p>
+          <p>This Website is provided &quot;as is,&quot; with all faults, and I express no representations or warranties, of any kind related to this Website or the materials contained on this Website.</p>
 
           <h2>5. Limitation of Liability</h2>
           <p>In no event shall I be held liable for anything arising out of or in any way connected with your use of this Website whether such liability is under contract. I shall not be held liable for any indirect, consequential or special liability arising out of or in any way related to your use of this Website.</p>

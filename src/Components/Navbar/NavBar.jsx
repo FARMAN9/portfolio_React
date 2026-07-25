@@ -1,14 +1,31 @@
-import React, { useRef, useState, useEffect } from "react";
+import { useRef, useState } from "react";
 import "./Navbar.css";
 import ali from "../../assets/ali.png";
 import backgound from "../../assets/nav_underline.svg";
-import AnchorLink from "react-anchor-link-smooth-scroll";
 import menu_open from "../../assets/menu_open.svg";
 import menu_close from "../../assets/menu_close.svg";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { scrollToSection } from "../../utils/navigation";
 
 function NavBar() {
   const [menu, setMenu] = useState("home");
   const menuRef = useRef();
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  const goToSection = (section) => {
+    setMenu(section);
+    closeMenu();
+
+    if (location.pathname !== "/") {
+      navigate("/");
+      scrollToSection(section);
+      return;
+    }
+
+    scrollToSection(section);
+  };
+
   const openMenu = () => {
     menuRef.current.style.right = "0";
   };
@@ -18,10 +35,10 @@ function NavBar() {
   return (
     <nav className="navbar">
       <div className="logo">
-        <AnchorLink className="anchor-link" href="#home">
+        <Link className="anchor-link" to="/" onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}>
           <h1>FARMAN</h1>
           <img src={ali} alt="" />
-        </AnchorLink>
+        </Link>
       </div>
       <img
         src={menu_open}
@@ -39,35 +56,25 @@ function NavBar() {
         />
         <li>
           {" "}
-          <AnchorLink className="anchor-link" href="#home">
-            <p onClick={() => setMenu("home")}>Home</p>{" "}
-          </AnchorLink>
+          <button type="button" className="nav-link-button" onClick={() => goToSection("home")}>Home</button>
           {menu === "home" ? <img src={backgound} alt="" /> : <></>}
         </li>
         <li>
-          <AnchorLink className="anchor-link" offset={50} href="#about">
-            <p onClick={() => setMenu("about")}>About Me</p>
-          </AnchorLink>
+          <button type="button" className="nav-link-button" onClick={() => goToSection("about")}>About Me</button>
           {menu === "about" ? <img src={backgound} alt="" /> : <></>}
         </li>
         <li>
-          <AnchorLink className="anchor-link" offset={50} href="#work">
-            <p onClick={() => setMenu("work")}>Portfolio</p>
-          </AnchorLink>
+          <button type="button" className="nav-link-button" onClick={() => goToSection("work")}>Portfolio</button>
           {menu === "work" ? <img src={backgound} alt="" /> : <></>}
         </li>
         <li>
-          <AnchorLink className="anchor-link" offset={50} href="#contact">
-            <p onClick={() => setMenu("contact")}>Contact</p>
-          </AnchorLink>
+          <button type="button" className="nav-link-button" onClick={() => goToSection("contact")}>Contact</button>
           {menu === "contact" ? <img src={backgound} alt="" /> : <></>}
         </li>
       </ul>
-      <div className="nav-connect">
-        <AnchorLink className="anchor-link" offset={50} href="#contact">
+      <button type="button" className="nav-connect" onClick={() => goToSection("contact")}>
           Connect With Me
-        </AnchorLink>
-      </div>
+      </button>
     </nav>
   );
 }

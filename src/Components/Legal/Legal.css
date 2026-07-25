@@ -12,22 +12,22 @@
 }
 
 .legal-title h1 {
-  font-size: 50px;
-  font-weight: 600;
+  font-size: clamp(2rem, 3.5vw, 3.6rem);
+  font-weight: 800;
 }
 
 .legal-title h1 span {
-  background: linear-gradient(270deg, #df8908 10%, #b415ff 100%);
+  background: linear-gradient(90deg, #9fe7d7 0%, #f4c76b 100%);
   background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
 .legal-content {
-  background: rgba(22, 21, 19, 0.8);
+  background: rgba(10, 18, 26, 0.76);
   padding: 40px;
-  border-radius: 15px;
-  border: 1px solid #32323b;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
   box-shadow: 0 10px 30px rgba(0,0,0,0.5);
   line-height: 1.8;
   font-size: 18px;
@@ -58,16 +58,15 @@
   display: inline-block;
   margin-bottom: 30px;
   padding: 10px 20px;
-  background: #32323b;
-  color: white;
+  background: #9fe7d7;
+  color: #071018;
   text-decoration: none;
   border-radius: 8px;
   transition: all 0.3s;
 }
 
 .back-button:hover {
-  background: linear-gradient(267deg, #DF8908 0.36%, #B415FF 102.06%);
-  transform: scale(1.05);
+  transform: translateY(-2px);
 }
 
 @media (max-width: 768px) {

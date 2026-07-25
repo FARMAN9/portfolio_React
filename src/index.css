@@ -7,9 +7,9 @@
 }
 
 html, body {
-  font-family: "Outfit", sans-serif;
+  font-family: "Manrope", "Outfit", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   color: aliceblue;
-  background-color: #0b0914;
+  background-color: #071018;
   overflow-x: hidden;
   scroll-behavior: smooth;
   width: 100%;
@@ -18,12 +18,12 @@ html, body {
 
 /* Premium Glassmorphism Utility */
 .glass-panel {
-  background: rgba(20, 18, 28, 0.6);
+  background: rgba(10, 18, 26, 0.72);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.08);
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
-  border-radius: 20px;
+  border-radius: 8px;
 }
 
 .background {
@@ -44,7 +44,7 @@ html, body {
 .text-container {
   z-index: -1;
 
-  height: 100vh;
+  height: 100svh;
   display: flex;
   position: absolute;
   top: 0;
@@ -59,14 +59,14 @@ html, body {
 }
 
 :root {
-  --color-bg1: rgb(53, 11, 75);
-  --color-bg2: rgb(0, 0, 0);
-  --color1: 18, 113, 255;
-  --color2: 221, 74, 255;
-  --color3: 100, 220, 255;
-  --color4: 200, 50, 50;
-  --color5: 180, 180, 50;
-  --color-interactive: 140, 100, 255;
+  --color-bg1: rgb(7, 16, 24);
+  --color-bg2: rgb(4, 8, 12);
+  --color1: 67, 197, 176;
+  --color2: 244, 199, 107;
+  --color3: 102, 151, 190;
+  --color4: 210, 90, 89;
+  --color5: 230, 238, 232;
+  --color-interactive: 67, 197, 176;
   --circle-size: 20% ;
   --blending: hard-light;
 }
@@ -206,6 +206,13 @@ html, body {
 
   }}
 
+@media (max-width: 520px) {
+  .glass-panel {
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+  }
+}
+
 /* 3D Model Loading Spinner */
 .three-loader-container {
   display: flex;
@@ -213,11 +220,11 @@ html, body {
   align-items: center;
   justify-content: center;
   color: white;
-  font-family: "Outfit", sans-serif;
+  font-family: "Manrope", "Outfit", sans-serif;
   gap: 12px;
-  background: rgba(20, 18, 28, 0.6);
+  background: rgba(10, 18, 26, 0.75);
   padding: 20px 30px;
-  border-radius: 16px;
+  border-radius: 8px;
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   border: 1px solid rgba(255, 255, 255, 0.08);
@@ -227,8 +234,8 @@ html, body {
 .three-loader-spinner {
   width: 36px;
   height: 36px;
-  border: 3px solid rgba(180, 21, 255, 0.15);
-  border-top-color: #b415ff;
+  border: 3px solid rgba(159, 231, 215, 0.15);
+  border-top-color: #9fe7d7;
   border-radius: 50%;
   animation: spin 1s linear infinite;
 }
@@ -237,7 +244,7 @@ html, body {
   font-size: 14px;
   font-weight: 600;
   letter-spacing: 1px;
-  background: linear-gradient(270deg, #df8908 10%, #b415ff 100%);
+  background: linear-gradient(90deg, #9fe7d7 10%, #f4c76b 100%);
   background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;

@@ -2,24 +2,29 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
 export const fetchProfile = createAsyncThunk('profile/fetchProfile', async (_, { rejectWithValue }) => {
   try {
-    const response = await fetch('http://localhost:5000/api/profile');
+    const apiUrl = import.meta.env.VITE_API_URL;
+    if (!apiUrl) throw new Error('No API URL configured');
+
+    const response = await fetch(`${apiUrl}/api/profile`);
     if (!response.ok) throw new Error('Failed to fetch profile');
     return await response.json();
   } catch (err) { return rejectWithValue(err.message); }
 });
 
 const fallbackData = {
-  name: "I'm Syed Farman Ali,",
-  heroTitle: "full stack developer based in India",
-  heroDescription: "I am from Jammu and Kashmir, with 1 year of experience in multiple companies and organizations like Jammu and Kashmir Police (CID) and Aharbal.",
-  aboutPara1: "I am an experienced Full Stack Developer with over a 1 year of professional expertise in the field. Throughout my career, I have had the privilege of collaborating with prestigious organizations, contributing to their success and growth.",
-  aboutPara2: "My passion for frontend development is not only reflected in my extensive experience but also in the enthusiasm and dedication I bring to each project.",
-  experienceYears: "1",
-  projectsCompleted: "4+",
+  name: "Syed Farman Ali",
+  heroTitle: "MERN and Python developer building practical web products",
+  heroDescription: "I build responsive React and React Native interfaces, Python/Django backends, and data-driven projects with a focus on clean delivery, fast learning, and useful user experiences.",
+  aboutPara1: "I am an aspiring full-stack developer from Jammu and Kashmir, India, with hands-on work across React, React Native, Node.js, Django, Python, and machine-learning projects. My public GitHub profile shows 41 repositories spanning portfolio apps, MERN chat, Django, data science, computer vision, and clone builds.",
+  aboutPara2: "My LinkedIn public profile positions me around MERN and Python development, with internship experience connected to CID Srinagar and education listed at the University of Kashmir. I like turning small ideas into complete products: readable code, polished interfaces, and deployable outcomes.",
+  experienceYears: "3+",
+  projectsCompleted: "10+",
   happyClients: "2+",
-  githubUrl: "https://github.com/farman9",
+  publicRepos: "41",
+  focusAreas: ["React", "React Native", "MERN", "Python", "Django", "Machine Learning"],
+  githubUrl: "https://github.com/FARMAN9",
   linkedinUrl: "https://www.linkedin.com/in/farman9",
-  leetcodeUrl: "https://leetcode.com/u/saeedfarman9/",
+  leetcodeUrl: "https://leetcode.com/saeedfarman9/",
   resumeUrl: "https://rxresu.me/farman9/python-django-developer"
 };
 

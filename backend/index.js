@@ -5,6 +5,7 @@ import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
 import { GoogleGenerativeAI } from '@google/generative-ai';
 import pkg from '@prisma/client';
+import { answerPortfolioQuestion, createPortfolioContext, portfolioProfile, portfolioProjects, portfolioSkills } from '../src/data/portfolioKnowledge.js';
 const { PrismaClient } = pkg;
 dotenv.config();
 
@@ -144,37 +145,51 @@ app.put('/api/profile', authenticateToken, async (req, res) => {
 app.post('/api/chat', async (req, res) => {
   try {
     const { message } = req.body;
-    
-    const apiKey = process.env.GEMINI_API_KEY;
-    if (!apiKey) {
-      return res.status(500).json({ error: "Gemini API key is not configured on the server." });
+
+    if (!message || !message.trim()) {
+      return res.status(400).json({ error: "Message is required." });
     }
 
-    const profile = await prisma.profile.findFirst();
-    const skills = await prisma.skill.findMany();
-    const projects = await prisma.project.findMany();
+    const dbProfile = await prisma.profile.findFirst();
+    const dbSkills = await prisma.skill.findMany({ orderBy: { value: 'desc' } });
+    const dbProjects = await prisma.project.findMany({ orderBy: { w_no: 'asc' } });
+
+    const profile = {
+      ...portfolioProfile,
+      ...(dbProfile || {}),
+      name: portfolioProfile.name,
+      title: portfolioProfile.title,
+      summary: portfolioProfile.summary,
+      experience: portfolioProfile.experience,
+      experienceYears: portfolioProfile.experienceYears,
+      projectsCompleted: portfolioProfile.projectsCompleted,
+      publicRepos: portfolioProfile.publicRepos,
+    };
+    const skills = dbSkills.length ? dbSkills : portfolioSkills;
+    const projects = dbProjects.length
+      ? dbProjects.map((project) => ({
+          ...(portfolioProjects.find((item) => item.name.toLowerCase() === project.name.toLowerCase()) || {}),
+          ...project,
+        }))
+      : portfolioProjects;
+    const apiKey = process.env.GEMINI_API_KEY;
+
+    if (!apiKey) {
+      return res.json({ reply: answerPortfolioQuestion(message, profile, skills, projects) });
+    }
 
     const genAI = new GoogleGenerativeAI(apiKey);
     const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
     const systemPrompt = `
-      You are an AI assistant on the personal portfolio website of ${profile?.name || 'Syed Farman Ali'}. 
+      You are an AI assistant on the personal portfolio website of ${profile.name}. 
       Your job is to answer questions from visitors about Farman's skills, experience, and projects.
-      Always be polite, professional, and concise. Do not hallucinate information. If you don't know the answer, say so or direct them to the contact section.
-      
-      Here is the information about Farman:
-      Title: ${profile?.heroTitle}
-      About: ${profile?.heroDescription} ${profile?.aboutPara1} ${profile?.aboutPara2}
-      Experience: ${profile?.experienceYears} years
-      Projects Completed: ${profile?.projectsCompleted}
-      Happy Clients: ${profile?.happyClients}
-      
-      Skills: ${skills.map(s => `${s.name} (${s.value}%)`).join(', ')}
-      
-      Projects Portfolio:
-      ${projects.map(p => `- ${p.name}: ${p.link}`).join('\n')}
-      
-      Visitor's Question: "${message}"
+      Always be polite, professional, concise, and specific. Use only the portfolio facts below.
+      If the visitor asks something outside the portfolio facts, say you do not know and suggest using the contact section.
+
+      ${createPortfolioContext(profile, skills, projects)}
+
+      Visitor question: "${message}"
     `;
 
     const result = await model.generateContent(systemPrompt);

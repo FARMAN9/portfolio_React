@@ -3,19 +3,29 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 60px;
+  gap: 48px;
   padding: 80px 6%;
 }
 
 /* Section title */
 .about-title {
   position: relative;
+  text-align: center;
+}
+
+.about-title span {
+  color: #9fe7d7;
+  font-size: 13px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0;
 }
 
 .about-title h1 {
-  font-size: clamp(2.5rem, 5vw, 5rem);
-  font-weight: 700;
+  font-size: clamp(2rem, 3.5vw, 3.6rem);
+  font-weight: 800;
   padding: 0 30px;
+  margin-top: 8px;
 }
 
 .about-title img {
@@ -29,8 +39,8 @@
 .about-sections {
   display: flex;
   gap: 60px;
-  padding: 50px 48px;
-  border-radius: 24px;
+  padding: 44px;
+  border-radius: 8px;
   align-items: center;
   width: 100%;
   box-sizing: border-box;
@@ -39,7 +49,7 @@
 .about-left img {
   width: 22rem;
   height: 22rem;
-  border-radius: 20px;
+  border-radius: 8px;
   object-fit: cover;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
   flex-shrink: 0;
@@ -58,9 +68,79 @@
   display: flex;
   flex-direction: column;
   gap: 16px;
-  font-size: clamp(1rem, 1.3vw, 1.2rem);
+  font-size: clamp(0.98rem, 1.1vw, 1.08rem);
   line-height: 1.8;
-  color: rgba(255, 255, 255, 0.82);
+  color: rgba(240, 247, 250, 0.82);
+}
+
+@media (max-width: 520px) {
+  .about {
+    padding: 52px 4.5%;
+    gap: 30px;
+  }
+
+  .about-sections {
+    padding: 24px 18px;
+  }
+
+  .about-right {
+    gap: 26px;
+  }
+
+  .about-skill {
+    display: grid;
+    grid-template-columns: 92px 1fr;
+    gap: 12px;
+  }
+
+  .about-achievements {
+    grid-template-columns: 1fr;
+  }
+}
+
+.about-focus {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.about-focus span {
+  border: 1px solid rgba(159, 231, 215, 0.24);
+  background: rgba(159, 231, 215, 0.08);
+  color: #d9fff7;
+  border-radius: 999px;
+  padding: 8px 12px;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.about-resume {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.about-resume div {
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.045);
+  border-radius: 8px;
+  padding: 16px;
+}
+
+.about-resume span {
+  display: block;
+  color: #9fe7d7;
+  font-size: 12px;
+  font-weight: 800;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+
+.about-resume p {
+  color: rgba(240, 247, 250, 0.8);
+  font-size: 14px;
+  line-height: 1.6;
+  margin: 0;
 }
 
 /* Skills bars */
@@ -93,7 +173,7 @@
   border: none;
   height: 7px;
   border-radius: 50px;
-  background: linear-gradient(267deg, #da7c25 0.36%, #b923e1 102%);
+  background: linear-gradient(90deg, #9fe7d7 0%, #f4c76b 100%);
   flex: 1;
 }
 
@@ -101,8 +181,9 @@
 .about-achievements {
   display: flex;
   width: 100%;
-  justify-content: space-around;
+  justify-content: space-between;
   padding: 0 4%;
+  gap: 18px;
 }
 
 .about-achievement {
@@ -120,7 +201,7 @@
 .about-achievement h1 {
   font-size: clamp(2rem, 4vw, 3.5rem);
   font-weight: 700;
-  background: linear-gradient(267deg, #da7c25 0.36%, #b923e1 102%);
+  background: linear-gradient(90deg, #9fe7d7 0%, #f4c76b 100%);
   background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -175,6 +256,10 @@
     line-height: 1.7;
   }
 
+  .about-resume {
+    grid-template-columns: 1fr;
+  }
+
   .about-skill p {
     font-size: 0.9rem;
     min-width: 90px;
@@ -185,8 +270,15 @@
   }
 
   .about-achievements {
-    justify-content: space-between;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
     padding: 0;
+    gap: 18px;
+    width: 100%;
+  }
+
+  .about-achievements hr {
+    display: none;
   }
 
   .about-achievement h1 {

@@ -52,8 +52,8 @@ function Contact() {
       <div className='contact-card glass-panel'>
         {/* Left info column */}
         <div className='contact-left'>
-          <h2>Let's talk</h2>
-          <p>I'm currently available to take on new projects, so feel free to send me a message about anything that you want me to work on. You can contact anytime.</p>
+          <h2>Let&apos;s build something useful</h2>
+          <p>I am open to internships, freelance work, and full-stack collaborations across React, React Native, MERN, Python, Django, and machine-learning projects.</p>
           <div className="contact-details">
             <div className="contact-detail">
               <img src={mail} alt="email" />
@@ -97,7 +97,7 @@ function Contact() {
       {alertVisible && (
         <div className="custom-alert" onClick={closeAlert}>
           <div className="custom-alert-content" onClick={e => e.stopPropagation()}>
-            <div className="alert-icon">✉️</div>
+            <div className="alert-icon">Mail</div>
             <p>{result}</p>
             <button onClick={closeAlert}>Close</button>
           </div>

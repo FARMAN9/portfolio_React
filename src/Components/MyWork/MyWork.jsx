@@ -1,8 +1,10 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchProjects } from "../../features/projects/projectsSlice";
 import "./MyWork.css";
 import bac from "../../assets/bac.svg";
+import { FaGithub } from "react-icons/fa";
+import { FiExternalLink } from "react-icons/fi";
 
 function MyWork() {
   const dispatch = useDispatch();
@@ -19,7 +21,8 @@ function MyWork() {
   return (
     <div id="work" className="mywork">
       <div className="mywork-title">
-        <h1>My Latest work</h1>
+        <span>Selected work</span>
+        <h1>Projects with proof</h1>
         <img src={bac} alt="" />
       </div>
 
@@ -30,12 +33,24 @@ function MyWork() {
           return (
             <div className="project-card glass-panel" key={index}>
               <img src={data.imageUrl} alt={data.name} className="project-img" />
-              <div className="project-overlay">
+              <div className="project-content">
                 <h3>{data.name}</h3>
                 {data.description && <p>{data.description}</p>}
-                <a href={data.link} target="_blank" rel="noopener noreferrer" className="project-link">
-                  View Project
-                </a>
+                {data.tech && (
+                  <div className="project-tech">
+                    {data.tech.map((item) => <span key={item}>{item}</span>)}
+                  </div>
+                )}
+                <div className="project-actions">
+                  <a href={data.link} target="_blank" rel="noopener noreferrer" className="project-link">
+                    <FaGithub /> Code
+                  </a>
+                  {data.demo && (
+                    <a href={data.demo} target="_blank" rel="noopener noreferrer" className="project-link project-link-secondary">
+                      <FiExternalLink /> Live
+                    </a>
+                  )}
+                </div>
               </div>
             </div>
           );
