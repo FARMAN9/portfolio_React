@@ -3,7 +3,7 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 export const fetchProfile = createAsyncThunk('profile/fetchProfile', async (_, { rejectWithValue }) => {
   try {
     const apiUrl = import.meta.env.VITE_API_URL;
-    if (!apiUrl) throw new Error('No API URL configured');
+    if (!apiUrl) return fallbackData;
 
     const response = await fetch(`${apiUrl}/api/profile`);
     if (!response.ok) throw new Error('Failed to fetch profile');
@@ -39,9 +39,9 @@ const profileSlice = createSlice({
         state.status = 'succeeded';
         state.data = Object.keys(action.payload).length > 0 ? action.payload : fallbackData;
       })
-      .addCase(fetchProfile.rejected, (state, action) => {
-        state.status = 'failed';
-        state.error = action.payload;
+      .addCase(fetchProfile.rejected, (state) => {
+        state.status = 'succeeded';
+        state.error = null;
         state.data = fallbackData;
       });
   }

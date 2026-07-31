@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { logout } from '../../features/auth/authSlice';
@@ -36,7 +36,7 @@ function Dashboard() {
     if (profile && Object.keys(profileForm).length === 0) {
       setProfileForm(profile);
     }
-  }, [profile]);
+  }, [profile, profileForm]);
 
   const handleLogout = () => {
     dispatch(logout());

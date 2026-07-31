@@ -30,7 +30,10 @@ function Chatbot() {
 
     try {
       const apiUrl = import.meta.env.VITE_API_URL;
-      if (!apiUrl) throw new Error('No API URL configured');
+      if (!apiUrl) {
+        setMessages(prev => [...prev, { sender: 'ai', text: answerPortfolioQuestion(userMessage.text) }]);
+        return;
+      }
 
       const response = await fetch(`${apiUrl}/api/chat`, {
         method: 'POST',

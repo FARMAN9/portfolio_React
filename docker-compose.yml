@@ -1,0 +1,27 @@
+services:
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        VITE_API_URL: http://localhost:5000
+    ports:
+      - "8080:80"
+    depends_on:
+      - backend
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - "5000:5000"
+    environment:
+      - DATABASE_URL=file:/data/dev.db
+      - JWT_SECRET=${JWT_SECRET:-change-me-in-production}
+      - GEMINI_API_KEY=${GEMINI_API_KEY:-}
+    volumes:
+      - backend-data:/data
+
+volumes:
+  backend-data:

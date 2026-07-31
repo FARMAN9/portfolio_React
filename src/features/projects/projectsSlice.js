@@ -6,7 +6,7 @@ export const fetchProjects = createAsyncThunk(
   async (_, { rejectWithValue }) => {
     try {
       const apiUrl = import.meta.env.VITE_API_URL;
-      if (!apiUrl) throw new Error('No API URL configured');
+      if (!apiUrl) return fallbackData;
 
       const response = await fetch(`${apiUrl}/api/projects`);
       if (!response.ok) {
@@ -121,12 +121,10 @@ const projectsSlice = createSlice({
         state.items = action.payload;
         state.error = null;
       })
-      .addCase(fetchProjects.rejected, (state, action) => {
-        state.status = 'failed';
-        state.error = action.payload || action.error.message;
-        // Apply fallback data if backend is down
+      .addCase(fetchProjects.rejected, (state) => {
+        state.status = 'succeeded';
+        state.error = null;
         state.items = fallbackData;
-        console.warn("Backend unavailable. Fallback static projects loaded.");
       });
   }
 });

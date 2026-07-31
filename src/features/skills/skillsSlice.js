@@ -3,7 +3,7 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 export const fetchSkills = createAsyncThunk('skills/fetchSkills', async (_, { rejectWithValue }) => {
   try {
     const apiUrl = import.meta.env.VITE_API_URL;
-    if (!apiUrl) throw new Error('No API URL configured');
+    if (!apiUrl) return fallbackData;
 
     const response = await fetch(`${apiUrl}/api/skills`);
     if (!response.ok) throw new Error('Failed to fetch skills');
@@ -33,9 +33,9 @@ const skillsSlice = createSlice({
         state.status = 'succeeded';
         state.items = action.payload;
       })
-      .addCase(fetchSkills.rejected, (state, action) => {
-        state.status = 'failed';
-        state.error = action.payload;
+      .addCase(fetchSkills.rejected, (state) => {
+        state.status = 'succeeded';
+        state.error = null;
         state.items = fallbackData;
       });
   }
