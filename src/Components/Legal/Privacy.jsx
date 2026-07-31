@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import NavBar from '../Navbar/NavBar';
 import Footer from '../Footer/Footer';
+import SEO from '../SEO/SEO';
 import './Legal.css';
 import 'animate.css';
 
@@ -12,6 +13,11 @@ function Privacy() {
 
   return (
     <>
+      <SEO
+        title="Privacy Policy | Syed Farman Ali Portfolio"
+        description="Privacy policy for the personal portfolio website of Syed Farman Ali, including contact form and AI chatbot information."
+        path="/privacy"
+      />
       <NavBar />
       <div className="legal-container">
         <Link to="/" className="back-button">Back to Home</Link>

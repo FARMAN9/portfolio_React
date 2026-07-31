@@ -1,0 +1,17 @@
+{
+  "name": "Syed Farman Ali Portfolio",
+  "short_name": "Farman Portfolio",
+  "description": "MERN, React Native, and Python/Django developer portfolio.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#071018",
+  "theme_color": "#071018",
+  "icons": [
+    {
+      "src": "/projects/portfilo_react.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ]
+}

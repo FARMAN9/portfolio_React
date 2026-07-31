@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="theme-color" content="#071018" />
     <meta name="robots" content="index, follow" />
+    <meta name="googlebot" content="index, follow" />
+    <meta name="format-detection" content="telephone=yes" />
+    <meta name="application-name" content="Syed Farman Ali Portfolio" />
     <meta
       name="description"
       content="Portfolio of Syed Farman Ali, a MERN, React Native, and Python/Django developer from Kashmir building responsive web apps, mobile interfaces, and machine-learning projects."
@@ -15,9 +18,12 @@
     />
     <meta name="author" content="Syed Farman Ali" />
     <link rel="canonical" href="https://portfolio-react-theta-steel.vercel.app/" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <link rel="sitemap" type="application/xml" href="/sitemap.xml" />
     <link rel="icon" href="/src/assets/farman.png" />
 
     <meta property="og:type" content="website" />
+    <meta property="og:locale" content="en_IN" />
     <meta property="og:title" content="Syed Farman Ali | MERN, React Native & Python Developer" />
     <meta
       property="og:description"
@@ -25,13 +31,17 @@
     />
     <meta property="og:url" content="https://portfolio-react-theta-steel.vercel.app/" />
     <meta property="og:site_name" content="Syed Farman Ali Portfolio" />
+    <meta property="og:image" content="https://portfolio-react-theta-steel.vercel.app/projects/portfilo_react.png" />
+    <meta property="og:image:alt" content="Syed Farman Ali portfolio project preview" />
 
-    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="Syed Farman Ali | MERN, React Native & Python Developer" />
     <meta
       name="twitter:description"
       content="Full-stack portfolio featuring React, React Native, MERN, Python/Django, and machine-learning projects."
     />
+    <meta name="twitter:image" content="https://portfolio-react-theta-steel.vercel.app/projects/portfilo_react.png" />
+    <meta name="twitter:image:alt" content="Syed Farman Ali portfolio project preview" />
 
     <title>Syed Farman Ali | MERN, React Native & Python Developer</title>
 
@@ -73,6 +83,49 @@
           "Django",
           "Machine Learning",
           "JavaScript"
+        ]
+      }
+    </script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "name": "Syed Farman Ali Portfolio",
+        "url": "https://portfolio-react-theta-steel.vercel.app/",
+        "description": "Portfolio of Syed Farman Ali, a MERN, React Native, and Python/Django developer from Kashmir.",
+        "inLanguage": "en-IN"
+      }
+    </script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "ItemList",
+        "name": "Featured Projects",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Portfolio React",
+            "url": "https://portfolio-react-theta-steel.vercel.app"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Star Beekeepers",
+            "url": "https://star-beekekpers.vercel.app/"
+          },
+          {
+            "@type": "ListItem",
+            "position": 3,
+            "name": "CityCabs",
+            "url": "https://www.citycabs.live/"
+          },
+          {
+            "@type": "ListItem",
+            "position": 4,
+            "name": "Diabetes Prediction",
+            "url": "https://diabetes-prediction-sooty.vercel.app"
+          }
         ]
       }
     </script>

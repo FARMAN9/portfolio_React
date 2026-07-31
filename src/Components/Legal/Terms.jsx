@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import NavBar from '../Navbar/NavBar';
 import Footer from '../Footer/Footer';
+import SEO from '../SEO/SEO';
 import './Legal.css';
 import 'animate.css';
 
@@ -12,6 +13,11 @@ function Terms() {
 
   return (
     <>
+      <SEO
+        title="Terms and Conditions | Syed Farman Ali Portfolio"
+        description="Terms and conditions for using the personal portfolio website of Syed Farman Ali."
+        path="/terms"
+      />
       <NavBar />
       <div className="legal-container">
         <Link to="/" className="back-button">Back to Home</Link>
