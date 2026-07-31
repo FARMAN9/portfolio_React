@@ -5,6 +5,7 @@ import { logout } from '../../features/auth/authSlice';
 import { fetchProjects } from '../../features/projects/projectsSlice';
 import { fetchSkills } from '../../features/skills/skillsSlice';
 import { fetchProfile } from '../../features/profile/profileSlice';
+import { apiFetch } from '../../utils/api';
 
 function Dashboard() {
   const { token, username } = useSelector((state) => state.auth);
@@ -54,11 +55,11 @@ function Dashboard() {
     setStatusMsg('Saving Project...');
     try {
       const url = projectForm.id 
-        ? `http://localhost:5000/api/projects/${projectForm.id}` 
-        : 'http://localhost:5000/api/projects';
+        ? `/api/projects/${projectForm.id}` 
+        : '/api/projects';
       const method = projectForm.id ? 'PUT' : 'POST';
       
-      const res = await fetch(url, { method, headers: authHeaders, body: JSON.stringify(projectForm) });
+      const res = await apiFetch(url, { method, headers: authHeaders, body: JSON.stringify(projectForm) });
       if (!res.ok) throw new Error('Failed to save project');
       
       setStatusMsg('Project saved!');
@@ -70,7 +71,7 @@ function Dashboard() {
   const handleProjectDelete = async (id) => {
     if (!window.confirm('Delete this project?')) return;
     try {
-      await fetch(`http://localhost:5000/api/projects/${id}`, { method: 'DELETE', headers: authHeaders });
+      await apiFetch(`/api/projects/${id}`, { method: 'DELETE', headers: authHeaders });
       dispatch(fetchProjects());
       setStatusMsg('Project deleted');
     } catch (err) { setStatusMsg(err.message); }
@@ -82,11 +83,11 @@ function Dashboard() {
     setStatusMsg('Saving Skill...');
     try {
       const url = skillForm.id 
-        ? `http://localhost:5000/api/skills/${skillForm.id}` 
-        : 'http://localhost:5000/api/skills';
+        ? `/api/skills/${skillForm.id}` 
+        : '/api/skills';
       const method = skillForm.id ? 'PUT' : 'POST';
       
-      const res = await fetch(url, { method, headers: authHeaders, body: JSON.stringify(skillForm) });
+      const res = await apiFetch(url, { method, headers: authHeaders, body: JSON.stringify(skillForm) });
       if (!res.ok) throw new Error('Failed to save skill');
       
       setStatusMsg('Skill saved!');
@@ -98,7 +99,7 @@ function Dashboard() {
   const handleSkillDelete = async (id) => {
     if (!window.confirm('Delete this skill?')) return;
     try {
-      await fetch(`http://localhost:5000/api/skills/${id}`, { method: 'DELETE', headers: authHeaders });
+      await apiFetch(`/api/skills/${id}`, { method: 'DELETE', headers: authHeaders });
       dispatch(fetchSkills());
       setStatusMsg('Skill deleted');
     } catch (err) { setStatusMsg(err.message); }
@@ -109,7 +110,7 @@ function Dashboard() {
     e.preventDefault();
     setStatusMsg('Saving Profile...');
     try {
-      const res = await fetch('http://localhost:5000/api/profile', { 
+      const res = await apiFetch('/api/profile', { 
         method: 'PUT', 
         headers: authHeaders, 
         body: JSON.stringify(profileForm) 

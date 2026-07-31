@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from 'react';
 import './Chatbot.css';
 import { answerPortfolioQuestion } from '../../data/portfolioKnowledge';
+import { apiFetch, hasApiBaseUrl } from '../../utils/api';
 
 function Chatbot() {
   const [isOpen, setIsOpen] = useState(false);
@@ -29,13 +30,12 @@ function Chatbot() {
     setIsLoading(true);
 
     try {
-      const apiUrl = import.meta.env.VITE_API_URL;
-      if (!apiUrl) {
+      if (!hasApiBaseUrl) {
         setMessages(prev => [...prev, { sender: 'ai', text: answerPortfolioQuestion(userMessage.text) }]);
         return;
       }
 
-      const response = await fetch(`${apiUrl}/api/chat`, {
+      const response = await apiFetch('/api/chat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ message: userMessage.text })

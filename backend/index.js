@@ -17,6 +17,14 @@ const JWT_SECRET = process.env.JWT_SECRET || 'supersecretjwtkey';
 app.use(cors());
 app.use(express.json());
 
+app.get('/', (_req, res) => {
+  res.json({ status: 'ok', service: 'portfolio-api' });
+});
+
+app.get('/api/health', (_req, res) => {
+  res.json({ status: 'ok' });
+});
+
 // Auth Middleware
 const authenticateToken = (req, res, next) => {
   const authHeader = req.headers['authorization'];
@@ -202,6 +210,10 @@ app.post('/api/chat', async (req, res) => {
   }
 });
 
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
-});
+if (!process.env.VERCEL) {
+  app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
+  });
+}
+
+export default app;

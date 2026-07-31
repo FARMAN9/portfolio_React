@@ -26,6 +26,7 @@ const initialProjects = portfolioProjects.map((project, index) => ({
   imageUrl: project.imageUrl || "/projects/coming_soon.gif",
   link: project.demo || project.link
 }));
+const starBeekeepersProject = initialProjects.find((project) => project.name === "Star Beekeepers");
 
 async function main() {
   console.log("Start seeding profile, skills, and projects...");
@@ -53,6 +54,15 @@ async function main() {
       await prisma.project.create({ data: project });
     }
     console.log("Seeded initial projects.");
+  } else if (starBeekeepersProject) {
+    const existingStarBeekeepers = await prisma.project.findFirst({
+      where: { name: starBeekeepersProject.name }
+    });
+
+    if (!existingStarBeekeepers) {
+      await prisma.project.create({ data: starBeekeepersProject });
+      console.log("Seeded Star Beekeepers project.");
+    }
   }
 
   console.log("Seeding finished.");

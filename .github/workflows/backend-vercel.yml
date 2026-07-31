@@ -1,0 +1,69 @@
+name: Backend Vercel Deploy
+
+on:
+  push:
+    branches: ["main"]
+  workflow_dispatch:
+
+env:
+  VERCEL_BACKEND_ORG_ID: ${{ secrets.VERCEL_BACKEND_ORG_ID }}
+  VERCEL_BACKEND_PROJECT_ID: ${{ secrets.VERCEL_BACKEND_PROJECT_ID }}
+  VERCEL_BACKEND_TOKEN: ${{ secrets.VERCEL_BACKEND_TOKEN }}
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check backend Vercel secrets
+        id: vercel-secrets
+        shell: bash
+        run: |
+          if [[ -n "$VERCEL_BACKEND_ORG_ID" && -n "$VERCEL_BACKEND_PROJECT_ID" && -n "$VERCEL_BACKEND_TOKEN" ]]; then
+            echo "configured=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "configured=false" >> "$GITHUB_OUTPUT"
+            echo "Backend Vercel secrets are not configured; skipping deployment."
+          fi
+
+      - uses: actions/checkout@v4
+        if: steps.vercel-secrets.outputs.configured == 'true'
+
+      - name: Use Node.js 20.x
+        if: steps.vercel-secrets.outputs.configured == 'true'
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20.x
+          cache: npm
+          cache-dependency-path: backend/package-lock.json
+
+      - run: npm ci
+        if: steps.vercel-secrets.outputs.configured == 'true'
+        working-directory: backend
+
+      - name: Pull backend Vercel environment
+        if: steps.vercel-secrets.outputs.configured == 'true'
+        working-directory: backend
+        env:
+          VERCEL_ORG_ID: ${{ secrets.VERCEL_BACKEND_ORG_ID }}
+          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_BACKEND_PROJECT_ID }}
+          VERCEL_TOKEN: ${{ secrets.VERCEL_BACKEND_TOKEN }}
+        run: npx vercel pull --yes --environment=production --token="$VERCEL_TOKEN"
+
+      - name: Build backend Vercel output
+        if: steps.vercel-secrets.outputs.configured == 'true'
+        working-directory: backend
+        env:
+          VERCEL_ORG_ID: ${{ secrets.VERCEL_BACKEND_ORG_ID }}
+          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_BACKEND_PROJECT_ID }}
+          VERCEL_TOKEN: ${{ secrets.VERCEL_BACKEND_TOKEN }}
+        run: npx vercel build --prod --token="$VERCEL_TOKEN"
+
+      - name: Deploy backend to Vercel
+        if: steps.vercel-secrets.outputs.configured == 'true'
+        working-directory: backend
+        env:
+          VERCEL_ORG_ID: ${{ secrets.VERCEL_BACKEND_ORG_ID }}
+          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_BACKEND_PROJECT_ID }}
+          VERCEL_TOKEN: ${{ secrets.VERCEL_BACKEND_TOKEN }}
+        run: npx vercel deploy --prebuilt --prod --token="$VERCEL_TOKEN"

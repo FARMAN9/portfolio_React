@@ -1,14 +1,14 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { apiFetch, hasApiBaseUrl } from '../../utils/api';
 
 // Async thunk to fetch projects from our Express API
 export const fetchProjects = createAsyncThunk(
   'projects/fetchProjects',
   async (_, { rejectWithValue }) => {
     try {
-      const apiUrl = import.meta.env.VITE_API_URL;
-      if (!apiUrl) return fallbackData;
+      if (!hasApiBaseUrl) return fallbackData;
 
-      const response = await fetch(`${apiUrl}/api/projects`);
+      const response = await apiFetch('/api/projects');
       if (!response.ok) {
         throw new Error('Failed to fetch projects');
       }

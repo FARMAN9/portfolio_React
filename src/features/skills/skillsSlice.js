@@ -1,11 +1,11 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { apiFetch, hasApiBaseUrl } from '../../utils/api';
 
 export const fetchSkills = createAsyncThunk('skills/fetchSkills', async (_, { rejectWithValue }) => {
   try {
-    const apiUrl = import.meta.env.VITE_API_URL;
-    if (!apiUrl) return fallbackData;
+    if (!hasApiBaseUrl) return fallbackData;
 
-    const response = await fetch(`${apiUrl}/api/skills`);
+    const response = await apiFetch('/api/skills');
     if (!response.ok) throw new Error('Failed to fetch skills');
     return await response.json();
   } catch (err) { return rejectWithValue(err.message); }
