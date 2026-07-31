@@ -97,6 +97,13 @@ export const portfolioProjects = [
     demo: "https://www.citycabs.live/",
     tech: ["Web", "Responsive UI"],
   },
+  {
+    name: "Star Beekeepers",
+    description: "Live honey-store website with a product-focused storefront experience for Star Beekeepers.",
+    link: "https://star-beekekpers.vercel.app/",
+    demo: "https://star-beekekpers.vercel.app/",
+    tech: ["React", "Vercel", "Storefront"],
+  },
 ];
 
 const normalize = (value) => value.toLowerCase().replace(/[^a-z0-9+#.\s]/g, " ");

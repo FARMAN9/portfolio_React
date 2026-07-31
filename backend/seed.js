@@ -1,5 +1,5 @@
 import pkg from '@prisma/client';
-import { portfolioProfile, portfolioSkills } from '../src/data/portfolioKnowledge.js';
+import { portfolioProfile, portfolioProjects, portfolioSkills } from '../src/data/portfolioKnowledge.js';
 const { PrismaClient } = pkg;
 
 const prisma = new PrismaClient();
@@ -20,9 +20,15 @@ const initialProfile = {
 };
 
 const initialSkills = portfolioSkills;
+const initialProjects = portfolioProjects.map((project, index) => ({
+  w_no: index + 1,
+  name: project.name,
+  imageUrl: project.imageUrl || "/projects/coming_soon.gif",
+  link: project.demo || project.link
+}));
 
 async function main() {
-  console.log("Start seeding profile and skills...");
+  console.log("Start seeding profile, skills, and projects...");
   
   // Seed Profile
   const existingProfile = await prisma.profile.findFirst();
@@ -38,6 +44,15 @@ async function main() {
       await prisma.skill.create({ data: skill });
     }
     console.log("Seeded initial skills.");
+  }
+
+  // Seed Projects
+  const existingProjectsCount = await prisma.project.count();
+  if (existingProjectsCount === 0) {
+    for (const project of initialProjects) {
+      await prisma.project.create({ data: project });
+    }
+    console.log("Seeded initial projects.");
   }
 
   console.log("Seeding finished.");

@@ -91,6 +91,15 @@ const fallbackData = [
     link: "https://www.citycabs.live/",
     demo: "https://www.citycabs.live/",
     tech: ["Web", "Responsive UI"]
+  },
+  {
+    w_no: 9,
+    name: "Star Beekeepers",
+    description: "Live honey-store website with a product-focused storefront experience for Star Beekeepers.",
+    imageUrl: "/projects/coming_soon.gif",
+    link: "https://star-beekekpers.vercel.app/",
+    demo: "https://star-beekekpers.vercel.app/",
+    tech: ["React", "Vercel", "Storefront"]
   }
 ];
 
