@@ -59,7 +59,17 @@ app.post('/api/auth/login', async (req, res) => {
 app.get('/api/projects', async (req, res) => {
   try {
     const projects = await prisma.project.findMany({ orderBy: { w_no: 'asc' } });
-    res.json(projects);
+    if (!projects || projects.length === 0) {
+      return res.json(portfolioProjects.map((p, i) => ({ w_no: i + 1, ...p })));
+    }
+    const updated = projects.map((p) => {
+      const match = portfolioProjects.find((item) => item.name.toLowerCase() === p.name.toLowerCase());
+      return {
+        ...p,
+        imageUrl: match?.imageUrl || p.imageUrl,
+      };
+    });
+    res.json(updated);
   } catch (error) { res.status(500).json({ error: "Error" }); }
 });
 

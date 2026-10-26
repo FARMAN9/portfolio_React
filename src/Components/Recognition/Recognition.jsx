@@ -38,8 +38,14 @@ const RECOGNITION_ITEMS = [
   },
   {
     id: 6,
+    title: "NIT Srinagar Engineering & Tech Collaboration",
+    description: "Collaborated in regional engineering hackathons, workshops, and technical forums alongside researchers at NIT Srinagar.",
+    year: "2024"
+  },
+  {
+    id: 7,
     title: "University of Kashmir Computer Science",
-    description: "Formal academic training at the University of Kashmir, bridging theoretical principles with hands-on web engineering.",
+    description: "Formal academic training in computer science, bridging theoretical fundamentals with modern MERN and Python engineering.",
     year: "2023"
   }
 ];

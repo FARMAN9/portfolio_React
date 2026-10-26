@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import "./Hero.css";
 import profileImg from "../../assets/profile.jpg";
+import seamlessPortrait from "../../assets/farman_seamless.png";
+import NavBar from "../Navbar/NavBar";
 import { useSelector } from "react-redux";
 import { FaGithub, FaLinkedin, FaCode } from "react-icons/fa";
 import { SiGooglescholar } from "react-icons/si";
@@ -53,10 +55,13 @@ function Hero({ onOpenVR }) {
         <div className="sunset-glow-ambient" />
       </div>
 
+      {/* Top Header Navbar sitting inside the sunset sky */}
+      <NavBar onOpenVR={onOpenVR} />
+
       {/* Creator Portrait in Warm Studio Lighting with bottom feather */}
       <div className="editorial-hero-portrait-wrap">
         <img
-          src={profileImg}
+          src={seamlessPortrait || profileImg}
           alt={profileData.name || "Syed Farman Ali"}
           className="editorial-hero-portrait"
         />

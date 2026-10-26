@@ -27,14 +27,14 @@ function NavBar({ onOpenVR }) {
   return (
     <header className="editorial-navbar">
       <div className="editorial-nav-inner">
-        {/* Logo matching folio. / farman. */}
+        {/* Logo matching reference style: farman. with orange dot */}
         <Link 
           to="/" 
           className="editorial-logo"
           onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
         >
-          <span>folio</span>
-          <span className="logo-dot">.</span>
+          <span className="logo-text">farman</span>
+          <span className="logo-dot" aria-hidden="true" />
         </Link>
 
         {/* Center Nav Links */}

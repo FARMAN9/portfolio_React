@@ -115,7 +115,7 @@ function Contact() {
                 <FiPhone size={15} /> +91 6005943382
               </a>
               <span className="contact-direct-item">
-                <FiMapPin size={15} /> Jammu &amp; Kashmir, India
+                <FiMapPin size={15} /> Gangoo, Pulwama, Jammu &amp; Kashmir, India
               </span>
             </div>
 

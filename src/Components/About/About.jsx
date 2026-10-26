@@ -31,12 +31,16 @@ function About() {
        </div>
        <div className="about-resume">
         <div>
-          <span>Education</span>
-          <p>University of Kashmir</p>
+          <span>📍 Location</span>
+          <p>{profileData.location || "Gangoo, Pulwama, Jammu and Kashmir, India"}</p>
         </div>
         <div>
-          <span>Resume focus</span>
-          <p>MERN, Python/Django, React Native, machine learning, and deployable web products</p>
+          <span>🎓 Education &amp; Research</span>
+          <p>SKUAST-Kashmir (AI/ML Research) · NIT Srinagar Collaboration · University of Kashmir</p>
+        </div>
+        <div>
+          <span>💼 Technical Focus</span>
+          <p>MERN Stack, Python/Django, React Native, Machine Learning, and WebXR Spatial Web</p>
         </div>
        </div>
        <div className="about-skills">

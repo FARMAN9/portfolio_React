@@ -24,20 +24,40 @@
 
 /* Logo */
 .editorial-logo {
-  font-family: "Syne", "Outfit", sans-serif;
-  font-size: 24px;
+  font-family: "Syne", "Outfit", "Plus Jakarta Sans", sans-serif;
+  font-size: 26px;
   font-weight: 800;
   color: #ffffff;
   text-decoration: none;
-  display: flex;
+  display: inline-flex;
   align-items: baseline;
-  letter-spacing: -0.5px;
-  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.25);
+  letter-spacing: -0.04em;
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.35);
+  transition: transform 0.2s ease, opacity 0.2s ease;
+  user-select: none;
+}
+
+.editorial-logo:hover {
+  transform: translateY(-1px);
+  opacity: 0.92;
+}
+
+.logo-text {
+  color: #ffffff;
+  letter-spacing: -0.04em;
+  line-height: 1;
 }
 
 .logo-dot {
-  color: #ffffff;
-  font-size: 28px;
+  display: inline-block;
+  width: 6.5px;
+  height: 6.5px;
+  background-color: #ff5722;
+  margin-left: 3px;
+  border-radius: 1px;
+  vertical-align: baseline;
+  transform: translateY(-1px);
+  box-shadow: 0 0 10px rgba(255, 87, 34, 0.55);
 }
 
 /* Links in center */

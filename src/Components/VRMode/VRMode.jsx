@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect, Suspense, useMemo } from 'react';
 import { Canvas, useFrame, useThree } from '@react-three/fiber';
-import { OrbitControls, Stars, Float, MeshDistortMaterial } from '@react-three/drei';
+import { OrbitControls, Stars, Float } from '@react-three/drei';
 import * as THREE from 'three';
 import './VRMode.css';
 import {
@@ -12,77 +12,246 @@ import {
   FiExternalLink,
   FiGithub,
   FiNavigation,
-  FiInfo
+  FiInfo,
+  FiMail,
+  FiPhone,
+  FiMapPin,
+  FiAward,
+  FiCpu,
+  FiLayers,
+  FiUser
 } from 'react-icons/fi';
 import { FaVrCardboard } from 'react-icons/fa';
+import { SiGooglescholar } from 'react-icons/si';
 
-// Featured projects in VR Space
+// All 9 showcase projects in 3D Spatial Space
 const VR_PROJECTS = [
+  {
+    id: 'portfolio-react',
+    name: 'Portfolio React 3D',
+    category: 'Interactive 3D Web',
+    tech: ['React', 'Three.js', 'Redux', 'Vite', 'CSS Glassmorphism'],
+    desc: 'Editorial personal portfolio built with React, WebGL 3D scenes, VR Holodeck mode, procedural Lo-Fi music player, and autonomous free AI assistant.',
+    demo: 'https://portfolio-react-theta-steel.vercel.app',
+    link: 'https://github.com/FARMAN9/portfolio_React',
+    color: '#ff5722',
+    image: '/projects/portfilo_react.jpg'
+  },
   {
     id: 'chatapp',
     name: 'ChatAPP MERN',
     category: 'Full-Stack Messaging',
-    tech: ['MongoDB', 'Express', 'React', 'Node.js'],
-    desc: 'Real-time full-stack chat application with end-to-end messaging, user authentication, and deployed web experience.',
+    tech: ['MongoDB', 'Express', 'React', 'Node.js', 'JWT'],
+    desc: 'Real-time full-stack chat application with live messaging, secure user authentication, responsive UI, and cloud deployment on Render.',
     demo: 'https://chatapp-mern-vvn5.onrender.com/',
     link: 'https://github.com/FARMAN9/ChatAPP-MERN',
-    color: '#f76707',
-    image: '/projects/coming_soon.gif'
-  },
-  {
-    id: 'portfolio-react',
-    name: 'Portfolio React 3D',
-    category: 'Interactive Web',
-    tech: ['React', 'Three.js', 'Redux', 'Vite'],
-    desc: 'Cutting-edge personal portfolio with 3D WebGL scenes, procedural music player, and AI assistant.',
-    demo: 'https://portfolio-react-theta-steel.vercel.app',
-    link: 'https://github.com/FARMAN9/portfolio_React',
-    color: '#ffa94d',
-    image: '/projects/portfilo_react.png'
+    color: '#51cf66',
+    image: '/projects/chatapp_mern.jpg'
   },
   {
     id: 'diabetes',
     name: 'Diabetes Prediction ML',
-    category: 'Machine Learning',
-    tech: ['Python', 'scikit-learn', 'ML', 'CSS'],
-    desc: 'Clinical machine learning web application predicting diabetes probability from medical inputs with responsive UI.',
+    category: 'Applied Machine Learning',
+    tech: ['Python', 'scikit-learn', 'ML', 'Responsive UI'],
+    desc: 'Clinical machine learning web application predicting diabetes risk from clinical patient health metrics using trained classification models.',
     demo: 'https://diabetes-prediction-sooty.vercel.app',
     link: 'https://github.com/FARMAN9/Diabetes-prediction',
     color: '#e03131',
-    image: '/projects/dpt.png'
+    image: '/projects/diabetes_ml.jpg'
   },
   {
-    id: 'citycabs',
-    name: 'CityCabs Platform',
-    category: 'Commercial Transport',
-    tech: ['React', 'Responsive UI', 'REST APIs'],
-    desc: 'Live commercial cab-booking platform with online reservations, responsive UI, and customer dispatch system.',
-    demo: 'https://www.citycabs.live/',
-    link: 'https://www.citycabs.live/',
-    color: '#ffd43b',
-    image: '/projects/citycabs.png'
-  },
-  {
-    id: 'star-beekeepers',
-    name: 'Star Beekeepers',
-    category: 'E-Commerce Storefront',
-    tech: ['React', 'Vercel', 'Storefront'],
-    desc: 'Live commercial honey store with clean product showcase, cart interactions, and brand storytelling.',
-    demo: 'https://star-beekekpers.vercel.app/',
-    link: 'https://star-beekekpers.vercel.app/',
-    color: '#2b8a3e',
-    image: '/projects/coming_soon.gif'
+    id: 'newspaper',
+    name: 'Old News Paper',
+    category: 'Digital Editorial Web',
+    tech: ['JavaScript', 'React', 'Live News API', 'CSS Grid'],
+    desc: 'Minimalist editorial digital news curation web application with responsive multi-category browsing feeds and typographic reading layouts.',
+    demo: 'https://oldnews-paper.vercel.app/',
+    link: 'https://github.com/FARMAN9/new_paper',
+    color: '#ffa94d',
+    image: '/projects/newspaper.jpg'
   },
   {
     id: 'django-portfolio',
     name: 'Django Web Engine',
     category: 'Backend Architecture',
-    tech: ['Python', 'Django', 'SQLite', 'HTML'],
-    desc: 'Server-rendered portfolio and admin suite engineered with Python and Django web framework.',
+    tech: ['Python', 'Django', 'SQLite', 'REST APIs'],
+    desc: 'Server-rendered portfolio and admin suite engineered with Python and Django web framework, focused on scalable backend patterns.',
     demo: 'https://portfoilo-django.vercel.app',
     link: 'https://github.com/FARMAN9/portfoilo_django',
     color: '#339af0',
-    image: '/projects/django_port.png'
+    image: '/projects/django_port.jpg'
+  },
+  {
+    id: 'myntra',
+    name: 'Myntra Storefront Clone',
+    category: 'E-Commerce Frontend',
+    tech: ['React', 'JavaScript', 'CSS3', 'Component UI'],
+    desc: 'High-fidelity ecommerce storefront flow with modern product filtering, dynamic catalogs, cart management, and luxury fashion showcases.',
+    link: 'https://github.com/FARMAN9/myntra-clone-',
+    color: '#f06595',
+    image: '/projects/myntra.jpg'
+  },
+  {
+    id: 'youtube',
+    name: 'YouTube Clone Platform',
+    category: 'Media Streaming UI',
+    tech: ['React', 'JavaScript', 'Video Layouts', 'CSS'],
+    desc: 'Video streaming interface recreation exploring reusable media components, dark-mode browsing feeds, and video playback screens.',
+    link: 'https://github.com/FARMAN9/youtube-clone',
+    color: '#ff4d4f',
+    image: '/projects/youtube.jpg'
+  },
+  {
+    id: 'citycabs',
+    name: 'CityCabs Platform',
+    category: 'Live Commercial Transport',
+    tech: ['React', 'Responsive UI', 'REST APIs', 'Vercel'],
+    desc: 'Live commercial cab-booking platform with online reservations, responsive fleet route maps, customer dispatch workflows, and contact management.',
+    demo: 'https://www.citycabs.live/',
+    link: 'https://www.citycabs.live/',
+    color: '#ffd43b',
+    image: '/projects/citycabs.jpg'
+  },
+  {
+    id: 'star-beekeepers',
+    name: 'Star Beekeepers',
+    category: 'Live E-Commerce Store',
+    tech: ['React', 'Vercel', 'Storefront Architecture'],
+    desc: 'Live commercial honey storefront website featuring artisan honey products, organic storytelling, responsive cart, and Vercel cloud deployment.',
+    demo: 'https://star-beekekpers.vercel.app/',
+    link: 'https://star-beekekpers.vercel.app/',
+    color: '#fcc419',
+    image: '/projects/star_beekeepers.jpg'
+  }
+];
+
+// Spatial Website Section Definitions
+const SPATIAL_SECTIONS = [
+  {
+    id: 'hero',
+    name: 'Farman 3D Model',
+    shortTitle: 'Farman 3D Model',
+    icon: 'user',
+    color: '#ff5722',
+    position: [0, 0, 0],
+    camPos: [0, 2.5, 4.8],
+    details: {
+      title: 'Syed Farman Ali',
+      subtitle: 'Full-Stack MERN, React Native & Python Engineer | ML Researcher',
+      location: '📍 Gangoo, Pulwama, Jammu and Kashmir, India (PIN: 192301)',
+      summary: 'Passionate software craftsman building scalable web products, cross-platform mobile apps in React Native, and applied machine learning systems. Active GitHub publisher (41+ repos) with peer-reviewed research published in SSRN and indexed on Google Scholar.',
+      highlights: [
+        '3+ Years practical software development experience',
+        '10+ Completed client & production web projects',
+        'Published AI researcher (Digital auscultation & machine learning)',
+        'Internship honors connected to CID Srinagar',
+        'Affiliations with SKUAST-Kashmir and NIT Srinagar engineering forums'
+      ]
+    }
+  },
+  {
+    id: 'about',
+    name: 'About & Regional Roots',
+    shortTitle: 'About & Roots',
+    icon: 'pin',
+    color: '#ff7043',
+    position: [-8.8, 0, -2.5],
+    camPos: [-5.8, 2.8, -1.2],
+    details: {
+      title: 'Roots & Academic Collaborations',
+      subtitle: 'Gangoo, Pulwama · SKUAST-Kashmir · NIT Srinagar',
+      location: 'Gangoo, Pulwama, Jammu & Kashmir (192301)',
+      summary: 'Rooted in Gangoo, Pulwama, Syed Farman Ali combines rigorous academic inquiry with practical production software development. His work bridges agricultural IoT and cardiac health classification with modern full-stack web platforms.',
+      affiliations: [
+        'SKUAST-Kashmir: AI & Machine Learning Research Collaboration',
+        'NIT Srinagar: Engineering Hackathons & Regional Technical Forums',
+        'University of Kashmir: Computer Science & Software Engineering Foundation',
+        'CID Srinagar: Technology Workflow & Backend Development Honors'
+      ]
+    }
+  },
+  {
+    id: 'skills',
+    name: 'Technical Skills Matrix',
+    shortTitle: 'Tech Stack',
+    icon: 'cpu',
+    color: '#20c997',
+    position: [8.8, 0, -2.5],
+    camPos: [5.8, 2.8, -1.2],
+    details: {
+      title: 'Full-Stack Technical Arsenal',
+      subtitle: 'Languages, Frameworks, Architecture & Tools',
+      skills: [
+        { name: 'Python & Django', level: 84 },
+        { name: 'React & React Native', level: 78 },
+        { name: 'JavaScript (ESNext)', level: 76 },
+        { name: 'MERN (Node/Express/MongoDB)', level: 64 },
+        { name: 'Machine Learning (scikit-learn)', level: 58 },
+        { name: 'HTML5 & Modern CSS3 Glassmorphism', level: 82 },
+        { name: 'Three.js / WebGL / Spatial Web', level: 72 }
+      ]
+    }
+  },
+  {
+    id: 'services',
+    name: 'Engineering Services',
+    shortTitle: 'Services',
+    icon: 'layers',
+    color: '#339af0',
+    position: [-6.8, 0, 7.2],
+    camPos: [-4.2, 2.8, 5.0],
+    details: {
+      title: 'What I Build & Deliver',
+      subtitle: 'Production-Grade Digital Engineering',
+      services: [
+        { title: 'Full-Stack Web Engineering', desc: 'Custom enterprise web applications built with React, Node.js, Express, and high-performance relational/NoSQL databases.' },
+        { title: 'Cross-Platform Mobile Apps', desc: 'Native-feel iOS and Android mobile applications crafted using React Native, Redux, and mobile-first design.' },
+        { title: 'Python & Django Architecture', desc: 'Server-rendered web systems, robust RESTful APIs, automation scripts, and administrative portals.' },
+        { title: 'Applied Machine Learning & AI', desc: 'Predictive health models, digital signal processing, cardiac phenotyping, and data analysis pipelines.' }
+      ]
+    }
+  },
+  {
+    id: 'recognition',
+    name: 'Awards & Research',
+    shortTitle: 'Recognition',
+    icon: 'award',
+    color: '#fcc419',
+    position: [6.8, 0, 7.2],
+    camPos: [4.2, 2.8, 5.0],
+    details: {
+      title: 'Milestones & Research Honors',
+      subtitle: 'Google Scholar, SSRN & Production Impact',
+      awards: [
+        { year: '2024', name: 'Google Scholar Research Publication (SSRN)', desc: 'Integrated Morphometric and Cardiac Phenotyping of Kashmir Sheep Using Digital Auscultation & ML at SKUAST-Kashmir.' },
+        { year: '2024', name: 'CID Srinagar Internship Honors', desc: 'Recognized for public service technology development, backend reliability, and data discipline.' },
+        { year: '2024', name: '41+ Public Repositories Milestone', desc: 'Active GitHub open-source contributions spanning MERN, Python, ML, and mobile projects.' },
+        { year: '2024', name: 'Commercial Client Deployments', desc: 'Delivered production online booking systems for Star Beekeepers and CityCabs transport.' }
+      ]
+    }
+  },
+  {
+    id: 'contact',
+    name: 'Direct Contact & Hire',
+    shortTitle: 'Contact',
+    icon: 'mail',
+    color: '#ff5722',
+    position: [0, 0, 10.2],
+    camPos: [0, 2.8, 7.2],
+    details: {
+      title: "Let's Collaborate",
+      subtitle: 'Open for Full-Stack, Python & AI Opportunities',
+      email: 'saeedfarman9@gmail.com',
+      phone: '+91 6005943382',
+      location: 'Gangoo, Pulwama, Jammu & Kashmir, India',
+      links: [
+        { name: 'GitHub Profile', url: 'https://github.com/FARMAN9' },
+        { name: 'LinkedIn', url: 'https://www.linkedin.com/in/farman9' },
+        { name: 'Google Scholar Profile', url: 'https://scholar.google.com/citations?user=y-lv0B0AAAAJ' },
+        { name: 'LeetCode Profile', url: 'https://leetcode.com/saeedfarman9/' },
+        { name: 'Resume / CV', url: 'https://rxresu.me/farman9/python-django-developer' }
+      ]
+    }
   }
 ];
 
@@ -103,7 +272,7 @@ function startVRAmbience() {
     filter1.type = 'lowpass';
     filter1.frequency.setValueAtTime(140, ctx.currentTime);
 
-    gain1.gain.setValueAtTime(0.04, ctx.currentTime);
+    gain1.gain.setValueAtTime(0.035, ctx.currentTime);
     osc1.connect(filter1);
     filter1.connect(gain1);
     gain1.connect(ctx.destination);
@@ -119,7 +288,7 @@ function startVRAmbience() {
     filter2.type = 'bandpass';
     filter2.frequency.setValueAtTime(320, ctx.currentTime);
 
-    gain2.gain.setValueAtTime(0.02, ctx.currentTime);
+    gain2.gain.setValueAtTime(0.018, ctx.currentTime);
     osc2.connect(filter2);
     filter2.connect(gain2);
     gain2.connect(ctx.destination);
@@ -141,82 +310,167 @@ function startVRAmbience() {
   }
 }
 
-// Central Core Sphere with orbiting particle ring
-function CentralHologramCore() {
-  const coreRef = useRef();
+// -------------------------------------------------------------
+// 3D COMPONENT: FARMAN'S HOLOGRAPHIC AVATAR MODEL (CENTER STAGE)
+// -------------------------------------------------------------
+function FarmanHologramAvatar({ onSelect, isSelected }) {
+  const avatarGroupRef = useRef();
   const ringRef = useRef();
   const ring2Ref = useRef();
+  const [hovered, setHovered] = useState(false);
+
+  // Load avatar image texture
+  const avatarTexture = useMemo(() => {
+    const loader = new THREE.TextureLoader();
+    const tex = loader.load('/farman_avatar.png');
+    tex.generateMipmaps = true;
+    return tex;
+  }, []);
 
   useFrame((state) => {
     const t = state.clock.getElapsedTime();
-    if (coreRef.current) {
-      coreRef.current.rotation.y = t * 0.35;
-      coreRef.current.position.y = 0.5 + Math.sin(t * 1.2) * 0.15;
+    if (avatarGroupRef.current) {
+      avatarGroupRef.current.position.y = 1.3 + Math.sin(t * 1.5) * 0.08;
+      avatarGroupRef.current.rotation.y = Math.sin(t * 0.6) * 0.12;
     }
     if (ringRef.current) {
-      ringRef.current.rotation.x = t * 0.5;
-      ringRef.current.rotation.y = t * 0.4;
+      ringRef.current.rotation.z = t * 0.4;
+      ringRef.current.rotation.x = Math.PI / 2 + Math.sin(t * 0.5) * 0.1;
     }
     if (ring2Ref.current) {
-      ring2Ref.current.rotation.z = -t * 0.4;
-      ring2Ref.current.rotation.x = t * 0.3;
+      ring2Ref.current.rotation.z = -t * 0.3;
+      ring2Ref.current.rotation.y = Math.sin(t * 0.4) * 0.15;
     }
   });
 
   return (
-    <group position={[0, 1.2, 0]}>
-      {/* Central Pulsing Sphere */}
-      <mesh ref={coreRef} castShadow>
-        <sphereGeometry args={[1.1, 48, 48]} />
-        <MeshDistortMaterial
-          color="#f76707"
-          attach="material"
-          distort={0.4}
-          speed={1.8}
-          roughness={0.15}
-          metalness={0.8}
-          clearcoat={1}
-          emissive="#7a1c0d"
-          emissiveIntensity={0.6}
-        />
-      </mesh>
-
-      {/* Orbiting Gyro Rings */}
-      <mesh ref={ringRef}>
-        <torusGeometry args={[2.0, 0.04, 16, 100]} />
+    <group position={[0, 0, 0]}>
+      {/* Multi-tier Cybernetic Podium */}
+      <mesh position={[0, 0.15, 0]}>
+        <cylinderGeometry args={[1.7, 2.0, 0.3, 32]} />
         <meshStandardMaterial
-          color="#ffa94d"
-          emissive="#f76707"
-          emissiveIntensity={0.8}
-          roughness={0.2}
+          color="#16121f"
           metalness={0.9}
-        />
-      </mesh>
-
-      <mesh ref={ring2Ref}>
-        <torusGeometry args={[2.5, 0.03, 16, 100]} />
-        <meshStandardMaterial
-          color="#ffc078"
-          emissive="#ffa94d"
-          emissiveIntensity={0.5}
           roughness={0.2}
+          emissive="#ff5722"
+          emissiveIntensity={0.35}
         />
       </mesh>
 
-      {/* Light Beacon */}
-      <pointLight color="#f76707" intensity={2.5} distance={15} />
+      <mesh position={[0, 0.35, 0]}>
+        <cylinderGeometry args={[1.35, 1.55, 0.15, 32]} />
+        <meshStandardMaterial
+          color="#0f0c16"
+          metalness={0.95}
+          roughness={0.15}
+          emissive="#ff8a65"
+          emissiveIntensity={0.5}
+        />
+      </mesh>
+
+      {/* Glowing Orange Concentric Ring on Podium Floor */}
+      <mesh position={[0, 0.44, 0]} rotation={[-Math.PI / 2, 0, 0]}>
+        <ringGeometry args={[0.9, 1.25, 48]} />
+        <meshBasicMaterial
+          color="#ff5722"
+          transparent
+          opacity={0.85}
+          side={THREE.DoubleSide}
+        />
+      </mesh>
+
+      {/* Orbiting Gyro Ring Around Avatar */}
+      <mesh ref={ringRef} position={[0, 2.2, 0]}>
+        <torusGeometry args={[1.4, 0.02, 16, 64]} />
+        <meshBasicMaterial color="#ff5722" transparent opacity={0.65} wireframe />
+      </mesh>
+
+      <mesh ref={ring2Ref} position={[0, 2.2, 0]}>
+        <torusGeometry args={[1.6, 0.015, 16, 64]} />
+        <meshBasicMaterial color="#ffa07a" transparent opacity={0.45} />
+      </mesh>
+
+      {/* Floating 3D Holographic Model of Farman */}
+      <group
+        ref={avatarGroupRef}
+        onClick={(e) => {
+          e.stopPropagation();
+          onSelect('hero');
+        }}
+        onPointerOver={(e) => {
+          e.stopPropagation();
+          setHovered(true);
+          document.body.style.cursor = 'pointer';
+        }}
+        onPointerOut={() => {
+          setHovered(false);
+          document.body.style.cursor = 'auto';
+        }}
+      >
+        {/* Hologram Glass Backing Plane */}
+        <mesh position={[0, 0.6, -0.02]}>
+          <planeGeometry args={[2.0, 2.6]} />
+          <meshStandardMaterial
+            color="#140f22"
+            transparent
+            opacity={0.35}
+            roughness={0.1}
+            metalness={0.9}
+            emissive="#ff5722"
+            emissiveIntensity={hovered || isSelected ? 0.45 : 0.15}
+          />
+        </mesh>
+
+        {/* Farman's Seamless Transparent Cutout Portrait */}
+        <mesh position={[0, 0.6, 0.02]}>
+          <planeGeometry args={[1.9, 2.5]} />
+          <meshBasicMaterial
+            map={avatarTexture}
+            transparent={true}
+            side={THREE.DoubleSide}
+            alphaTest={0.05}
+          />
+        </mesh>
+
+        {/* Holographic Wireframe Edge Frame */}
+        <mesh position={[0, 0.6, 0]}>
+          <boxGeometry args={[2.05, 2.65, 0.06]} />
+          <meshBasicMaterial
+            color={hovered || isSelected ? '#ff5722' : '#ff8a65'}
+            transparent
+            opacity={hovered || isSelected ? 0.8 : 0.35}
+            wireframe
+          />
+        </mesh>
+
+        {/* Floating Identity Banner Badge */}
+        <mesh position={[0, 2.15, 0]}>
+          <planeGeometry args={[2.5, 0.42]} />
+          <meshBasicMaterial color="#0c0a14" transparent opacity={0.9} />
+        </mesh>
+
+        {/* Spotlight on Farman Avatar */}
+        <pointLight
+          position={[0, 1.4, 1.4]}
+          color="#ff7043"
+          intensity={hovered || isSelected ? 3.8 : 2.4}
+          distance={6}
+        />
+      </group>
     </group>
   );
 }
 
-// 3D Cyberpunk Holodeck Pedestal & Screen
+// -------------------------------------------------------------
+// 3D COMPONENT: ALL 9 PROJECT PEDESTALS IN ORBIT
+// -------------------------------------------------------------
 function ProjectPedestal({ project, index, total, onSelect, activeId }) {
   const groupRef = useRef();
   const screenRef = useRef();
   const [hovered, setHovered] = useState(false);
 
   const angle = (index / total) * Math.PI * 2;
-  const radius = 7.5;
+  const radius = 6.8;
   const x = Math.sin(angle) * radius;
   const z = Math.cos(angle) * radius;
   const rotY = angle + Math.PI;
@@ -226,7 +480,7 @@ function ProjectPedestal({ project, index, total, onSelect, activeId }) {
   useFrame((state) => {
     const t = state.clock.getElapsedTime();
     if (groupRef.current) {
-      const floatOffset = Math.sin(t * 1.5 + index) * 0.08;
+      const floatOffset = Math.sin(t * 1.5 + index * 0.7) * 0.08;
       groupRef.current.position.y = (hovered || isSelected ? 0.35 : 0) + floatOffset;
     }
     if (screenRef.current && (hovered || isSelected)) {
@@ -234,7 +488,6 @@ function ProjectPedestal({ project, index, total, onSelect, activeId }) {
     }
   });
 
-  // Project Image Texture
   const texture = useMemo(() => {
     const loader = new THREE.TextureLoader();
     return loader.load(project.image);
@@ -243,10 +496,10 @@ function ProjectPedestal({ project, index, total, onSelect, activeId }) {
   return (
     <group position={[x, 0, z]} rotation={[0, rotY, 0]}>
       <group ref={groupRef}>
-        {/* Holographic Project Screen Frame */}
+        {/* Holographic Device Screen Frame */}
         <mesh
           ref={screenRef}
-          position={[0, 2.8, 0]}
+          position={[0, 2.6, 0]}
           onClick={(e) => {
             e.stopPropagation();
             onSelect(project);
@@ -261,54 +514,48 @@ function ProjectPedestal({ project, index, total, onSelect, activeId }) {
             document.body.style.cursor = 'auto';
           }}
         >
-          <boxGeometry args={[3.2, 2.0, 0.12]} />
+          <boxGeometry args={[2.8, 1.75, 0.1]} />
           <meshStandardMaterial
             color={hovered || isSelected ? '#ffffff' : '#222226'}
             emissive={project.color}
-            emissiveIntensity={hovered || isSelected ? 0.9 : 0.35}
+            emissiveIntensity={hovered || isSelected ? 0.9 : 0.3}
             roughness={0.2}
             metalness={0.8}
           />
 
-          {/* Front Screen Texture Display */}
-          <mesh position={[0, 0, 0.07]}>
-            <planeGeometry args={[2.95, 1.75]} />
+          {/* Front Screen Display Texture */}
+          <mesh position={[0, 0, 0.06]}>
+            <planeGeometry args={[2.6, 1.55]} />
             <meshBasicMaterial map={texture} />
           </mesh>
         </mesh>
 
-        {/* Glow Frame Halo */}
-        <mesh position={[0, 2.8, 0]}>
-          <boxGeometry args={[3.4, 2.2, 0.08]} />
+        {/* Glow Halo Frame */}
+        <mesh position={[0, 2.6, 0]}>
+          <boxGeometry args={[3.0, 1.95, 0.06]} />
           <meshBasicMaterial
             color={project.color}
             transparent
-            opacity={hovered || isSelected ? 0.6 : 0.25}
+            opacity={hovered || isSelected ? 0.65 : 0.25}
             wireframe
           />
         </mesh>
 
-        {/* Floating Screen Banner Header */}
-        <mesh position={[0, 4.0, 0]}>
-          <planeGeometry args={[2.8, 0.45]} />
-          <meshBasicMaterial color="#141418" transparent opacity={0.9} />
-        </mesh>
-
-        {/* Base Pillar */}
+        {/* Pedestal Pillar */}
         <mesh position={[0, 0.8, 0]}>
-          <cylinderGeometry args={[0.25, 0.45, 1.6, 16]} />
+          <cylinderGeometry args={[0.2, 0.38, 1.6, 16]} />
           <meshStandardMaterial
             color="#18181c"
             metalness={0.9}
             roughness={0.3}
             emissive={project.color}
-            emissiveIntensity={0.2}
+            emissiveIntensity={0.25}
           />
         </mesh>
 
-        {/* Glowing Floor Contact Ring */}
+        {/* Floor Contact Ring */}
         <mesh position={[0, 0.05, 0]} rotation={[-Math.PI / 2, 0, 0]}>
-          <ringGeometry args={[0.9, 1.25, 32]} />
+          <ringGeometry args={[0.7, 1.0, 32]} />
           <meshBasicMaterial
             color={project.color}
             transparent
@@ -317,44 +564,118 @@ function ProjectPedestal({ project, index, total, onSelect, activeId }) {
           />
         </mesh>
 
-        {/* Spot Glow on active */}
         {(hovered || isSelected) && (
-          <pointLight position={[0, 2.8, 1]} color={project.color} intensity={2.2} distance={5} />
+          <pointLight position={[0, 2.6, 1]} color={project.color} intensity={2.2} distance={5} />
         )}
       </group>
     </group>
   );
 }
 
-// Cyberpunk Floor Grid & Rings
+// -------------------------------------------------------------
+// 3D COMPONENT: SPATIAL WEBSITE SECTION MONOLITH STATIONS
+// -------------------------------------------------------------
+function SpatialStation({ section, onSelect, isSelected }) {
+  const meshRef = useRef();
+  const [hovered, setHovered] = useState(false);
+
+  useFrame((state) => {
+    const t = state.clock.getElapsedTime();
+    if (meshRef.current) {
+      meshRef.current.position.y = 1.8 + Math.sin(t * 1.4) * 0.1;
+      meshRef.current.rotation.y = t * 0.35;
+    }
+  });
+
+  return (
+    <group position={section.position}>
+      {/* Base Platform */}
+      <mesh position={[0, 0.15, 0]}>
+        <cylinderGeometry args={[1.1, 1.3, 0.3, 16]} />
+        <meshStandardMaterial
+          color="#161420"
+          metalness={0.9}
+          roughness={0.2}
+          emissive={section.color}
+          emissiveIntensity={0.35}
+        />
+      </mesh>
+
+      {/* Glowing Floor Ring */}
+      <mesh position={[0, 0.32, 0]} rotation={[-Math.PI / 2, 0, 0]}>
+        <ringGeometry args={[0.8, 1.05, 32]} />
+        <meshBasicMaterial color={section.color} transparent opacity={0.7} side={THREE.DoubleSide} />
+      </mesh>
+
+      {/* Floating 3D Geometric Tech Monolith */}
+      <group
+        ref={meshRef}
+        onClick={(e) => {
+          e.stopPropagation();
+          onSelect(section.id);
+        }}
+        onPointerOver={(e) => {
+          e.stopPropagation();
+          setHovered(true);
+          document.body.style.cursor = 'pointer';
+        }}
+        onPointerOut={() => {
+          setHovered(false);
+          document.body.style.cursor = 'auto';
+        }}
+      >
+        <mesh>
+          <octahedronGeometry args={[0.9, 0]} />
+          <meshStandardMaterial
+            color={hovered || isSelected ? '#ffffff' : '#221b2d'}
+            emissive={section.color}
+            emissiveIntensity={hovered || isSelected ? 0.95 : 0.45}
+            roughness={0.2}
+            metalness={0.9}
+            wireframe={!hovered && !isSelected}
+          />
+        </mesh>
+
+        <mesh scale={[1.2, 1.2, 1.2]}>
+          <octahedronGeometry args={[0.9, 0]} />
+          <meshBasicMaterial color={section.color} transparent opacity={0.3} wireframe />
+        </mesh>
+
+        {/* Station Nameplate */}
+        <mesh position={[0, 1.5, 0]}>
+          <planeGeometry args={[2.2, 0.38]} />
+          <meshBasicMaterial color="#0e0a16" transparent opacity={0.88} />
+        </mesh>
+
+        <pointLight position={[0, 0, 0]} color={section.color} intensity={2} distance={4} />
+      </group>
+    </group>
+  );
+}
+
+// -------------------------------------------------------------
+// 3D COMPONENT: HOLODECK CYBERPUNK FLOOR & CONCENTRIC RINGS
+// -------------------------------------------------------------
 function HolodeckFloor() {
   return (
     <group position={[0, 0, 0]}>
-      {/* Concentric Holodeck Rings */}
+      {/* Concentric Holodeck Energy Rings */}
       <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, 0.01, 0]}>
-        <ringGeometry args={[7.2, 7.8, 64]} />
-        <meshBasicMaterial color="#f76707" transparent opacity={0.35} />
+        <ringGeometry args={[6.6, 7.0, 64]} />
+        <meshBasicMaterial color="#ff5722" transparent opacity={0.35} />
       </mesh>
       <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, 0.01, 0]}>
-        <ringGeometry args={[3.8, 4.1, 64]} />
-        <meshBasicMaterial color="#ffa94d" transparent opacity={0.25} />
-      </mesh>
-      <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, 0.01, 0]}>
-        <ringGeometry args={[11.5, 12.0, 64]} />
-        <meshBasicMaterial color="#e03131" transparent opacity={0.2} />
+        <ringGeometry args={[10.2, 10.6, 64]} />
+        <meshBasicMaterial color="#ffa07a" transparent opacity={0.25} />
       </mesh>
 
       {/* Main Grid Plane */}
-      <gridHelper args={[32, 32, '#f76707', '#2b0b06']} position={[0, 0, 0]} />
+      <gridHelper args={[34, 34, '#ff5722', '#260f08']} position={[0, 0, 0]} />
 
       {/* Outer Ground Disk */}
       <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -0.05, 0]} receiveShadow>
         <circleGeometry args={[22, 64]} />
-        <meshStandardMaterial
-          color="#0d0403"
-          roughness={0.7}
-          metalness={0.8}
-        />
+        <meshStandardMaterial color="#090508" roughness={0.7} metalness={0.8} />
       </mesh>
     </group>
   );
@@ -373,7 +694,11 @@ function CameraRig({ targetPos }) {
   return null;
 }
 
+// -------------------------------------------------------------
+// MAIN COMPONENT: VRMode
+// -------------------------------------------------------------
 export default function VRMode({ isOpen, onClose }) {
+  const [activeSectionId, setActiveSectionId] = useState(null);
   const [selectedProject, setSelectedProject] = useState(null);
   const [isAudioMuted, setIsAudioMuted] = useState(false);
   const [isFullscreen, setIsFullscreen] = useState(false);
@@ -382,7 +707,7 @@ export default function VRMode({ isOpen, onClose }) {
 
   const audioHandleRef = useRef(null);
 
-  // Check WebXR device compatibility
+  // Check WebXR compatibility
   useEffect(() => {
     if (navigator.xr && navigator.xr.isSessionSupported) {
       navigator.xr.isSessionSupported('immersive-vr')
@@ -393,7 +718,7 @@ export default function VRMode({ isOpen, onClose }) {
     }
   }, []);
 
-  // Spatial audio management
+  // Spatial audio
   useEffect(() => {
     if (isOpen && !isAudioMuted) {
       audioHandleRef.current = startVRAmbience();
@@ -410,7 +735,7 @@ export default function VRMode({ isOpen, onClose }) {
     };
   }, [isOpen, isAudioMuted]);
 
-  // Fullscreen toggle
+  // Fullscreen
   const toggleFullscreen = () => {
     if (!document.fullscreenElement) {
       document.documentElement.requestFullscreen().catch(() => {});
@@ -421,7 +746,7 @@ export default function VRMode({ isOpen, onClose }) {
     }
   };
 
-  // WebXR Session Trigger for VR Headsets
+  // WebXR Headset Session
   const enterWebXRHeadset = async () => {
     if (navigator.xr && webXRStatus === 'supported') {
       try {
@@ -434,38 +759,65 @@ export default function VRMode({ isOpen, onClose }) {
     }
   };
 
-  // Quick navigation to a project pedestal
+  // Teleport camera to a section station
+  const navigateToSection = (sectionId) => {
+    setSelectedProject(null);
+    setActiveSectionId(sectionId);
+    const sec = SPATIAL_SECTIONS.find((s) => s.id === sectionId);
+    if (sec) {
+      setTargetCameraPos(new THREE.Vector3(...sec.camPos));
+    }
+  };
+
+  // Focus a specific project pedestal
   const focusProject = (proj, idx) => {
+    setActiveSectionId(null);
     setSelectedProject(proj);
     const angle = (idx / VR_PROJECTS.length) * Math.PI * 2;
-    const camDist = 4.8;
-    const x = Math.sin(angle) * (7.5 - camDist);
-    const z = Math.cos(angle) * (7.5 - camDist);
-    setTargetCameraPos(new THREE.Vector3(x, 2.8, z));
+    const camDist = 4.2;
+    const radius = 6.8;
+    const x = Math.sin(angle) * (radius - camDist);
+    const z = Math.cos(angle) * (radius - camDist);
+    setTargetCameraPos(new THREE.Vector3(x, 2.6, z));
+  };
+
+  // Reset view to Holodeck center overview
+  const resetCamera = () => {
+    setSelectedProject(null);
+    setActiveSectionId(null);
+    setTargetCameraPos(new THREE.Vector3(0, 4.0, 12));
   };
 
   if (!isOpen) return null;
+
+  const currentSection = SPATIAL_SECTIONS.find((s) => s.id === activeSectionId);
 
   return (
     <div className="vr-mode-overlay" role="dialog" aria-modal="true" aria-label="3D VR Portfolio Holodeck">
       {/* 3D WebGL Canvas */}
       <div className="vr-canvas-container">
         <Canvas
-          camera={{ position: [0, 3.8, 11], fov: 60 }}
+          camera={{ position: [0, 4.0, 12], fov: 60 }}
           dpr={[1, 1.5]}
           gl={{ antialias: true, alpha: false, powerPreference: 'high-performance' }}
         >
-          <color attach="background" args={['#0c0302']} />
-          <ambientLight intensity={0.65} />
+          <color attach="background" args={['#080407']} />
+          <ambientLight intensity={0.7} />
           <pointLight position={[0, 10, 0]} color="#ffffff" intensity={1.5} />
-          <pointLight position={[10, 5, 8]} color="#f76707" intensity={2} />
-          <pointLight position={[-10, 5, -8]} color="#00e5ff" intensity={1.5} />
+          <pointLight position={[10, 6, 8]} color="#ff5722" intensity={2} />
+          <pointLight position={[-10, 6, -8]} color="#ff7043" intensity={1.5} />
 
           <Suspense fallback={null}>
             <Stars radius={120} depth={60} count={3500} factor={4} saturation={0.8} fade speed={1.2} />
             <HolodeckFloor />
-            <CentralHologramCore />
 
+            {/* Central Stage: Farman's 3D Holographic Avatar Model */}
+            <FarmanHologramAvatar
+              onSelect={navigateToSection}
+              isSelected={activeSectionId === 'hero'}
+            />
+
+            {/* Orbiting Ring of all 9 Project Pedestals */}
             {VR_PROJECTS.map((proj, idx) => (
               <ProjectPedestal
                 key={proj.id}
@@ -476,6 +828,16 @@ export default function VRMode({ isOpen, onClose }) {
                 activeId={selectedProject?.id}
               />
             ))}
+
+            {/* Outer Perimeter Spatial Website Stations */}
+            {SPATIAL_SECTIONS.filter((s) => s.id !== 'hero').map((section) => (
+              <SpatialStation
+                key={section.id}
+                section={section}
+                onSelect={navigateToSection}
+                isSelected={activeSectionId === section.id}
+              />
+            ))}
           </Suspense>
 
           <CameraRig targetPos={targetCameraPos} />
@@ -484,20 +846,20 @@ export default function VRMode({ isOpen, onClose }) {
             dampingFactor={0.06}
             maxPolarAngle={Math.PI / 2 + 0.05}
             minDistance={2.5}
-            maxDistance={18}
-            autoRotate={!selectedProject}
-            autoRotateSpeed={0.4}
+            maxDistance={22}
+            autoRotate={!selectedProject && !activeSectionId}
+            autoRotateSpeed={0.35}
           />
         </Canvas>
       </div>
 
-      {/* VR HUD Interface Header */}
+      {/* VR HUD Top Bar */}
       <div className="vr-hud-topbar">
         <div className="vr-hud-brand">
           <div className="vr-status-beacon" />
           <div className="vr-title-group">
             <span className="vr-hud-title">FARMAN 3D SPATIAL HOLODECK</span>
-            <span className="vr-hud-subtitle">Interactive 3D &amp; WebXR Spatial Portfolio</span>
+            <span className="vr-hud-subtitle">Full Website in 3D WebXR · Gangoo, Pulwama (J&amp;K)</span>
           </div>
         </div>
 
@@ -510,7 +872,7 @@ export default function VRMode({ isOpen, onClose }) {
             title="Launch WebXR Headset Mode"
           >
             <FaVrCardboard size={16} />
-            <span>{webXRStatus === 'supported' ? 'Enter VR Headset' : 'WebXR Ready'}</span>
+            <span>{webXRStatus === 'supported' ? 'Enter VR Headset' : 'WebXR Headset'}</span>
           </button>
 
           {/* Audio toggle */}
@@ -518,7 +880,7 @@ export default function VRMode({ isOpen, onClose }) {
             type="button"
             className="vr-hud-btn"
             onClick={() => setIsAudioMuted(!isAudioMuted)}
-            title={isAudioMuted ? "Unmute Spatial Audio" : "Mute Spatial Audio"}
+            title={isAudioMuted ? 'Unmute Spatial Audio' : 'Mute Spatial Audio'}
           >
             {isAudioMuted ? <FiVolumeX size={17} /> : <FiVolume2 size={17} />}
           </button>
@@ -528,7 +890,7 @@ export default function VRMode({ isOpen, onClose }) {
             type="button"
             className="vr-hud-btn"
             onClick={toggleFullscreen}
-            title={isFullscreen ? "Exit Fullscreen" : "Fullscreen Mode"}
+            title={isFullscreen ? 'Exit Fullscreen' : 'Fullscreen Mode'}
           >
             {isFullscreen ? <FiMinimize size={17} /> : <FiMaximize size={17} />}
           </button>
@@ -546,38 +908,163 @@ export default function VRMode({ isOpen, onClose }) {
         </div>
       </div>
 
-      {/* Bottom Pedestals Quick Dock */}
+      {/* Bottom Spatial Navigation Dock for Entire Website */}
       <div className="vr-bottom-dock">
         <div className="vr-dock-label">
           <FiNavigation size={13} />
-          <span>Quick Teleport to Hologram:</span>
+          <span>Teleport to Section / Station:</span>
         </div>
         <div className="vr-dock-pills">
-          {VR_PROJECTS.map((proj, idx) => (
+          {/* All Website Stations */}
+          {SPATIAL_SECTIONS.map((sec) => (
             <button
-              key={proj.id}
+              key={sec.id}
               type="button"
-              className={`vr-dock-pill ${selectedProject?.id === proj.id ? 'is-active' : ''}`}
-              onClick={() => focusProject(proj, idx)}
+              className={`vr-dock-pill ${activeSectionId === sec.id ? 'is-active' : ''}`}
+              onClick={() => navigateToSection(sec.id)}
             >
-              <span className="pill-dot" style={{ backgroundColor: proj.color }} />
-              <span>{proj.name}</span>
+              <span className="pill-dot" style={{ backgroundColor: sec.color }} />
+              <span>{sec.shortTitle}</span>
             </button>
           ))}
+
+          {/* Quick Project Cycle */}
+          <button
+            type="button"
+            className={`vr-dock-pill ${selectedProject ? 'is-active' : ''}`}
+            onClick={() => focusProject(VR_PROJECTS[0], 0)}
+          >
+            <span className="pill-dot" style={{ backgroundColor: '#ffd43b' }} />
+            <span>🚀 9 Projects</span>
+          </button>
+
           <button
             type="button"
             className="vr-dock-pill reset-pill"
-            onClick={() => {
-              setSelectedProject(null);
-              setTargetCameraPos(new THREE.Vector3(0, 3.8, 11));
-            }}
+            onClick={resetCamera}
           >
             <span>Reset View</span>
           </button>
         </div>
       </div>
 
-      {/* Selected 3D Hologram Project Inspector Card */}
+      {/* INSPECTOR MODAL 1: Selected 3D Spatial Section Modal */}
+      {currentSection && (
+        <div className="vr-project-modal">
+          <div className="vr-modal-card">
+            <button
+              type="button"
+              className="vr-modal-close"
+              onClick={() => setActiveSectionId(null)}
+            >
+              <FiX size={18} />
+            </button>
+
+            <div className="vr-modal-header">
+              <span className="vr-modal-category" style={{ color: currentSection.color }}>
+                SPATIAL STATION // {currentSection.name.toUpperCase()}
+              </span>
+              <h3 className="vr-modal-title">{currentSection.details.title}</h3>
+              <p className="vr-modal-subtitle">{currentSection.details.subtitle}</p>
+            </div>
+
+            {currentSection.details.location && (
+              <p className="vr-modal-location">
+                <FiMapPin size={13} /> {currentSection.details.location}
+              </p>
+            )}
+
+            {currentSection.details.summary && (
+              <p className="vr-modal-desc">{currentSection.details.summary}</p>
+            )}
+
+            {/* Section Specific Highlights / Lists */}
+            {currentSection.details.highlights && (
+              <ul className="vr-modal-list">
+                {currentSection.details.highlights.map((h, i) => (
+                  <li key={i}>{h}</li>
+                ))}
+              </ul>
+            )}
+
+            {currentSection.details.affiliations && (
+              <ul className="vr-modal-list">
+                {currentSection.details.affiliations.map((aff, i) => (
+                  <li key={i}><strong>{aff}</strong></li>
+                ))}
+              </ul>
+            )}
+
+            {currentSection.details.skills && (
+              <div className="vr-skills-grid">
+                {currentSection.details.skills.map((sk) => (
+                  <div key={sk.name} className="vr-skill-row">
+                    <span className="vr-skill-name">{sk.name}</span>
+                    <div className="vr-skill-bar-wrap">
+                      <div className="vr-skill-bar" style={{ width: `${sk.level}%` }} />
+                    </div>
+                    <span className="vr-skill-val">{sk.level}%</span>
+                  </div>
+                ))}
+              </div>
+            )}
+
+            {currentSection.details.services && (
+              <div className="vr-services-grid">
+                {currentSection.details.services.map((svc) => (
+                  <div key={svc.title} className="vr-service-card">
+                    <h4>{svc.title}</h4>
+                    <p>{svc.desc}</p>
+                  </div>
+                ))}
+              </div>
+            )}
+
+            {currentSection.details.awards && (
+              <div className="vr-awards-list">
+                {currentSection.details.awards.map((aw, i) => (
+                  <div key={i} className="vr-award-item">
+                    <span className="vr-award-year">{aw.year}</span>
+                    <div>
+                      <strong>{aw.name}</strong>
+                      <p>{aw.desc}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+
+            {currentSection.details.links && (
+              <div className="vr-links-group">
+                <div className="vr-contact-info-row">
+                  <a href={`mailto:${currentSection.details.email}`} className="vr-link-pill">
+                    <FiMail size={14} /> {currentSection.details.email}
+                  </a>
+                  <a href={`tel:${currentSection.details.phone}`} className="vr-link-pill">
+                    <FiPhone size={14} /> {currentSection.details.phone}
+                  </a>
+                </div>
+                <div className="vr-social-links-grid">
+                  {currentSection.details.links.map((lnk) => (
+                    <a
+                      key={lnk.name}
+                      href={lnk.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="vr-modal-btn btn-secondary"
+                    >
+                      <span>{lnk.name}</span>
+                      <FiExternalLink size={13} />
+                    </a>
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
+
+      {/* INSPECTOR MODAL 2: Selected Project Hologram Modal */}
       {selectedProject && (
         <div className="vr-project-modal">
           <div className="vr-modal-card">
@@ -590,7 +1077,9 @@ export default function VRMode({ isOpen, onClose }) {
             </button>
 
             <div className="vr-modal-header">
-              <span className="vr-modal-category">{selectedProject.category}</span>
+              <span className="vr-modal-category" style={{ color: selectedProject.color }}>
+                {selectedProject.category}
+              </span>
               <h3 className="vr-modal-title">{selectedProject.name}</h3>
             </div>
 
@@ -614,15 +1103,17 @@ export default function VRMode({ isOpen, onClose }) {
                   <span>Launch Live Demo</span>
                 </a>
               )}
-              <a
-                href={selectedProject.link}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="vr-modal-btn btn-secondary"
-              >
-                <FiGithub size={15} />
-                <span>Source Code</span>
-              </a>
+              {selectedProject.link && (
+                <a
+                  href={selectedProject.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="vr-modal-btn btn-secondary"
+                >
+                  <FiGithub size={15} />
+                  <span>Source Code</span>
+                </a>
+              )}
             </div>
           </div>
         </div>
@@ -631,7 +1122,7 @@ export default function VRMode({ isOpen, onClose }) {
       {/* Controls Hint Tooltip */}
       <div className="vr-controls-hint">
         <FiInfo size={14} />
-        <span>Drag / Orbit to look around • Click any holographic pedestal to inspect • Use teleport bar below</span>
+        <span>Orbit to look around • Click Farman's 3D Avatar, any of the 9 Projects, or Station Monoliths • Teleport using bottom dock</span>
       </div>
     </div>
   );

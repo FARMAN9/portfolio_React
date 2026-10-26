@@ -118,6 +118,13 @@
 .chatbot-title-group {
   display: flex;
   flex-direction: column;
+  gap: 2px;
+}
+
+.chatbot-title-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
 }
 
 .chatbot-name {
@@ -127,9 +134,21 @@
   letter-spacing: -0.2px;
 }
 
+.chatbot-free-badge {
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  background: rgba(81, 207, 102, 0.2);
+  color: #51cf66;
+  border: 1px solid rgba(81, 207, 102, 0.4);
+  padding: 1px 6px;
+  border-radius: 999px;
+  text-transform: uppercase;
+}
+
 .chatbot-status-text {
   font-size: 11px;
-  color: rgba(255, 255, 255, 0.65);
+  color: rgba(255, 255, 255, 0.7);
 }
 
 .chatbot-header-actions {

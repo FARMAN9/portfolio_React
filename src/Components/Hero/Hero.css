@@ -1,16 +1,17 @@
 .editorial-hero {
   position: relative;
-  min-height: 80svh;
+  min-height: 84svh;
   display: flex;
-  align-items: flex-end;
-  padding: 60px 48px 80px 48px;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 0 0 60px 0;
   overflow: hidden;
   background: linear-gradient(
     180deg,
-    #db3826 0%,
-    #fe6639 24%,
-    #ff8c42 48%,
-    #f8c49e 72%,
+    #cf3322 0%,
+    #e84928 22%,
+    #f76707 45%,
+    #fab072 72%,
     #ffffff 96%,
     #ffffff 100%
   );
@@ -20,8 +21,7 @@
 @media (max-width: 900px) {
   .editorial-hero {
     min-height: 85svh;
-    padding: 40px 24px 60px 24px;
-    align-items: center;
+    padding: 0 0 50px 0;
   }
 }
 
@@ -120,8 +120,9 @@
   position: relative;
   z-index: 3;
   width: 100%;
-  max-width: 1280px;
-  margin: 0 auto;
+  max-width: 100%;
+  padding: 0 48px;
+  margin-top: auto;
   display: grid;
   grid-template-columns: 1.15fr 0.85fr;
   align-items: flex-end;
@@ -131,7 +132,8 @@
 @media (max-width: 900px) {
   .editorial-hero-grid {
     grid-template-columns: 1fr;
-    gap: 30px;
+    gap: 28px;
+    padding: 0 24px;
   }
 }
 
@@ -146,8 +148,8 @@
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  background: rgba(255, 255, 255, 0.12);
-  border: 1px solid rgba(255, 255, 255, 0.18);
+  background: rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.28);
   backdrop-filter: blur(10px);
   padding: 6px 14px;
   border-radius: 30px;
@@ -156,6 +158,7 @@
   font-size: 12px;
   font-weight: 600;
   letter-spacing: 0.3px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
 }
 
 .hero-status-ping {
@@ -168,13 +171,13 @@
 
 .editorial-hero-title {
   font-family: "Syne", "Outfit", sans-serif;
-  font-size: clamp(44px, 6.2vw, 84px);
+  font-size: clamp(48px, 6.2vw, 84px);
   font-weight: 800;
   color: #ffffff;
   letter-spacing: -2px;
   line-height: 0.98;
   margin: 0;
-  text-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+  text-shadow: 0 4px 24px rgba(0, 0, 0, 0.35);
 }
 
 .hero-dynamic-subtitle {
@@ -227,9 +230,9 @@
   align-items: center;
   justify-content: center;
   gap: 8px;
-  background: rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.16);
   backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.28);
+  border: 1px solid rgba(255, 255, 255, 0.32);
   color: #ffffff;
   padding: 10px 22px;
   border-radius: 40px;
@@ -238,7 +241,7 @@
   font-weight: 700;
   cursor: pointer;
   transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
 }
 
 .btn-pill-vr-glow:hover {
@@ -251,23 +254,31 @@
 .hero-social-links {
   display: flex;
   align-items: center;
-  gap: 16px;
+  gap: 10px;
   flex-wrap: wrap;
   padding-top: 6px;
 }
 
 .hero-social-item {
-  display: flex;
+  display: inline-flex;
   align-items: center;
   gap: 6px;
-  color: rgba(255, 255, 255, 0.7);
-  font-size: 12.5px;
+  background: rgba(18, 18, 20, 0.72);
+  color: #ffffff;
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 12px;
   font-weight: 600;
   text-decoration: none;
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
   transition: all 0.2s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
 .hero-social-item:hover {
-  color: #ffa94d;
-  transform: translateY(-1px);
+  background: #f76707;
+  color: #ffffff;
+  transform: translateY(-2px);
+  border-color: #f76707;
 }

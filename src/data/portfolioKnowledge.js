@@ -1,7 +1,12 @@
 export const portfolioProfile = {
   name: "Syed Farman Ali",
-  title: "MERN and Python developer building practical web products",
-  location: "Jammu and Kashmir, India",
+  title: "MERN, React Native & Python Engineer | Machine Learning Researcher",
+  location: "Gangoo, Pulwama, Jammu and Kashmir, India",
+  village: "Gangoo",
+  district: "Pulwama",
+  state: "Jammu and Kashmir",
+  country: "India",
+  pincode: "192301",
   email: "saeedfarman9@gmail.com",
   phone: "+916005943382",
   experienceYears: "3+",
@@ -10,16 +15,26 @@ export const portfolioProfile = {
   publicRepos: "41",
   education: [
     {
-      institution: "University of Kashmir",
-      detail: "University education listed on public LinkedIn profile",
+      institution: "SKUAST-Kashmir",
+      detail: "Academic & research collaboration in Applied AI, Machine Learning, and IoT",
     },
     {
-      institution: "SKUAST-Kashmir",
-      detail: "Academic and research collaboration in AI, ML, Web, and IoT",
+      institution: "National Institute of Technology (NIT)",
+      detail: "Engineering collaboration, regional technology forums, and workshops",
+    },
+    {
+      institution: "University of Kashmir",
+      detail: "Computer science and software engineering education",
     },
   ],
+  affiliations: [
+    "SKUAST-Kashmir",
+    "National Institute of Technology (NIT)",
+    "University of Kashmir",
+    "CID Srinagar (Internship)"
+  ],
   scholarUrl: "https://scholar.google.com/citations?user=y-lv0B0AAAAJ",
-  affiliation: "SKUAST-Kashmir",
+  affiliation: "SKUAST-Kashmir & NIT Collaboration",
   publications: [
     {
       title: "Integrated Morphometric and Cardiac Phenotyping of Kashmir Sheep Using Digital Auscultation and Machine Learning",
@@ -67,6 +82,7 @@ export const portfolioProjects = [
   {
     name: "Portfolio React",
     description: "Modern personal portfolio built with React, Redux, Vite, animated UI sections, and deployable project showcases.",
+    imageUrl: "/projects/portfilo_react.jpg",
     link: "https://github.com/FARMAN9/portfolio_React",
     demo: "https://portfolio-react-theta-steel.vercel.app",
     tech: ["React", "Redux", "Vite", "CSS"],
@@ -74,6 +90,7 @@ export const portfolioProjects = [
   {
     name: "ChatAPP MERN",
     description: "Full-stack MERN chat application with a deployed web experience.",
+    imageUrl: "/projects/chatapp_mern.jpg",
     link: "https://github.com/FARMAN9/ChatAPP-MERN",
     demo: "https://chatapp-mern-vvn5.onrender.com/",
     tech: ["MongoDB", "Express", "React", "Node"],
@@ -81,6 +98,7 @@ export const portfolioProjects = [
   {
     name: "Diabetes Prediction",
     description: "Machine-learning web project for predicting diabetes risk from health inputs.",
+    imageUrl: "/projects/diabetes_ml.jpg",
     link: "https://github.com/FARMAN9/Diabetes-prediction",
     demo: "https://diabetes-prediction-sooty.vercel.app",
     tech: ["Python", "ML", "HTML", "CSS"],
@@ -88,6 +106,7 @@ export const portfolioProjects = [
   {
     name: "Old News Paper",
     description: "News-style web app with a clean JavaScript-driven browsing interface.",
+    imageUrl: "/projects/newspaper.jpg",
     link: "https://github.com/FARMAN9/new_paper",
     demo: "https://oldnews-paper.vercel.app/",
     tech: ["JavaScript", "React", "API"],
@@ -95,6 +114,7 @@ export const portfolioProjects = [
   {
     name: "Django Portfolio",
     description: "Portfolio implementation using Django and Python backend practice.",
+    imageUrl: "/projects/django_port.jpg",
     link: "https://github.com/FARMAN9/portfoilo_django",
     demo: "https://portfoilo-django.vercel.app",
     tech: ["Django", "Python", "HTML"],
@@ -102,18 +122,21 @@ export const portfolioProjects = [
   {
     name: "Myntra Clone",
     description: "React ecommerce storefront clone with product-focused UI components.",
+    imageUrl: "/projects/myntra.jpg",
     link: "https://github.com/FARMAN9/myntra-clone-",
     tech: ["React", "JavaScript", "CSS"],
   },
   {
     name: "YouTube Clone",
     description: "React clone project practicing reusable components and media-style browsing screens.",
+    imageUrl: "/projects/youtube.jpg",
     link: "https://github.com/FARMAN9/youtube-clone",
     tech: ["React", "JavaScript", "CSS"],
   },
   {
     name: "CityCabs",
     description: "Live cab-service website focused on a simple user-facing service presence.",
+    imageUrl: "/projects/citycabs.jpg",
     link: "https://www.citycabs.live/",
     demo: "https://www.citycabs.live/",
     tech: ["Web", "Responsive UI"],
@@ -121,6 +144,7 @@ export const portfolioProjects = [
   {
     name: "Star Beekeepers",
     description: "Live honey-store website with a product-focused storefront experience for Star Beekeepers.",
+    imageUrl: "/projects/star_beekeepers.jpg",
     link: "https://star-beekekpers.vercel.app/",
     demo: "https://star-beekekpers.vercel.app/",
     tech: ["React", "Vercel", "Storefront"],
@@ -241,14 +265,24 @@ export function answerPortfolioQuestion(question, profile = portfolioProfile, sk
     return `📄 You can view and download ${profile.name}'s up-to-date resume here:\n${profile.resumeUrl}\nIt details his MERN, Python/Django, React Native, ML, and internship achievements.`;
   }
 
-  // Google Scholar / Research Publications
-  if (q.includes("scholar") || q.includes("research") || q.includes("paper") || q.includes("publication") || q.includes("skuast") || q.includes("ssrn") || q.includes("citation")) {
-    return `📚 **Google Scholar & Research Publications**:\n${profile.name} has published research in machine learning and cardiac phenotyping connected to SKUAST-Kashmir.\n\nPublications include:\n• "Integrated Morphometric and Cardiac Phenotyping of Kashmir Sheep Using Digital Auscultation and Machine Learning" (SSRN)\n• "Assessing Heart Rate and Digital Auscultation in Kashmir Sheep" (SSRN)\n\n🔗 Google Scholar Profile:\n${profile.scholarUrl || "https://scholar.google.com/citations?user=y-lv0B0AAAAJ"}`;
+  // Pulwama, Gangoo, Jammu & Kashmir Location queries
+  if (q.includes("pulwama") || q.includes("gangoo") || q.includes("kashmir") || q.includes("jammu and kashmir") || q.includes("where do you live") || q.includes("where are you located") || q.includes("where is farman") || q.includes("where are you from") || q.includes("location")) {
+    return `📍 **Location & Roots**:\n${profile.name} is proudly based in **Gangoo, Pulwama, Jammu and Kashmir (J&K), India** (PIN: 192301).\n\n• **Native Place**: Gangoo, Pulwama, Kashmir\n• **Reach**: Available for on-site roles in J&K / India, and high-impact remote engineering worldwide.\n• **Tech Community**: Active builder in the Jammu & Kashmir developer ecosystem, collaborating with research scholars and engineering institutions.`;
   }
 
-  // Location / Where
-  if (q.includes("where do you live") || q.includes("where are you located") || q.includes("where is farman") || q.includes("where are you from") || q.includes("location") || q.includes("from kashmir")) {
-    return `📍 ${profile.name} is based in ${profile.location}, India. He is available for remote opportunities worldwide as well as on-site roles.`;
+  // NIT, SKUAST & Academic Affiliations
+  if (q.includes("nit") || q.includes("skuast") || q.includes("university") || q.includes("college") || q.includes("education") || q.includes("degree")) {
+    return `🎓 **Academic & Research Affiliations**:\n• **SKUAST-Kashmir**: Research collaborator in Artificial Intelligence, Machine Learning, and Digital Auscultation (published in SSRN / Google Scholar).\n• **National Institute of Technology (NIT)**: Active technical collaboration, engineering problem solving, and regional tech forums.\n• **University of Kashmir**: Formal foundation in Computer Science & modern software engineering.`;
+  }
+
+  // Free AI Agent query
+  if (q.includes("free ai") || q.includes("ai agent") || q.includes("chatgpt") || q.includes("bot") || q.includes("who built you")) {
+    return `🤖 **Farman Free AI Agent**:\nI am Farman's **Free Autonomous AI Agent**! Built natively with zero API key barriers to provide visitors, recruiters, and search indexers (Google, Bing, ChatGPT, Perplexity) instant knowledge about Farman's full-stack work in Gangoo, Pulwama, J&K, his SKUAST/NIT research, and live project demos.`;
+  }
+
+  // Google Scholar / Research Publications
+  if (q.includes("scholar") || q.includes("research") || q.includes("paper") || q.includes("publication") || q.includes("ssrn") || q.includes("citation")) {
+    return `📚 **Google Scholar & Research Publications**:\n${profile.name} has published peer-reviewed AI/ML research connected to SKUAST-Kashmir & regional academic teams.\n\nPublications:\n• "Integrated Morphometric and Cardiac Phenotyping of Kashmir Sheep Using Digital Auscultation and Machine Learning" (SSRN)\n• "Assessing Heart Rate and Digital Auscultation in Kashmir Sheep" (SSRN)\n\n🔗 Google Scholar Profile:\n${profile.scholarUrl || "https://scholar.google.com/citations?user=y-lv0B0AAAAJ"}`;
   }
 
   // Who is Farman / About

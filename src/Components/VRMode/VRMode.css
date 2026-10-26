@@ -261,15 +261,16 @@
   }
 }
 
-/* Selected Project Hologram Modal */
 .vr-project-modal {
   position: absolute;
   top: 50%;
   right: 24px;
   transform: translateY(-50%);
   z-index: 20;
-  width: min(360px, calc(100vw - 48px));
+  width: min(420px, calc(100vw - 36px));
+  max-height: 84vh;
   animation: modalSlideRight 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  display: flex;
 }
 
 @keyframes modalSlideRight {
@@ -278,17 +279,20 @@
 }
 
 .vr-modal-card {
-  background: rgba(16, 10, 10, 0.94);
-  backdrop-filter: blur(24px);
-  -webkit-backdrop-filter: blur(24px);
-  border: 1px solid rgba(247, 103, 7, 0.4);
+  background: rgba(16, 12, 18, 0.95);
+  backdrop-filter: blur(28px);
+  -webkit-backdrop-filter: blur(28px);
+  border: 1px solid rgba(255, 87, 34, 0.45);
   border-radius: 20px;
-  padding: 22px;
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.7), 0 0 24px rgba(247, 103, 7, 0.2);
+  padding: 24px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8), 0 0 30px rgba(255, 87, 34, 0.2);
   display: flex;
   flex-direction: column;
   gap: 14px;
   position: relative;
+  width: 100%;
+  overflow-y: auto;
+  max-height: 80vh;
 }
 
 .vr-modal-close {
@@ -298,42 +302,241 @@
   background: rgba(255, 255, 255, 0.08);
   border: none;
   color: rgba(255, 255, 255, 0.8);
-  width: 28px;
-  height: 28px;
+  width: 30px;
+  height: 30px;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
   transition: all 0.2s ease;
+  z-index: 2;
 }
 
 .vr-modal-close:hover {
-  background: rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.22);
   color: #ffffff;
 }
 
 .vr-modal-category {
-  font-size: 11px;
-  font-weight: 700;
+  font-size: 10.5px;
+  font-weight: 800;
   text-transform: uppercase;
-  letter-spacing: 0.8px;
-  color: #f76707;
+  letter-spacing: 1px;
 }
 
 .vr-modal-title {
-  font-family: "Syne", sans-serif;
+  font-family: "Syne", "Outfit", sans-serif;
   font-size: 20px;
   font-weight: 800;
   color: #ffffff;
-  margin: 2px 0 0 0;
+  margin: 3px 0 2px 0;
+  letter-spacing: -0.4px;
+}
+
+.vr-modal-subtitle {
+  font-size: 12px;
+  font-weight: 600;
+  color: #ffa07a;
+  margin: 0;
+}
+
+.vr-modal-location {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11.5px;
+  font-weight: 600;
+  color: #ff8a65;
+  background: rgba(255, 87, 34, 0.12);
+  border: 1px solid rgba(255, 87, 34, 0.25);
+  padding: 4px 10px;
+  border-radius: 999px;
+  width: fit-content;
+  margin: 0;
 }
 
 .vr-modal-desc {
-  font-size: 13.5px;
-  line-height: 1.5;
-  color: rgba(255, 255, 255, 0.8);
+  font-size: 13px;
+  line-height: 1.55;
+  color: rgba(255, 255, 255, 0.85);
   margin: 0;
+}
+
+/* Modal Lists */
+.vr-modal-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.vr-modal-list li {
+  font-size: 12.5px;
+  line-height: 1.45;
+  color: rgba(255, 255, 255, 0.78);
+  padding-left: 14px;
+  position: relative;
+}
+
+.vr-modal-list li::before {
+  content: "•";
+  position: absolute;
+  left: 0;
+  color: #ff5722;
+  font-weight: bold;
+}
+
+/* Skills Matrix in VR */
+.vr-skills-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.vr-skill-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 12px;
+}
+
+.vr-skill-name {
+  width: 140px;
+  color: #ffffff;
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.vr-skill-bar-wrap {
+  flex: 1;
+  height: 5px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.vr-skill-bar {
+  height: 100%;
+  background: linear-gradient(90deg, #ff5722, #ffa07a);
+  border-radius: 999px;
+}
+
+.vr-skill-val {
+  width: 34px;
+  text-align: right;
+  font-size: 11px;
+  font-weight: 700;
+  color: #ffa07a;
+}
+
+/* Services in VR */
+.vr-services-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.vr-service-card {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  padding: 10px 14px;
+}
+
+.vr-service-card h4 {
+  margin: 0 0 3px 0;
+  font-size: 13px;
+  color: #ffffff;
+  font-weight: 700;
+}
+
+.vr-service-card p {
+  margin: 0;
+  font-size: 11.5px;
+  color: rgba(255, 255, 255, 0.7);
+  line-height: 1.4;
+}
+
+/* Awards in VR */
+.vr-awards-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.vr-award-item {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  font-size: 12px;
+  background: rgba(255, 255, 255, 0.03);
+  padding: 8px 12px;
+  border-radius: 10px;
+  border-left: 2px solid #ff5722;
+}
+
+.vr-award-year {
+  background: rgba(255, 87, 34, 0.18);
+  color: #ff8a65;
+  font-weight: 800;
+  font-size: 10px;
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+
+.vr-award-item strong {
+  display: block;
+  color: #ffffff;
+  font-size: 12.5px;
+  margin-bottom: 2px;
+}
+
+.vr-award-item p {
+  margin: 0;
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.65);
+}
+
+/* Contact Links in VR */
+.vr-links-group {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.vr-contact-info-row {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.vr-link-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.06);
+  padding: 6px 12px;
+  border-radius: 8px;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.vr-link-pill:hover {
+  background: rgba(255, 87, 34, 0.2);
+  color: #ffa07a;
+}
+
+.vr-social-links-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px;
 }
 
 .vr-modal-tech-list {
@@ -365,21 +568,21 @@
   gap: 6px;
   padding: 10px 14px;
   border-radius: 30px;
-  font-size: 12.5px;
+  font-size: 12px;
   font-weight: 700;
   text-decoration: none;
   transition: all 0.2s ease;
 }
 
 .vr-modal-btn.btn-primary {
-  background: linear-gradient(135deg, #f76707 0%, #e03131 100%);
+  background: linear-gradient(135deg, #ff5722 0%, #e64a19 100%);
   color: #ffffff;
-  box-shadow: 0 4px 14px rgba(247, 103, 7, 0.4);
+  box-shadow: 0 4px 14px rgba(255, 87, 34, 0.4);
 }
 
 .vr-modal-btn.btn-primary:hover {
   transform: translateY(-2px);
-  box-shadow: 0 6px 18px rgba(247, 103, 7, 0.6);
+  box-shadow: 0 6px 18px rgba(255, 87, 34, 0.6);
 }
 
 .vr-modal-btn.btn-secondary {
@@ -390,4 +593,5 @@
 
 .vr-modal-btn.btn-secondary:hover {
   background: rgba(255, 255, 255, 0.18);
+  color: #ff8a65;
 }

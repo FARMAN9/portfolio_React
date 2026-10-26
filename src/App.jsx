@@ -37,24 +37,19 @@ function Home() {
   }, [profileStatus, skillsStatus, dispatch]);
 
   useEffect(() => {
-    if (profileStatus === 'succeeded' || profileStatus === 'failed') {
-      if (skillsStatus === 'succeeded' || skillsStatus === 'failed') {
-        const timer = setTimeout(() => setShowLoader(false), 350);
-        return () => clearTimeout(timer);
-      }
-    }
-  }, [profileStatus, skillsStatus]);
+    // Safety fallback timer
+    const safetyTimer = setTimeout(() => setShowLoader(false), 2800);
+    return () => clearTimeout(safetyTimer);
+  }, []);
 
   return (
     <>
       <SEO />
       <InteractiveEffects />
-      {showLoader && <Loader />}
+      {showLoader && <Loader onFinished={() => setShowLoader(false)} />}
       <div style={{ opacity: showLoader ? 0 : 1, transition: 'opacity 0.4s ease-in-out' }}>
         {/* Editorial Frame matching reference image */}
         <main className="editorial-container">
-          {/* Top Minimal Navbar with VR Mode trigger */}
-          <NavBar onOpenVR={() => setIsVROpen(true)} />
           <Hero onOpenVR={() => setIsVROpen(true)} />
           <MyWork />
           <Services />

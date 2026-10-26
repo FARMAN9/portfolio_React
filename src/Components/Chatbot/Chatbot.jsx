@@ -6,12 +6,14 @@ import { FiSend, FiRefreshCw, FiVolume2, FiVolumeX, FiX, FiMessageSquare } from 
 import { FaRobot } from 'react-icons/fa';
 
 const SUGGESTIONS = [
+  "📍 Where is Farman based? (Gangoo, Pulwama)",
+  "🎓 SKUAST & NIT Collaborations",
   "💼 Core Skills & Tech Stack",
-  "🚀 Featured Projects & Demos",
-  "📚 Research & Google Scholar",
-  "📄 Resume & Background",
-  "📬 Contact & Hire Farman",
-  "🎓 Education & Location"
+  "🚀 9 Featured Project Mockups",
+  "📚 Google Scholar & AI Research",
+  "📬 Hire & Contact Farman",
+  "🥽 Launch 3D VR Mode",
+  "📄 Resume & Background"
 ];
 
 // Lightweight pleasant Web Audio API chime
@@ -121,7 +123,7 @@ function Chatbot() {
   const [messages, setMessages] = useState([
     {
       sender: 'ai',
-      text: "👋 Hi! I'm Farman's AI Portfolio Assistant. Ask me anything about his full-stack MERN & Python development, machine learning projects, or work experience!"
+      text: "👋 Hello! I am Farman's **Free Autonomous AI Agent**.\n\nI can answer questions about Farman's software engineering work in **Gangoo, Pulwama (Jammu & Kashmir)**, his **SKUAST & NIT** research, **MERN / Python** tech stack, or live project demos.\n\nWhat would you like to know?"
     }
   ]);
   const [input, setInput] = useState('');
@@ -211,8 +213,11 @@ function Chatbot() {
                 <span className="chatbot-status-dot" title="Online" />
               </div>
               <div className="chatbot-title-group">
-                <span className="chatbot-name">Farman AI Assistant</span>
-                <span className="chatbot-status-text">Available • Instant Answers</span>
+                <div className="chatbot-title-row">
+                  <span className="chatbot-name">Farman AI Agent</span>
+                  <span className="chatbot-free-badge">FREE</span>
+                </div>
+                <span className="chatbot-status-text">⚡ Autonomous &amp; Instant · Online</span>
               </div>
             </div>
             <div className="chatbot-header-actions">
@@ -249,7 +254,7 @@ function Chatbot() {
               <div key={idx} className={`chat-message ${msg.sender}`}>
                 {msg.sender === 'ai' && (
                   <div className="chat-ai-label">
-                    <span>Farman AI</span>
+                    <span>Farman AI Agent</span>
                   </div>
                 )}
                 <div className="chat-text">
@@ -260,7 +265,7 @@ function Chatbot() {
 
             {isLoading && (
               <div className="chat-message ai">
-                <div className="chat-ai-label"><span>Farman AI</span></div>
+                <div className="chat-ai-label"><span>Farman AI Agent</span></div>
                 <div className="chatbot-typing-bubble">
                   <span className="typing-dot" />
                   <span className="typing-dot" />

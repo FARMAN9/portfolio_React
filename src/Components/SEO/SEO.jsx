@@ -2,9 +2,9 @@
 import { useEffect } from 'react';
 
 const SITE_URL = 'https://portfolio-react-theta-steel.vercel.app';
-const DEFAULT_IMAGE = `${SITE_URL}/projects/portfilo_react.png`;
-const DEFAULT_TITLE = 'Syed Farman Ali | MERN, React Native & Python Developer';
-const DEFAULT_DESCRIPTION = 'Portfolio of Syed Farman Ali, a MERN, React Native, and Python/Django developer from Kashmir building responsive web apps, mobile interfaces, and machine-learning projects.';
+const DEFAULT_IMAGE = `${SITE_URL}/projects/portfilo_react.jpg`;
+const DEFAULT_TITLE = 'Syed Farman Ali | MERN, Python & ML Engineer | Gangoo, Pulwama, Jammu & Kashmir';
+const DEFAULT_DESCRIPTION = 'Official portfolio of Syed Farman Ali: Full-stack MERN, React Native & Python engineer based in Gangoo, Pulwama, Jammu & Kashmir. Collaborator with SKUAST-Kashmir and NIT in AI/ML & IoT.';
 
 function setMeta(selector, attribute, value) {
   let element = document.head.querySelector(selector);
