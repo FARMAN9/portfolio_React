@@ -1,0 +1,54 @@
+.tech-strip-wrapper {
+  background: #fbfbfd;
+  border-top: 1px solid #eaeaea;
+  border-bottom: 1px solid #eaeaea;
+  padding: 24px 0;
+  overflow: hidden;
+  position: relative;
+}
+
+.tech-strip-inner {
+  display: flex;
+  width: 100%;
+  overflow: hidden;
+  mask-image: linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%);
+}
+
+.tech-strip-track {
+  display: flex;
+  align-items: center;
+  gap: 48px;
+  animation: techMarquee 25s linear infinite;
+  width: max-content;
+}
+
+.tech-strip-wrapper:hover .tech-strip-track {
+  animation-play-state: paused;
+}
+
+@keyframes techMarquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-33.33%); }
+}
+
+.tech-logo-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  opacity: 0.75;
+  transition: all 0.2s ease;
+  cursor: default;
+}
+
+.tech-logo-item:hover {
+  opacity: 1;
+  transform: scale(1.08);
+}
+
+.tech-name {
+  font-family: "Plus Jakarta Sans", sans-serif;
+  font-size: 13.5px;
+  font-weight: 700;
+  color: #121214;
+}

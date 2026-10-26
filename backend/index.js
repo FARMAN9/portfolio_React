@@ -130,7 +130,10 @@ app.delete('/api/skills/:id', authenticateToken, async (req, res) => {
 app.get('/api/profile', async (req, res) => {
   try {
     const profile = await prisma.profile.findFirst();
-    res.json(profile || {});
+    res.json({
+      scholarUrl: portfolioProfile.scholarUrl,
+      ...(profile || {}),
+    });
   } catch (error) { res.status(500).json({ error: "Error" }); }
 });
 
@@ -182,31 +185,35 @@ app.post('/api/chat', async (req, res) => {
       : portfolioProjects;
     const apiKey = process.env.GEMINI_API_KEY;
 
-    if (!apiKey) {
+    if (!apiKey || !apiKey.startsWith("AIzaSy")) {
       return res.json({ reply: answerPortfolioQuestion(message, profile, skills, projects) });
     }
 
-    const genAI = new GoogleGenerativeAI(apiKey);
-    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+    try {
+      const genAI = new GoogleGenerativeAI(apiKey);
+      const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
-    const systemPrompt = `
-      You are an AI assistant on the personal portfolio website of ${profile.name}. 
-      Your job is to answer questions from visitors about Farman's skills, experience, and projects.
-      Always be polite, professional, concise, and specific. Use only the portfolio facts below.
-      If the visitor asks something outside the portfolio facts, say you do not know and suggest using the contact section.
+      const systemPrompt = `
+        You are an AI assistant on the personal portfolio website of ${profile.name}. 
+        Your job is to answer questions from visitors about Farman's skills, experience, and projects.
+        Always be polite, professional, concise, and specific. Use only the portfolio facts below.
+        If the visitor asks something outside the portfolio facts, say you do not know and suggest using the contact section.
 
-      ${createPortfolioContext(profile, skills, projects)}
+        ${createPortfolioContext(profile, skills, projects)}
 
-      Visitor question: "${message}"
-    `;
+        Visitor question: "${message}"
+      `;
 
-    const result = await model.generateContent(systemPrompt);
-    const responseText = result.response.text();
-    
-    res.json({ reply: responseText });
+      const result = await model.generateContent(systemPrompt);
+      const responseText = result.response.text();
+      return res.json({ reply: responseText });
+    } catch (aiErr) {
+      console.warn("Gemini call failed, falling back to local portfolio knowledge:", aiErr.message);
+      return res.json({ reply: answerPortfolioQuestion(message, profile, skills, projects) });
+    }
   } catch (error) {
     console.error("Chat API error:", error);
-    res.status(500).json({ error: "Failed to communicate with AI agent." });
+    res.json({ reply: answerPortfolioQuestion(req.body?.message || "") });
   }
 });
 

@@ -1,0 +1,126 @@
+/* Top Scroll Progress Bar */
+.top-scroll-progress-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #f76707 0%, #ffa94d 50%, #e03131 100%);
+  z-index: 10000;
+  box-shadow: 0 0 12px rgba(247, 103, 7, 0.8);
+  pointer-events: none;
+  transition: width 0.1s linear;
+}
+
+/* Custom Glowing Cursor */
+.custom-cursor-glow {
+  position: fixed;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  z-index: 99999;
+  transform: translate3d(-100px, -100px, 0);
+  transition: opacity 0.3s ease;
+  will-change: transform;
+}
+
+.cursor-dot {
+  width: 8px;
+  height: 8px;
+  background: #f76707;
+  border-radius: 50%;
+  position: absolute;
+  top: -4px;
+  left: -4px;
+  box-shadow: 0 0 10px rgba(247, 103, 7, 0.8);
+  transition: transform 0.15s ease;
+}
+
+.cursor-ring {
+  width: 32px;
+  height: 32px;
+  border: 1.5px solid rgba(247, 103, 7, 0.45);
+  border-radius: 50%;
+  position: absolute;
+  top: -16px;
+  left: -16px;
+  transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.custom-cursor-glow.is-hovering .cursor-dot {
+  transform: scale(0.4);
+  background: #ffa94d;
+}
+
+.custom-cursor-glow.is-hovering .cursor-ring {
+  width: 52px;
+  height: 52px;
+  top: -26px;
+  left: -26px;
+  background: rgba(247, 103, 7, 0.1);
+  border-color: rgba(247, 103, 7, 0.8);
+  backdrop-filter: blur(2px);
+}
+
+/* Floating Back To Top Button */
+.floating-scroll-top-btn {
+  position: fixed;
+  bottom: 24px;
+  right: 92px;
+  z-index: 9997;
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  background: rgba(18, 18, 20, 0.92);
+  backdrop-filter: blur(14px);
+  border: none;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(16px) scale(0.9);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+}
+
+.floating-scroll-top-btn.is-visible {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0) scale(1);
+}
+
+.floating-scroll-top-btn:hover {
+  transform: translateY(-3px) scale(1.06);
+  box-shadow: 0 12px 28px rgba(247, 103, 7, 0.3);
+}
+
+.scroll-progress-ring {
+  position: absolute;
+  top: 0;
+  left: 0;
+  transform: rotate(-90deg);
+}
+
+.ring-progress {
+  transition: stroke-dashoffset 0.15s ease;
+}
+
+.scroll-top-icon {
+  position: relative;
+  z-index: 2;
+  transition: transform 0.2s ease;
+}
+
+.floating-scroll-top-btn:hover .scroll-top-icon {
+  transform: translateY(-2px);
+  color: #ffa94d;
+}
+
+@media (max-width: 480px) {
+  .floating-scroll-top-btn {
+    bottom: 84px;
+    right: 16px;
+  }
+}

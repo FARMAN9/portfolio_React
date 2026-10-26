@@ -25,6 +25,7 @@ const fallbackData = {
   githubUrl: "https://github.com/FARMAN9",
   linkedinUrl: "https://www.linkedin.com/in/farman9",
   leetcodeUrl: "https://leetcode.com/saeedfarman9/",
+  scholarUrl: "https://scholar.google.com/citations?user=y-lv0B0AAAAJ",
   resumeUrl: "https://rxresu.me/farman9/python-django-developer"
 };
 

@@ -1,81 +1,151 @@
-import { useRef, useState } from "react";
+import { useState } from "react";
 import "./Navbar.css";
-import ali from "../../assets/ali.png";
-import backgound from "../../assets/nav_underline.svg";
-import menu_open from "../../assets/menu_open.svg";
-import menu_close from "../../assets/menu_close.svg";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { scrollToSection } from "../../utils/navigation";
+import { FiMenu, FiX, FiArrowUpRight } from "react-icons/fi";
 
-function NavBar() {
-  const [menu, setMenu] = useState("home");
-  const menuRef = useRef();
+// eslint-disable-next-line react/prop-types
+function NavBar({ onOpenVR }) {
+  const [activeNav, setActiveNav] = useState("home");
+  const [mobileOpen, setMobileOpen] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
 
-  const goToSection = (section) => {
-    setMenu(section);
-    closeMenu();
+  const handleNavClick = (section) => {
+    setActiveNav(section);
+    setMobileOpen(false);
 
     if (location.pathname !== "/") {
       navigate("/");
-      scrollToSection(section);
+      setTimeout(() => scrollToSection(section), 100);
       return;
     }
 
     scrollToSection(section);
   };
 
-  const openMenu = () => {
-    menuRef.current.style.right = "0";
-  };
-  const closeMenu = () => {
-    menuRef.current.style.right = "-350px";
-  };
   return (
-    <nav className="navbar">
-      <div className="logo">
-        <Link className="anchor-link" to="/" onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}>
-          <h1>FARMAN</h1>
-          <img src={ali} alt="" />
+    <header className="editorial-navbar">
+      <div className="editorial-nav-inner">
+        {/* Logo matching folio. / farman. */}
+        <Link 
+          to="/" 
+          className="editorial-logo"
+          onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+        >
+          <span>folio</span>
+          <span className="logo-dot">.</span>
         </Link>
-      </div>
-      <img
-        src={menu_open}
-        onClick={openMenu}
-        alt=""
-        className="nav-mob-open d-md-none"
-      />
 
-      <ul ref={menuRef} className="nav-menu d-none d-md-flex">
-        <img
-          src={menu_close}
-          alt=""
-          className="nav-mob-close d-md-none"
-          onClick={closeMenu}
-        />
-        <li>
-          {" "}
-          <button type="button" className="nav-link-button" onClick={() => goToSection("home")}>Home</button>
-          {menu === "home" ? <img src={backgound} alt="" /> : <></>}
-        </li>
-        <li>
-          <button type="button" className="nav-link-button" onClick={() => goToSection("about")}>About Me</button>
-          {menu === "about" ? <img src={backgound} alt="" /> : <></>}
-        </li>
-        <li>
-          <button type="button" className="nav-link-button" onClick={() => goToSection("work")}>Portfolio</button>
-          {menu === "work" ? <img src={backgound} alt="" /> : <></>}
-        </li>
-        <li>
-          <button type="button" className="nav-link-button" onClick={() => goToSection("contact")}>Contact</button>
-          {menu === "contact" ? <img src={backgound} alt="" /> : <></>}
-        </li>
-      </ul>
-      <button type="button" className="nav-connect" onClick={() => goToSection("contact")}>
-          Connect With Me
-      </button>
-    </nav>
+        {/* Center Nav Links */}
+        <nav className="editorial-nav-links">
+          <button 
+            type="button" 
+            className={`nav-item ${activeNav === "home" ? "is-active" : ""}`}
+            onClick={() => handleNavClick("home")}
+          >
+            Home
+          </button>
+          <button 
+            type="button" 
+            className={`nav-item ${activeNav === "work" ? "is-active" : ""}`}
+            onClick={() => handleNavClick("work")}
+          >
+            Work
+          </button>
+          <button 
+            type="button" 
+            className={`nav-item ${activeNav === "services" ? "is-active" : ""}`}
+            onClick={() => handleNavClick("services")}
+          >
+            Services
+          </button>
+          <button 
+            type="button" 
+            className={`nav-item ${activeNav === "testimonials" ? "is-active" : ""}`}
+            onClick={() => handleNavClick("testimonials")}
+          >
+            Reviews
+          </button>
+          <button 
+            type="button" 
+            className={`nav-item ${activeNav === "recognition" ? "is-active" : ""}`}
+            onClick={() => handleNavClick("recognition")}
+          >
+            Milestones
+          </button>
+          <button 
+            type="button" 
+            className={`nav-item ${activeNav === "contact" ? "is-active" : ""}`}
+            onClick={() => handleNavClick("contact")}
+          >
+            Contact
+          </button>
+        </nav>
+
+        {/* Right CTA Buttons */}
+        <div className="editorial-nav-actions">
+          <button
+            type="button"
+            className="btn-nav-vr"
+            onClick={onOpenVR}
+            title="Experience 3D Virtual Reality Holodeck"
+          >
+            <span className="vr-nav-icon">🥽</span>
+            <span>VR Mode</span>
+          </button>
+
+          <button 
+            type="button" 
+            className="btn-nav-talk"
+            onClick={() => handleNavClick("contact")}
+          >
+            Let&apos;s talk
+          </button>
+
+          {/* Mobile Menu Toggle Button */}
+          <button 
+            type="button" 
+            className="mobile-nav-toggle"
+            onClick={() => setMobileOpen(!mobileOpen)}
+            aria-label="Toggle menu"
+          >
+            {mobileOpen ? <FiX size={22} /> : <FiMenu size={22} />}
+          </button>
+        </div>
+      </div>
+
+      {/* Mobile Drawer */}
+      {mobileOpen && (
+        <div className="editorial-mobile-drawer">
+          <div className="mobile-drawer-links">
+            <button type="button" onClick={() => handleNavClick("home")}>Home</button>
+            <button type="button" onClick={() => handleNavClick("work")}>A Selection of My Work</button>
+            <button type="button" onClick={() => handleNavClick("services")}>Creative Solutions</button>
+            <button type="button" onClick={() => handleNavClick("testimonials")}>Client Reviews</button>
+            <button type="button" onClick={() => handleNavClick("recognition")}>Awards &amp; Recognition</button>
+            <button type="button" onClick={() => handleNavClick("contact")}>Contact &amp; Connect</button>
+          </div>
+          <button
+            type="button"
+            className="btn-pill-dark mobile-vr-btn"
+            onClick={() => {
+              setMobileOpen(false);
+              onOpenVR();
+            }}
+          >
+            🥽 Launch 3D / VR Mode
+          </button>
+          <button 
+            type="button" 
+            className="btn-pill-orange mobile-talk-btn"
+            onClick={() => handleNavClick("contact")}
+          >
+            Let&apos;s Talk <FiArrowUpRight />
+          </button>
+        </div>
+      )}
+    </header>
   );
 }
 

@@ -1,0 +1,107 @@
+.recognition-table {
+  display: flex;
+  flex-direction: column;
+  border-top: 1px solid #e5e5ea;
+}
+
+.recognition-row {
+  display: grid;
+  grid-template-columns: 280px 1fr 60px 80px;
+  align-items: center;
+  gap: 24px;
+  padding: 24px 8px;
+  border-bottom: 1px solid #e5e5ea;
+  transition: all 0.2s ease;
+}
+
+.recognition-row:hover {
+  background: #fbfbfd;
+  padding-left: 14px;
+}
+
+@media (max-width: 860px) {
+  .recognition-row {
+    grid-template-columns: 1fr auto;
+    gap: 12px;
+  }
+  .recognition-desc-col {
+    grid-column: 1 / -1;
+  }
+}
+
+.rec-title {
+  font-family: "Syne", "Plus Jakarta Sans", sans-serif;
+  font-size: 16px;
+  font-weight: 800;
+  color: #121214;
+  margin: 0;
+}
+
+.rec-desc {
+  font-size: 13.5px;
+  color: #64646e;
+  line-height: 1.5;
+  margin: 0;
+}
+
+.recognition-trophy-col {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.rec-title-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.rec-title-link:hover {
+  color: #ea580c;
+}
+
+.rec-title-arrow {
+  color: #ea580c;
+  transition: transform 0.2s ease;
+}
+
+.rec-title-link:hover .rec-title-arrow {
+  transform: translate(2px, -2px);
+}
+
+.trophy-badge {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: rgba(252, 196, 25, 0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.trophy-badge-scholar {
+  background: rgba(66, 133, 244, 0.14);
+}
+
+.trophy-icon {
+  color: #f59f00;
+  font-size: 18px;
+}
+
+.scholar-icon {
+  color: #2563eb;
+  font-size: 19px;
+}
+
+.recognition-year-col {
+  text-align: right;
+}
+
+.rec-year {
+  font-family: "Syne", sans-serif;
+  font-size: 15px;
+  font-weight: 800;
+  color: #121214;
+}
