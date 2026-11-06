@@ -1,17 +1,22 @@
 import { useMemo } from 'react';
 import { getCodeScreenTexture, getMetricsScreenTexture } from './TextureGenerator';
+import RealPlant from './RealPlant';
 
 /* eslint-disable react/prop-types */
 export default function Workstation({ onInspect }) {
   const codeScreen = useMemo(() => getCodeScreenTexture(), []);
   const metricsScreen = useMemo(() => getMetricsScreenTexture(), []);
 
-  // Desk center position: [0, 0, -3.0]
-  const deskY = 0.74; // Desk surface height
+  // Desk surface height and dimensions (matching Scandinavian minimalist desk in Reference 4)
+  const deskY = 0.74;
+  const deskW = 2.4;
+  const deskD = 1.0;
+  const legOffsetW = deskW / 2 - 0.08;
+  const legOffsetD = deskD / 2 - 0.08;
 
   return (
     <group name="Workstation" position={[0, 0, -3.0]}>
-      {/* 1. Executive Desk Surface */}
+      {/* 1. Scandinavian Light Oak Desktop Surface (Reference Photo 4) */}
       <mesh
         position={[0, deskY, 0]}
         castShadow
@@ -19,267 +24,265 @@ export default function Workstation({ onInspect }) {
         onClick={onInspect}
         style={{ cursor: 'pointer' }}
       >
-        <boxGeometry args={[2.5, 0.05, 1.05]} />
+        <boxGeometry args={[deskW, 0.045, deskD]} />
         <meshStandardMaterial
-          color="#48382e"
-          roughness={0.3}
-          metalness={0.1}
+          color="#d8c3a9"
+          roughness={0.35}
+          metalness={0.05}
         />
       </mesh>
 
-      {/* Desk Chamfered Edge Trim */}
-      <mesh position={[0, deskY - 0.03, 0]}>
-        <boxGeometry args={[2.52, 0.015, 1.07]} />
-        <meshStandardMaterial color="#110d0a" roughness={0.7} />
+      {/* Chamfered edge trim under the desktop */}
+      <mesh position={[0, deskY - 0.026, 0]}>
+        <boxGeometry args={[deskW - 0.02, 0.01, deskD - 0.02]} />
+        <meshStandardMaterial color="#bda389" roughness={0.5} />
       </mesh>
 
-      {/* Desk Cable Grommet */}
-      <mesh position={[0.6, deskY + 0.026, -0.38]} rotation={[-Math.PI / 2, 0, 0]}>
-        <cylinderGeometry args={[0.035, 0.035, 0.005, 24]} />
-        <meshStandardMaterial color="#33373d" metalness={0.8} roughness={0.2} />
+      {/* 4 Clean Brushed Steel Vertical Square Legs (Reference Photo 4) */}
+      {[
+        [-legOffsetW, legOffsetD],
+        [legOffsetW, legOffsetD],
+        [-legOffsetW, -legOffsetD],
+        [legOffsetW, -legOffsetD]
+      ].map(([lx, lz], idx) => (
+        <group key={`desk-leg-${idx}`} position={[lx, deskY / 2, lz]}>
+          <mesh castShadow receiveShadow>
+            <boxGeometry args={[0.045, deskY, 0.045]} />
+            <meshStandardMaterial color="#9ea6b0" metalness={0.85} roughness={0.25} />
+          </mesh>
+          {/* Subtle floor glide foot */}
+          <mesh position={[0, -deskY / 2 + 0.005, 0]}>
+            <cylinderGeometry args={[0.025, 0.025, 0.01, 16]} />
+            <meshStandardMaterial color="#2d3139" roughness={0.8} />
+          </mesh>
+        </group>
+      ))}
+
+      {/* Recessed Perimeter Steel Sub-Frame connecting legs */}
+      <mesh position={[0, deskY - 0.035, legOffsetD]}>
+        <boxGeometry args={[deskW - 0.16, 0.035, 0.04]} />
+        <meshStandardMaterial color="#9ea6b0" metalness={0.85} roughness={0.25} />
+      </mesh>
+      <mesh position={[0, deskY - 0.035, -legOffsetD]}>
+        <boxGeometry args={[deskW - 0.16, 0.035, 0.04]} />
+        <meshStandardMaterial color="#9ea6b0" metalness={0.85} roughness={0.25} />
+      </mesh>
+      <mesh position={[-legOffsetW, deskY - 0.035, 0]}>
+        <boxGeometry args={[0.04, 0.035, deskD - 0.16]} />
+        <meshStandardMaterial color="#9ea6b0" metalness={0.85} roughness={0.25} />
+      </mesh>
+      <mesh position={[legOffsetW, deskY - 0.035, 0]}>
+        <boxGeometry args={[0.04, 0.035, deskD - 0.16]} />
+        <meshStandardMaterial color="#9ea6b0" metalness={0.85} roughness={0.25} />
       </mesh>
 
-      {/* Heavy-Duty Steel Sled Legs */}
-      {/* Left Sled Leg */}
-      <group position={[-1.12, deskY / 2, 0]}>
-        <mesh castShadow receiveShadow>
-          <boxGeometry args={[0.06, deskY, 0.95]} />
-          <meshStandardMaterial color="#1a1c20" metalness={0.85} roughness={0.25} />
-        </mesh>
-        {/* Foot pad */}
-        <mesh position={[0, -deskY / 2 + 0.01, 0]}>
-          <boxGeometry args={[0.1, 0.02, 0.98]} />
-          <meshStandardMaterial color="#111215" roughness={0.8} />
-        </mesh>
-      </group>
-
-      {/* Right Sled Leg */}
-      <group position={[1.12, deskY / 2, 0]}>
-        <mesh castShadow receiveShadow>
-          <boxGeometry args={[0.06, deskY, 0.95]} />
-          <meshStandardMaterial color="#1a1c20" metalness={0.85} roughness={0.25} />
-        </mesh>
-        {/* Foot pad */}
-        <mesh position={[0, -deskY / 2 + 0.01, 0]}>
-          <boxGeometry args={[0.1, 0.02, 0.98]} />
-          <meshStandardMaterial color="#111215" roughness={0.8} />
-        </mesh>
-      </group>
-
-      {/* Desk Stiffener Crossbeam */}
-      <mesh position={[0, deskY - 0.08, -0.2]}>
-        <boxGeometry args={[2.18, 0.04, 0.05]} />
-        <meshStandardMaterial color="#1a1c20" metalness={0.85} roughness={0.25} />
+      {/* 2. Premium Dark Leather Desk Mat */}
+      <mesh position={[-0.1, deskY + 0.024, 0.06]} receiveShadow>
+        <boxGeometry args={[1.05, 0.004, 0.48]} />
+        <meshStandardMaterial color="#1a1c22" roughness={0.8} metalness={0.05} />
+      </mesh>
+      {/* Subtle stitched trim */}
+      <mesh position={[-0.1, deskY + 0.026, -0.175]}>
+        <boxGeometry args={[1.03, 0.001, 0.004]} />
+        <meshBasicMaterial color="#339af0" />
       </mesh>
 
-      {/* 2. Premium Desk Mat */}
-      <mesh position={[0, deskY + 0.027, 0.05]} receiveShadow>
-        <boxGeometry args={[0.96, 0.004, 0.44]} />
-        <meshStandardMaterial color="#17191e" roughness={0.82} metalness={0.05} />
-      </mesh>
-      {/* Desk Mat Orange Accent Stitching */}
-      <mesh position={[0, deskY + 0.029, -0.168]}>
-        <boxGeometry args={[0.94, 0.001, 0.004]} />
-        <meshBasicMaterial color="#ff5722" />
-      </mesh>
-
-      {/* 3. Dual Curved Professional Monitors */}
-      {/* Monitor Dual Arm Stand */}
-      <group position={[0, deskY + 0.026, -0.42]}>
+      {/* 3. Dual Professional Thin-Bezel Monitors (Mounted on Dual VESA Arm) */}
+      <group position={[-0.1, deskY + 0.023, -0.38]}>
         {/* Desk clamp */}
-        <mesh position={[0, 0.04, 0]}>
-          <boxGeometry args={[0.14, 0.08, 0.12]} />
-          <meshStandardMaterial color="#121316" metalness={0.9} roughness={0.2} />
+        <mesh position={[0, 0.035, 0]}>
+          <boxGeometry args={[0.12, 0.07, 0.1]} />
+          <meshStandardMaterial color="#14161b" metalness={0.9} roughness={0.2} />
         </mesh>
         {/* Vertical riser pillar */}
         <mesh position={[0, 0.28, 0]}>
-          <cylinderGeometry args={[0.024, 0.024, 0.48, 16]} />
-          <meshStandardMaterial color="#1d1f24" metalness={0.85} roughness={0.25} />
+          <cylinderGeometry args={[0.022, 0.022, 0.48, 16]} />
+          <meshStandardMaterial color="#1e2229" metalness={0.85} roughness={0.25} />
         </mesh>
-        {/* Horizontal articulated dual cross-arm */}
-        <mesh position={[0, 0.42, 0.04]}>
-          <boxGeometry args={[0.82, 0.035, 0.05]} />
-          <meshStandardMaterial color="#1a1c20" metalness={0.85} roughness={0.25} />
+        {/* Dual articulated horizontal arms */}
+        <mesh position={[0, 0.42, 0.05]}>
+          <boxGeometry args={[0.85, 0.03, 0.04]} />
+          <meshStandardMaterial color="#1a1c22" metalness={0.85} roughness={0.25} />
         </mesh>
       </group>
 
-      {/* Left Monitor: Code IDE Display (Farman's React/Python Workstation) */}
+      {/* Left Monitor: VS Code IDE Display (Farman's React/Python Workspace) */}
       <group
-        position={[-0.48, deskY + 0.44, -0.26]}
-        rotation={[0, 0.16, 0]}
+        position={[-0.56, deskY + 0.45, -0.25]}
+        rotation={[0, 0.14, 0]}
         onClick={onInspect}
+        style={{ cursor: 'pointer' }}
       >
         {/* Screen Bezel & Enclosure */}
         <mesh castShadow>
-          <boxGeometry args={[0.76, 0.48, 0.025]} />
-          <meshStandardMaterial color="#121316" metalness={0.8} roughness={0.2} />
+          <boxGeometry args={[0.78, 0.48, 0.022]} />
+          <meshStandardMaterial color="#121316" metalness={0.85} roughness={0.2} />
         </mesh>
         {/* Active Display Panel with Code Texture */}
-        <mesh position={[0, 0, 0.014]}>
-          <planeGeometry args={[0.74, 0.46]} />
+        <mesh position={[0, 0, 0.012]}>
+          <planeGeometry args={[0.764, 0.464]} />
           <meshBasicMaterial map={codeScreen} />
         </mesh>
-        {/* Power LED Indicator (Soft Green) */}
-        <mesh position={[0.34, -0.22, 0.015]}>
+        {/* Power LED Indicator */}
+        <mesh position={[0.35, -0.22, 0.013]}>
           <sphereGeometry args={[0.003, 8, 8]} />
           <meshBasicMaterial color="#51cf66" />
         </mesh>
       </group>
 
-      {/* Right Monitor: Metrics & Telemetry Display */}
+      {/* Right Monitor: Live Cloud Telemetry & Metrics Display */}
       <group
-        position={[0.48, deskY + 0.44, -0.26]}
-        rotation={[0, -0.16, 0]}
+        position={[0.36, deskY + 0.45, -0.25]}
+        rotation={[0, -0.14, 0]}
         onClick={onInspect}
+        style={{ cursor: 'pointer' }}
       >
         {/* Screen Bezel & Enclosure */}
         <mesh castShadow>
-          <boxGeometry args={[0.76, 0.48, 0.025]} />
-          <meshStandardMaterial color="#121316" metalness={0.8} roughness={0.2} />
+          <boxGeometry args={[0.78, 0.48, 0.022]} />
+          <meshStandardMaterial color="#121316" metalness={0.85} roughness={0.2} />
         </mesh>
         {/* Active Display Panel with Metrics Texture */}
-        <mesh position={[0, 0, 0.014]}>
-          <planeGeometry args={[0.74, 0.46]} />
+        <mesh position={[0, 0, 0.012]}>
+          <planeGeometry args={[0.764, 0.464]} />
           <meshBasicMaterial map={metricsScreen} />
         </mesh>
         {/* Power LED Indicator */}
-        <mesh position={[0.34, -0.22, 0.015]}>
+        <mesh position={[0.35, -0.22, 0.013]}>
           <sphereGeometry args={[0.003, 8, 8]} />
           <meshBasicMaterial color="#339af0" />
         </mesh>
       </group>
 
-      {/* 4. Mechanical Keyboard (75% Compact Layout) */}
-      <group position={[-0.08, deskY + 0.03, 0.08]} rotation={[-0.04, 0.02, 0]}>
-        {/* Keyboard chassis */}
+      {/* 4. Overhead Minimalist Architectural LED Bar Lamp (Exact Match to Reference 4!) */}
+      <group position={[-0.1, deskY + 0.023, -0.42]}>
+        {/* Vertical slim riser stem behind monitors */}
+        <mesh position={[-0.45, 0.44, 0]}>
+          <cylinderGeometry args={[0.006, 0.006, 0.88, 12]} />
+          <meshStandardMaterial color="#22252c" metalness={0.9} roughness={0.2} />
+        </mesh>
+        {/* Forward horizontal cantilever arm */}
+        <mesh position={[-0.45, 0.88, 0.18]} rotation={[Math.PI / 2, 0, 0]}>
+          <cylinderGeometry args={[0.006, 0.006, 0.36, 12]} />
+          <meshStandardMaterial color="#22252c" metalness={0.9} roughness={0.2} />
+        </mesh>
+        {/* Horizontal LED Light Bar spanning overhead */}
+        <mesh position={[0, 0.88, 0.36]}>
+          <boxGeometry args={[0.88, 0.014, 0.022]} />
+          <meshStandardMaterial color="#22252c" metalness={0.9} roughness={0.2} />
+        </mesh>
+        {/* LED Diffuser Bar (Glowing warm light downwards) */}
+        <mesh position={[0, 0.872, 0.36]}>
+          <boxGeometry args={[0.84, 0.004, 0.016]} />
+          <meshBasicMaterial color="#fffbe6" />
+        </mesh>
+        {/* Downward Task Spotlight */}
+        <spotLight
+          position={[0, 0.87, 0.36]}
+          target-position={[0, deskY, 0.1]}
+          color="#fffaf0"
+          intensity={3.2}
+          angle={0.65}
+          penumbra={0.4}
+          distance={2.4}
+        />
+      </group>
+
+      {/* 5. Mechanical Keyboard (75% Compact Layout) */}
+      <group position={[-0.18, deskY + 0.026, 0.1]} rotation={[-0.03, 0.01, 0]}>
         <mesh castShadow>
           <boxGeometry args={[0.34, 0.016, 0.135]} />
           <meshStandardMaterial color="#1e222b" roughness={0.3} metalness={0.6} />
         </mesh>
-        {/* Keycap bed */}
         <mesh position={[0, 0.01, 0]}>
           <boxGeometry args={[0.32, 0.008, 0.12]} />
           <meshStandardMaterial color="#2d313b" roughness={0.6} />
         </mesh>
-        {/* Keycaps top representation */}
+        {/* Accent keycaps */}
         <mesh position={[-0.13, 0.016, -0.04]}>
-          {/* Escape Keycap (Orange) */}
           <boxGeometry args={[0.022, 0.008, 0.02]} />
           <meshStandardMaterial color="#ff5722" />
         </mesh>
         <mesh position={[0.13, 0.016, 0.01]}>
-          {/* Enter Keycap (Amber) */}
           <boxGeometry args={[0.035, 0.008, 0.02]} />
-          <meshStandardMaterial color="#fcc419" />
+          <meshStandardMaterial color="#339af0" />
         </mesh>
         <mesh position={[0, 0.016, 0.04]}>
-          {/* Spacebar */}
           <boxGeometry args={[0.14, 0.008, 0.018]} />
           <meshStandardMaterial color="#dbe4ee" roughness={0.5} />
         </mesh>
       </group>
 
-      {/* 5. Precision Ergonomic Mouse */}
-      <group position={[0.28, deskY + 0.032, 0.08]} rotation={[0, -0.06, 0]}>
+      {/* 6. Precision Optical Mouse */}
+      <group position={[0.22, deskY + 0.028, 0.1]} rotation={[0, -0.05, 0]}>
         <mesh castShadow>
           <boxGeometry args={[0.065, 0.025, 0.11]} />
           <meshStandardMaterial color="#171920" roughness={0.4} metalness={0.5} />
         </mesh>
-        {/* Metallic Scroll Wheel */}
         <mesh position={[0, 0.014, -0.02]}>
           <cylinderGeometry args={[0.005, 0.005, 0.018, 12]} />
-          <meshStandardMaterial color="#ff7043" metalness={0.9} roughness={0.2} />
+          <meshStandardMaterial color="#339af0" metalness={0.9} roughness={0.2} />
         </mesh>
       </group>
 
-      {/* 6. Custom Desktop PC Tower (Tempered Glass Side Panel) */}
-      <group position={[1.02, deskY / 2, 0.05]} castShadow>
-        {/* Main PC Case */}
+      {/* 7. Modern Desktop PC Tower on Desk (Right side, matching Reference 4) */}
+      <group position={[0.92, deskY + 0.23, -0.05]} castShadow>
+        {/* PC Chassis (Sleek black aluminum) */}
         <mesh castShadow receiveShadow>
-          <boxGeometry args={[0.22, 0.46, 0.46]} />
-          <meshStandardMaterial color="#111317" metalness={0.85} roughness={0.2} />
+          <boxGeometry args={[0.22, 0.44, 0.44]} />
+          <meshStandardMaterial color="#15171d" metalness={0.85} roughness={0.25} />
         </mesh>
-        {/* Front Mesh Panel with Dual Ring Fans */}
-        <mesh position={[0, 0, 0.232]}>
-          <planeGeometry args={[0.2, 0.44]} />
-          <meshStandardMaterial color="#0b0c0f" roughness={0.8} />
+        {/* Front Mesh Intake Panel */}
+        <mesh position={[0, 0, 0.222]}>
+          <planeGeometry args={[0.19, 0.41]} />
+          <meshStandardMaterial color="#0b0c10" roughness={0.8} />
         </mesh>
-        {/* Front Fan Glow Rings */}
-        <mesh position={[0, 0.09, 0.233]}>
-          <ringGeometry args={[0.05, 0.062, 32]} />
-          <meshBasicMaterial color="#ff5722" />
-        </mesh>
-        <mesh position={[0, -0.09, 0.233]}>
-          <ringGeometry args={[0.05, 0.062, 32]} />
+        {/* Front RGB Fan Rings (Cyan / Blue subtle glow) */}
+        <mesh position={[0, 0.09, 0.223]}>
+          <ringGeometry args={[0.045, 0.058, 32]} />
           <meshBasicMaterial color="#339af0" />
         </mesh>
-
+        <mesh position={[0, -0.09, 0.223]}>
+          <ringGeometry args={[0.045, 0.058, 32]} />
+          <meshBasicMaterial color="#4dabf7" />
+        </mesh>
         {/* Tempered Glass Left Side Panel */}
         <mesh position={[-0.112, 0, 0]}>
-          <planeGeometry args={[0.42, 0.42]} />
+          <planeGeometry args={[0.4, 0.4]} />
           <meshPhysicalMaterial
             color="#080a10"
             transparent
-            opacity={0.3}
-            roughness={0.05}
+            opacity={0.25}
+            roughness={0.04}
             metalness={0.1}
-            transmission={0.7}
+            transmission={0.75}
           />
         </mesh>
-        {/* Internal GPU / Cooler Light Glow */}
-        <pointLight position={[-0.05, 0.02, 0]} color="#ff7043" intensity={0.6} distance={0.8} />
+        {/* Interior GPU / Ram subtle blue glow */}
+        <pointLight position={[-0.05, 0.02, 0]} color="#339af0" intensity={0.9} distance={0.9} />
       </group>
 
-      {/* 7. Modern Articulated Desk Lamp with Warm Task Light */}
-      <group position={[-0.95, deskY + 0.026, -0.3]}>
-        {/* Heavy circular base */}
-        <mesh>
-          <cylinderGeometry args={[0.08, 0.08, 0.015, 24]} />
-          <meshStandardMaterial color="#1a1c22" metalness={0.9} roughness={0.2} />
-        </mesh>
-        {/* Lower arm rod */}
-        <mesh position={[0, 0.18, 0.04]} rotation={[0.22, 0, 0]}>
-          <cylinderGeometry args={[0.008, 0.008, 0.36, 12]} />
-          <meshStandardMaterial color="#1a1c22" metalness={0.9} roughness={0.2} />
-        </mesh>
-        {/* Upper arm rod */}
-        <mesh position={[0, 0.4, 0.18]} rotation={[-0.35, 0, 0]}>
-          <cylinderGeometry args={[0.008, 0.008, 0.32, 12]} />
-          <meshStandardMaterial color="#1a1c22" metalness={0.9} roughness={0.2} />
-        </mesh>
-        {/* Lamp Shade Hood */}
-        <mesh position={[0, 0.48, 0.28]} rotation={[0.4, 0, 0]}>
-          <coneGeometry args={[0.065, 0.1, 16, 1, true]} />
-          <meshStandardMaterial color="#21252d" metalness={0.85} roughness={0.3} />
-        </mesh>
-        {/* Warm Task Spotlight illuminating desk pad */}
-        <spotLight
-          position={[0, 0.48, 0.28]}
-          target-position={[0.2, deskY, 0.1]}
-          color="#fff5ea"
-          intensity={3.8}
-          angle={0.7}
-          penumbra={0.5}
-          distance={3.2}
-          castShadow
-        />
-      </group>
+      {/* 8. Desktop Real Potted Plant (Mini Monstera on Desk Corner) */}
+      <RealPlant
+        position={[-1.02, deskY + 0.023, -0.28]}
+        scale={0.42}
+      />
 
-      {/* 8. Ergonomic Mesh High-Back Chair */}
-      <group position={[0, 0, 0.65]} rotation={[0, -0.1, 0]}>
-        {/* Five-star star base & 5 caster wheels */}
+      {/* 9. Herman Miller Style Ergonomic Task Chair (Reference Photo 4) */}
+      <group position={[-0.1, 0, 0.68]} rotation={[0, -0.08, 0]}>
+        {/* 5-Star Spider Base */}
         <mesh position={[0, 0.04, 0]}>
           <cylinderGeometry args={[0.04, 0.04, 0.04, 16]} />
           <meshStandardMaterial color="#1a1c22" metalness={0.9} roughness={0.2} />
         </mesh>
         {[0, 1, 2, 3, 4].map((i) => {
           const angle = (i * Math.PI * 2) / 5;
-          const cx = Math.sin(angle) * 0.28;
-          const cz = Math.cos(angle) * 0.28;
+          const cx = Math.sin(angle) * 0.29;
+          const cz = Math.cos(angle) * 0.29;
           return (
             <group key={`caster-${i}`}>
               <mesh position={[cx / 2, 0.04, cz / 2]} rotation={[0, angle, 0]}>
-                <boxGeometry args={[0.03, 0.02, 0.28]} />
+                <boxGeometry args={[0.03, 0.02, 0.29]} />
                 <meshStandardMaterial color="#1e2229" metalness={0.85} roughness={0.3} />
               </mesh>
               <mesh position={[cx, 0.025, cz]}>
@@ -289,32 +292,66 @@ export default function Workstation({ onInspect }) {
             </group>
           );
         })}
-        {/* Pneumatic center cylinder column */}
+
+        {/* Pneumatic Chrome Cylinder */}
         <mesh position={[0, 0.22, 0]}>
-          <cylinderGeometry args={[0.028, 0.028, 0.32, 16]} />
-          <meshStandardMaterial color="#2c3039" metalness={0.95} roughness={0.15} />
+          <cylinderGeometry args={[0.024, 0.024, 0.32, 16]} />
+          <meshStandardMaterial color="#ced4da" metalness={0.95} roughness={0.12} />
         </mesh>
-        {/* Seat cushion (contoured ergonomic mesh) */}
+
+        {/* Seat Cushion (Contoured Breathable Mesh with Waterfall Edge) */}
         <mesh position={[0, 0.44, 0]} castShadow receiveShadow>
-          <boxGeometry args={[0.48, 0.07, 0.46]} />
-          <meshStandardMaterial color="#1d2027" roughness={0.75} metalness={0.1} />
+          <boxGeometry args={[0.48, 0.065, 0.46]} />
+          <meshStandardMaterial color="#21252f" roughness={0.7} metalness={0.15} />
         </mesh>
-        {/* High-back curved ergonomic spine & lumbar support */}
-        <mesh position={[0, 0.76, -0.22]} rotation={[-0.08, 0, 0]} castShadow>
-          <boxGeometry args={[0.44, 0.58, 0.04]} />
-          <meshStandardMaterial color="#181a20" roughness={0.75} metalness={0.15} />
+
+        {/* Dual-Post Ergonomic Lumbar Spine (Rear frame) */}
+        <mesh position={[0, 0.65, -0.22]} rotation={[-0.08, 0, 0]}>
+          <cylinderGeometry args={[0.015, 0.015, 0.42, 12]} />
+          <meshStandardMaterial color="#1a1c22" metalness={0.85} roughness={0.25} />
         </mesh>
-        {/* Adjustable Armrests */}
-        <mesh position={[-0.26, 0.58, 0]}>
-          <boxGeometry args={[0.05, 0.03, 0.24]} />
-          <meshStandardMaterial color="#121316" roughness={0.6} />
-        </mesh>
-        <mesh position={[0.26, 0.58, 0]}>
-          <boxGeometry args={[0.05, 0.03, 0.24]} />
-          <meshStandardMaterial color="#121316" roughness={0.6} />
-        </mesh>
+
+        {/* Breathable Mesh Backrest Frame & Translucent Mesh Panel */}
+        <group position={[0, 0.78, -0.23]} rotation={[-0.08, 0, 0]}>
+          {/* Outer nylon perimeter frame */}
+          <mesh castShadow>
+            <boxGeometry args={[0.44, 0.54, 0.03]} />
+            <meshStandardMaterial color="#181a20" roughness={0.65} metalness={0.2} />
+          </mesh>
+          {/* Inner mesh panel */}
+          <mesh position={[0, 0, 0.005]}>
+            <planeGeometry args={[0.40, 0.48]} />
+            <meshStandardMaterial
+              color="#2a2e38"
+              roughness={0.8}
+              transparent
+              opacity={0.85}
+            />
+          </mesh>
+        </group>
+
+        {/* Adjustable T-Armrests with Polyurethane Pads */}
+        <group position={[-0.26, 0.56, 0]}>
+          <mesh position={[0, -0.06, 0]}>
+            <cylinderGeometry args={[0.012, 0.012, 0.16, 12]} />
+            <meshStandardMaterial color="#1a1c22" metalness={0.85} roughness={0.25} />
+          </mesh>
+          <mesh position={[0, 0.02, 0]}>
+            <boxGeometry args={[0.055, 0.025, 0.22]} />
+            <meshStandardMaterial color="#121316" roughness={0.7} />
+          </mesh>
+        </group>
+        <group position={[0.26, 0.56, 0]}>
+          <mesh position={[0, -0.06, 0]}>
+            <cylinderGeometry args={[0.012, 0.012, 0.16, 12]} />
+            <meshStandardMaterial color="#1a1c22" metalness={0.85} roughness={0.25} />
+          </mesh>
+          <mesh position={[0, 0.02, 0]}>
+            <boxGeometry args={[0.055, 0.025, 0.22]} />
+            <meshStandardMaterial color="#121316" roughness={0.7} />
+          </mesh>
+        </group>
       </group>
     </group>
   );
 }
-

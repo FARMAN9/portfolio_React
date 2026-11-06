@@ -93,3 +93,4 @@ export const OFFICE_OBSTACLES = [
   { minX: -5.4, maxX: -4.4, minZ: 4.0, maxZ: 5.0, name: 'Planter South-West' },
   { minX: 4.4, maxX: 5.4, minZ: 4.0, maxZ: 5.0, name: 'Planter South-East' }
 ];
+

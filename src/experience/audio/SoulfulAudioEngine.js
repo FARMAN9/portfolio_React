@@ -1,13 +1,54 @@
 /**
  * Soulful Audio Engine
- * Generates an organic, rich, meditative and soulful musical soundscape using Web Audio API.
+ * Provides authentic, rich, soulful and meditative soundscapes for the 3D WebXR studio.
  * Features:
- * - Neo-Soul & Contemplative Modal Chord Progressions (9th & 11th extensions)
- * - Warm Felt Electric Piano / Rhodes emulation
- * - Ethereal Analog Ambient Strings & Pad layers
- * - Meditative Pentatonic Acoustic Plucks (Santoor/Harp timbre)
- * - Breathing Analog Lowpass Filter with gentle chorus
+ * - High-fidelity soulful ambient audio tracks (Kai Engel - Neoclassical Piano Ambient, Placid Ambient Flow)
+ * - Original procedural Web Audio synthesizer (warm Rhodes 9th chords, sub-bass, and Kashmiri Santoor plucks)
+ * - Seamless looping, volume attenuation, and auto-resume on user gesture
  */
+
+export const SOULFUL_TRACKS = [
+  {
+    id: 'soulful-piano',
+    title: 'Meekness (Soulful Piano Ambient)',
+    artist: 'Kai Engel',
+    genre: 'Soulful Neoclassical Ambient',
+    src: '/audio/soulful-piano-ambient.ogg',
+    isProcedural: false
+  },
+  {
+    id: 'soulful-flow',
+    title: 'Placid Meditative Flow',
+    artist: 'MusicLFiles',
+    genre: 'Peaceful Ambient Chords',
+    src: '/audio/soulful-flow.ogg',
+    isProcedural: false
+  },
+  {
+    id: 'kashmir-santoor-synth',
+    title: 'Kashmiri Santoor & Rhodes Chords',
+    artist: 'Farman Studio Synthesizer',
+    genre: 'Procedural Modal Soundscape',
+    src: '',
+    isProcedural: true
+  },
+  {
+    id: 'persian-folk-archive',
+    title: 'Traditional Folk Recording (1931)',
+    artist: 'Archive Collection',
+    genre: 'Persian Classical',
+    src: '/audio/persian-folk-1931.ogg',
+    isProcedural: false
+  },
+  {
+    id: 'urdu-anthem',
+    title: 'Saare Jahan Se Achha',
+    artist: 'Urdu Instrumental',
+    genre: 'Instrumental Melody',
+    src: '/audio/sare-jahan-urdu.ogg',
+    isProcedural: false
+  }
+];
 
 class SoulfulAudioEngine {
   constructor() {
@@ -18,41 +59,48 @@ class SoulfulAudioEngine {
     this.timer = null;
     this.chordStep = 0;
     this.volume = 0.55;
+    this.currentTrackIndex = 0;
+    this.audioElement = null;
+    this.listeners = new Set();
 
     // Soulful contemplative chord progressions (frequencies in Hz)
-    // Progression 1: Dm9 -> G13sus -> Cmaj9 -> Fmaj7#11
-    // Progression 2: Em9 -> Am9 -> Dm9 -> Bbmaj9 (Soulful Kashmiri Dusk)
     this.progressions = [
-      // Dm9 (D3, F3, A3, C4, E4) + Sub (D2)
       { sub: 73.42, notes: [146.83, 174.61, 220.0, 261.63, 329.63] },
-      // G13sus (G2, F3, A3, C4, E4) + Sub (G2)
       { sub: 98.0, notes: [196.0, 174.61, 220.0, 261.63, 329.63] },
-      // Cmaj9 (C3, E3, G3, B3, D4) + Sub (C2)
       { sub: 65.41, notes: [130.81, 164.81, 196.0, 246.94, 293.66] },
-      // Fmaj7#11 (F2, A3, C4, E4, B4) + Sub (F2)
       { sub: 87.31, notes: [174.61, 220.0, 261.63, 329.63, 493.88] },
-      // Am9 (A2, C3, E3, G3, B3) + Sub (A1)
       { sub: 55.0, notes: [110.0, 130.81, 164.81, 196.0, 246.94] },
-      // Bbmaj9 (Bb2, D3, F3, A3, C4) + Sub (Bb1)
       { sub: 58.27, notes: [116.54, 146.83, 174.61, 220.0, 261.63] }
     ];
 
-    // Soulful pentatonic acoustic pluck scale (Santoor / Bell chimes)
     this.plucks = [329.63, 392.0, 440.0, 523.25, 587.33, 659.25, 783.99];
   }
 
-  init() {
+  subscribe(listener) {
+    this.listeners.add(listener);
+    return () => this.listeners.delete(listener);
+  }
+
+  notify() {
+    const state = {
+      isPlaying: this.isPlaying,
+      currentTrack: SOULFUL_TRACKS[this.currentTrackIndex],
+      trackIndex: this.currentTrackIndex,
+      volume: this.volume
+    };
+    this.listeners.forEach((l) => l(state));
+  }
+
+  initSynth() {
     if (this.ctx) return;
     try {
       const AudioCtx = window.AudioContext || window.webkitAudioContext;
       if (!AudioCtx) return;
       this.ctx = new AudioCtx();
 
-      // Master output gain
       this.masterGain = this.ctx.createGain();
       this.masterGain.gain.setValueAtTime(this.volume, this.ctx.currentTime);
 
-      // Warm analog master lowpass filter
       this.filter = this.ctx.createBiquadFilter();
       this.filter.type = 'lowpass';
       this.filter.frequency.setValueAtTime(850, this.ctx.currentTime);
@@ -60,37 +108,103 @@ class SoulfulAudioEngine {
 
       this.masterGain.connect(this.filter);
       this.filter.connect(this.ctx.destination);
-    } catch (e) {
-      console.warn('AudioContext init error:', e);
+    } catch {
+      // ignore
     }
   }
 
   setVolume(val) {
     this.volume = Math.max(0, Math.min(1, val));
+    if (this.audioElement) {
+      this.audioElement.volume = this.volume;
+    }
     if (this.masterGain && this.ctx) {
       this.masterGain.gain.setTargetAtTime(this.volume, this.ctx.currentTime, 0.1);
     }
+    this.notify();
   }
 
   start() {
-    this.init();
-    if (!this.ctx) return;
-    if (this.ctx.state === 'suspended') {
-      this.ctx.resume();
-    }
-    if (this.isPlaying) return;
+    const track = SOULFUL_TRACKS[this.currentTrackIndex];
     this.isPlaying = true;
-    this.playStep();
+
+    if (track.isProcedural) {
+      if (this.audioElement) {
+        this.audioElement.pause();
+      }
+      this.initSynth();
+      if (this.ctx && this.ctx.state === 'suspended') {
+        this.ctx.resume();
+      }
+      this.playStep();
+    } else {
+      // Stop synth loop if running
+      if (this.timer) {
+        clearTimeout(this.timer);
+        this.timer = null;
+      }
+      if (this.masterGain && this.ctx) {
+        this.masterGain.gain.setTargetAtTime(0, this.ctx.currentTime, 0.1);
+      }
+      if (!this.audioElement) {
+        this.audioElement = new Audio();
+        this.audioElement.loop = true;
+      }
+      const targetSrc = track.src;
+      if (!this.audioElement.src.endsWith(targetSrc)) {
+        this.audioElement.src = targetSrc;
+      }
+      this.audioElement.volume = this.volume;
+      this.audioElement.play().catch(() => {
+        // Fallback to procedural synth if file playback is blocked
+        this.initSynth();
+        this.playStep();
+      });
+    }
+
+    this.notify();
   }
 
   stop() {
     this.isPlaying = false;
+    if (this.audioElement) {
+      this.audioElement.pause();
+    }
     if (this.timer) {
       clearTimeout(this.timer);
       this.timer = null;
     }
     if (this.masterGain && this.ctx) {
-      this.masterGain.gain.setTargetAtTime(0, this.ctx.currentTime, 0.3);
+      this.masterGain.gain.setTargetAtTime(0, this.ctx.currentTime, 0.2);
+    }
+    this.notify();
+  }
+
+  toggle() {
+    if (this.isPlaying) {
+      this.stop();
+    } else {
+      this.start();
+    }
+  }
+
+  nextTrack() {
+    this.currentTrackIndex = (this.currentTrackIndex + 1) % SOULFUL_TRACKS.length;
+    if (this.isPlaying) {
+      this.start();
+    } else {
+      this.notify();
+    }
+  }
+
+  selectTrack(index) {
+    if (index >= 0 && index < SOULFUL_TRACKS.length) {
+      this.currentTrackIndex = index;
+      if (this.isPlaying) {
+        this.start();
+      } else {
+        this.notify();
+      }
     }
   }
 
@@ -100,17 +214,15 @@ class SoulfulAudioEngine {
     const currentChord = this.progressions[this.chordStep % this.progressions.length];
     this.chordStep++;
 
-    // 1. Warm Sub-Bass Fundamental
+    // Sub-Bass
     try {
       const subOsc = this.ctx.createOscillator();
       const subGain = this.ctx.createGain();
       subOsc.type = 'sine';
       subOsc.frequency.setValueAtTime(currentChord.sub, now);
-
       subGain.gain.setValueAtTime(0, now);
       subGain.gain.linearRampToValueAtTime(0.18, now + 1.2);
       subGain.gain.exponentialRampToValueAtTime(0.001, now + 5.2);
-
       subOsc.connect(subGain);
       subGain.connect(this.masterGain);
       subOsc.start(now);
@@ -119,73 +231,58 @@ class SoulfulAudioEngine {
       // ignore
     }
 
-    // 2. Lush Multi-Voice Ethereal Pad
-    currentChord.notes.forEach((freq, idx) => {
+    // Warm Rhodes electric piano pad
+    currentChord.notes.forEach((freq, i) => {
       try {
-        const oscA = this.ctx.createOscillator();
-        const oscB = this.ctx.createOscillator();
-        const padGain = this.ctx.createGain();
+        const osc = this.ctx.createOscillator();
+        const noteGain = this.ctx.createGain();
+        osc.type = 'triangle';
+        osc.frequency.setValueAtTime(freq, now);
+        osc.detune.setValueAtTime((i % 2 === 0 ? 3 : -3), now);
 
-        // Slight binaural detune (+3 and -3 cents) for lush warmth
-        oscA.type = 'triangle';
-        oscA.frequency.setValueAtTime(freq, now);
-        oscA.detune.setValueAtTime(3.5, now);
+        const attack = 0.8 + i * 0.15;
+        const decay = 4.8;
+        noteGain.gain.setValueAtTime(0, now);
+        noteGain.gain.linearRampToValueAtTime(0.055, now + attack);
+        noteGain.gain.exponentialRampToValueAtTime(0.0008, now + attack + decay);
 
-        oscB.type = 'sine';
-        oscB.frequency.setValueAtTime(freq, now);
-        oscB.detune.setValueAtTime(-3.5, now);
-
-        const noteVol = 0.055 / (idx * 0.4 + 1);
-        padGain.gain.setValueAtTime(0, now);
-        padGain.gain.linearRampToValueAtTime(noteVol, now + 1.4 + idx * 0.15);
-        padGain.gain.exponentialRampToValueAtTime(0.0001, now + 5.8);
-
-        oscA.connect(padGain);
-        oscB.connect(padGain);
-        padGain.connect(this.masterGain);
-
-        oscA.start(now + idx * 0.08);
-        oscB.start(now + idx * 0.08);
-        oscA.stop(now + 6.2);
-        oscB.stop(now + 6.2);
+        osc.connect(noteGain);
+        noteGain.connect(this.masterGain);
+        osc.start(now);
+        osc.stop(now + attack + decay + 0.5);
       } catch {
         // ignore
       }
     });
 
-    // 3. Meditative Acoustic Pluck (Santoor / Bell Chime)
-    const pluckFreq = this.plucks[Math.floor(Math.random() * this.plucks.length)];
-    const pluckTime = now + 1.2 + Math.random() * 1.6;
-    try {
-      const pOsc = this.ctx.createOscillator();
-      const pGain = this.ctx.createGain();
-      const pFilter = this.ctx.createBiquadFilter();
+    // Kashmiri Santoor / Harp pluck
+    if (Math.random() > 0.3) {
+      const pluckFreq = this.plucks[Math.floor(Math.random() * this.plucks.length)];
+      try {
+        const pluckOsc = this.ctx.createOscillator();
+        const pluckGain = this.ctx.createGain();
+        pluckOsc.type = 'sine';
+        pluckOsc.frequency.setValueAtTime(pluckFreq, now + 1.2);
+        pluckGain.gain.setValueAtTime(0, now + 1.2);
+        pluckGain.gain.linearRampToValueAtTime(0.08, now + 1.25);
+        pluckGain.gain.exponentialRampToValueAtTime(0.0001, now + 3.2);
 
-      pOsc.type = 'triangle';
-      pOsc.frequency.setValueAtTime(pluckFreq, pluckTime);
-
-      pFilter.type = 'bandpass';
-      pFilter.frequency.setValueAtTime(pluckFreq * 1.5, pluckTime);
-      pFilter.Q.setValueAtTime(2.5, pluckTime);
-
-      pGain.gain.setValueAtTime(0, pluckTime);
-      pGain.gain.linearRampToValueAtTime(0.065, pluckTime + 0.04);
-      pGain.gain.exponentialRampToValueAtTime(0.0001, pluckTime + 2.4);
-
-      pOsc.connect(pFilter);
-      pFilter.connect(pGain);
-      pGain.connect(this.masterGain);
-
-      pOsc.start(pluckTime);
-      pOsc.stop(pluckTime + 2.5);
-    } catch {
-      // ignore
+        pluckOsc.connect(pluckGain);
+        pluckGain.connect(this.masterGain);
+        pluckOsc.start(now + 1.2);
+        pluckOsc.stop(now + 3.3);
+      } catch {
+        // ignore
+      }
     }
 
-    // Schedule next chord (4.6s per chord allows soothing meditative transitions)
-    this.timer = setTimeout(() => this.playStep(), 4600);
+    // Loop interval
+    const intervalMs = 5400;
+    this.timer = setTimeout(() => {
+      this.playStep();
+    }, intervalMs);
   }
 }
 
-export const soulfulAudio = new SoulfulAudioEngine();
+const soulfulAudio = new SoulfulAudioEngine();
 export default soulfulAudio;

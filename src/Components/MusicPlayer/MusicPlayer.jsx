@@ -16,6 +16,30 @@ import {
 // Community-shared recordings plus royalty-free tracks and an original browser synth.
 const AUDIO_TRACKS = [
   {
+    id: 'soulful-piano',
+    title: 'Meekness (Soulful Piano Ambient)',
+    artist: 'Kai Engel',
+    genre: 'Soulful Neoclassical Piano',
+    duration: '3:15',
+    src: '/audio/soulful-piano-ambient.ogg',
+    credit: 'Kai Engel - Meekness (from Sustains album)',
+    sourceUrl: 'https://commons.wikimedia.org/wiki/File:Kai_Engel_-_02_-_Meekness.ogg',
+    license: 'CC BY 4.0',
+    licenseUrl: 'https://creativecommons.org/licenses/by/4.0/'
+  },
+  {
+    id: 'soulful-flow',
+    title: 'Placid Meditative Flow',
+    artist: 'MusicLFiles',
+    genre: 'Peaceful Ambient Chords',
+    duration: '2:50',
+    src: '/audio/soulful-flow.ogg',
+    credit: 'Placid Ambient by MusicLFiles',
+    sourceUrl: 'https://commons.wikimedia.org/wiki/File:Placid_Ambient_by_MusicLFiles.ogg',
+    license: 'CC BY 4.0',
+    licenseUrl: 'https://creativecommons.org/licenses/by/4.0/'
+  },
+  {
     id: 'soulful-kashmir-ambient',
     title: 'Soulful Kashmiri Ambient & Santoor',
     artist: 'Farman Studio · Procedural Meditation',

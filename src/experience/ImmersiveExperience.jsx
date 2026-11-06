@@ -5,7 +5,7 @@ import * as THREE from 'three';
 import './ImmersiveExperience.css';
 
 import { xrStore, checkVRSupport, enterVRSession, exitVRSession } from './xr/xrStore';
-import soulfulAudio from './audio/SoulfulAudioEngine';
+import soulfulAudio, { SOULFUL_TRACKS } from './audio/SoulfulAudioEngine';
 import OfficeWorld from './world/OfficeWorld';
 import DesktopControls from './controllers/DesktopControls';
 import VRControls from './controllers/VRControls';
@@ -19,10 +19,11 @@ import {
   FiX,
   FiMaximize,
   FiMinimize,
-  FiVolume2,
-  FiVolumeX,
   FiSettings,
-  FiNavigation
+  FiNavigation,
+  FiPlay,
+  FiPause,
+  FiSkipForward
 } from 'react-icons/fi';
 import { FaVrCardboard } from 'react-icons/fa';
 
@@ -32,7 +33,6 @@ export default function ImmersiveExperience({ isOpen, onClose }) {
   const [inVR, setInVR] = useState(false);
   const [statusMessage, setStatusMessage] = useState('');
   const [isFullscreen, setIsFullscreen] = useState(false);
-  const [isMuted, setIsMuted] = useState(true);
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
   const [speedMultiplier, setSpeedMultiplier] = useState(1.0);
   const [snapAngle, setSnapAngle] = useState(30);
@@ -44,6 +44,13 @@ export default function ImmersiveExperience({ isOpen, onClose }) {
   const [isStudioReady, setIsStudioReady] = useState(false);
   const [hasStarted, setHasStarted] = useState(false);
 
+  // Soulful Audio state tracking
+  const [audioState, setAudioState] = useState(() => ({
+    isPlaying: soulfulAudio.isPlaying,
+    currentTrack: SOULFUL_TRACKS[soulfulAudio.currentTrackIndex],
+    trackIndex: soulfulAudio.currentTrackIndex,
+    volume: soulfulAudio.volume
+  }));
 
   // Check WebXR support on mount
   useEffect(() => {
@@ -61,6 +68,13 @@ export default function ImmersiveExperience({ isOpen, onClose }) {
     return () => unsub();
   }, [inVR]);
 
+  // Subscribe to Soulful Audio changes
+  useEffect(() => {
+    return soulfulAudio.subscribe((state) => {
+      setAudioState(state);
+    });
+  }, []);
+
   // Fullscreen change listener
   useEffect(() => {
     const handleFullscreen = () => {
@@ -69,19 +83,6 @@ export default function ImmersiveExperience({ isOpen, onClose }) {
     document.addEventListener('fullscreenchange', handleFullscreen);
     return () => document.removeEventListener('fullscreenchange', handleFullscreen);
   }, []);
-
-  // Soulful ambient soundscape
-  useEffect(() => {
-    if (!isMuted && isOpen) {
-      soulfulAudio.start();
-    } else {
-      soulfulAudio.stop();
-    }
-
-    return () => {
-      soulfulAudio.stop();
-    };
-  }, [isMuted, isOpen]);
 
   // Clean up on unmount or close
   useEffect(() => {
@@ -145,15 +146,15 @@ export default function ImmersiveExperience({ isOpen, onClose }) {
           alpha: false,
           powerPreference: 'high-performance',
           toneMapping: THREE.ACESFilmicToneMapping,
-          toneMappingExposure: 1.42
+          toneMappingExposure: 1.35
         }}
         onCreated={({ gl }) => {
-          gl.setClearColor('#181c24');
+          gl.setClearColor('#c8e1f5');
           setIsStudioReady(true);
         }}
       >
         <XR store={xrStore}>
-          {/* Desktop First-Person Controls with Collision */}
+          {/* Desktop First-Person Controls with Real Collision Detection */}
           <DesktopControls
             isLocked={isLocked}
             setIsLocked={setIsLocked}
@@ -170,7 +171,7 @@ export default function ImmersiveExperience({ isOpen, onClose }) {
             snapAngle={snapAngle}
           />
 
-          {/* 3D Modern Architectural Developer Office */}
+          {/* 3D Modern Architectural Sunlit Developer Office */}
           <Suspense fallback={null}>
             <OfficeWorld
               onSelectStation={(id) => setActiveStation(id)}
@@ -187,7 +188,8 @@ export default function ImmersiveExperience({ isOpen, onClose }) {
           isReady={isStudioReady}
           onStart={() => {
             setHasStarted(true);
-            setStatusMessage('Studio loaded. Click anywhere on screen to enter mouse-look mode.');
+            soulfulAudio.start();
+            setStatusMessage('Studio loaded. Soulful music playing. Click anywhere to look around.');
           }}
         />
       )}
@@ -198,6 +200,39 @@ export default function ImmersiveExperience({ isOpen, onClose }) {
           <span className="brand-dot-pulse" />
           <span className="brand-name">FARMAN</span>
           <span className="brand-badge">3D STUDIO</span>
+        </div>
+
+        {/* Soulful Audio Player Widget */}
+        <div className="spatial-audio-pill" title="Soulful Studio Soundscape">
+          <button
+            type="button"
+            className="btn-audio-toggle"
+            onClick={() => soulfulAudio.toggle()}
+            aria-label={audioState.isPlaying ? 'Pause Soulful Music' : 'Play Soulful Music'}
+          >
+            {audioState.isPlaying ? <FiPause size={15} /> : <FiPlay size={15} />}
+          </button>
+          <div
+            className="audio-track-info"
+            onClick={() => soulfulAudio.nextTrack()}
+            title="Click to switch track"
+          >
+            <span className="audio-track-title">
+              {audioState.currentTrack?.title || 'Soulful Piano Ambient'}
+            </span>
+            <span className="audio-track-artist">
+              {audioState.currentTrack?.artist || 'Kai Engel'}
+            </span>
+          </div>
+          <button
+            type="button"
+            className="btn-audio-skip"
+            onClick={() => soulfulAudio.nextTrack()}
+            title="Next Track"
+            aria-label="Next Track"
+          >
+            <FiSkipForward size={14} />
+          </button>
         </div>
 
         <div className="spatial-hud-actions">
@@ -221,17 +256,6 @@ export default function ImmersiveExperience({ isOpen, onClose }) {
             title="Navigation and Comfort Settings"
           >
             <FiSettings size={17} />
-          </button>
-
-          {/* Audio Ambience Toggle */}
-          <button
-            type="button"
-            className="btn-hud-icon"
-            onClick={() => setIsMuted(!isMuted)}
-            aria-label={isMuted ? 'Unmute Audio' : 'Mute Audio'}
-            title={isMuted ? 'Enable Ambience' : 'Mute Ambience'}
-          >
-            {isMuted ? <FiVolumeX size={17} /> : <FiVolume2 size={17} />}
           </button>
 
           {/* Fullscreen Toggle */}
@@ -269,54 +293,50 @@ export default function ImmersiveExperience({ isOpen, onClose }) {
 
       {/* Ephemeral Status Toast */}
       {statusMessage && (
-        <div className="spatial-status-toast" role="status">
+        <div className="spatial-status-toast" role="status" aria-live="polite">
           <span>{statusMessage}</span>
           <button
             type="button"
             onClick={() => setStatusMessage('')}
-            aria-label="Dismiss message"
+            aria-label="Dismiss toast"
           >
-            <FiX size={14} />
+            ×
           </button>
         </div>
       )}
 
-      {/* Bottom Spatial Navigation Dock */}
-      {hasStarted && (
-        <nav className="spatial-bottom-dock" aria-label="Station Quick Teleport">
-          <div className="dock-label">
-            <FiNavigation size={13} />
-            <span>QUICK TELEPORT</span>
-          </div>
-          <div className="dock-buttons-strip">
-            {OFFICE_STATIONS.map((station) => (
-              <button
-                key={station.id}
-                type="button"
-                className={`dock-station-btn ${activeStation === station.id ? 'is-active' : ''}`}
-                onClick={() => handleTeleportToStation(station.id)}
-              >
-                <span className="station-badge">{station.badge}</span>
-                <span className="station-name">{station.name}</span>
-              </button>
-            ))}
-          </div>
-        </nav>
-      )}
+      {/* Bottom Teleport Navigation Bar */}
+      <nav className="spatial-bottom-nav" aria-label="Studio Station Teleportation">
+        <div className="teleport-label">
+          <FiNavigation size={13} />
+          <span>Quick Teleport:</span>
+        </div>
+        <div className="teleport-buttons-row">
+          {OFFICE_STATIONS.map((station) => (
+            <button
+              key={station.id}
+              type="button"
+              className="btn-teleport-station"
+              onClick={() => handleTeleportToStation(station.id)}
+              title={station.hint}
+            >
+              <span>{station.name}</span>
+            </button>
+          ))}
+        </div>
+      </nav>
 
-      {/* Station Modal Details View */}
+      {/* Station Modal for Detailed Portfolio Content */}
       <StationModal
         activeStation={activeStation}
+        onClose={() => setActiveStation(null)}
         selectedProject={selectedProject}
+        onCloseProject={() => setSelectedProject(null)}
         selectedSkill={selectedSkill}
-        onClose={() => {
-          setActiveStation(null);
-          setSelectedProject(null);
-          setSelectedSkill(null);
-        }}
+        onCloseSkill={() => setSelectedSkill(null)}
       />
 
-      {/* Comfort Settings Dialog */}
+      {/* Comfort & Movement Settings Modal */}
       <ComfortSettings
         isOpen={isSettingsOpen}
         onClose={() => setIsSettingsOpen(false)}
@@ -324,10 +344,12 @@ export default function ImmersiveExperience({ isOpen, onClose }) {
         setSpeedMultiplier={setSpeedMultiplier}
         snapAngle={snapAngle}
         setSnapAngle={setSnapAngle}
-        isMuted={isMuted}
-        setIsMuted={setIsMuted}
+        isMuted={!audioState.isPlaying}
+        setIsMuted={(muted) => {
+          if (muted) soulfulAudio.stop();
+          else soulfulAudio.start();
+        }}
       />
     </div>
   );
 }
-

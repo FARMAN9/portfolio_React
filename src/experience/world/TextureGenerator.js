@@ -8,7 +8,7 @@ let cachedCodeScreen = null;
 let cachedMetricsScreen = null;
 
 /**
- * Procedural realistic hardwood floor texture.
+ * Procedural realistic warm Scandinavian / European oak hardwood floor texture.
  */
 export function getWoodFloorTextures() {
   if (cachedWoodDiffuse && cachedWoodRoughness) {
@@ -22,8 +22,8 @@ export function getWoodFloorTextures() {
   canvas.height = height;
   const ctx = canvas.getContext('2d');
 
-  // Base rich warm natural European oak / honey walnut wood
-  ctx.fillStyle = '#6e5644';
+  // Base warm golden honey oak (matching Reference photo 5)
+  ctx.fillStyle = '#b89368';
   ctx.fillRect(0, 0, width, height);
 
   // Planks
@@ -32,20 +32,20 @@ export function getWoodFloorTextures() {
 
   for (let i = 0; i < numPlanks; i++) {
     const y = i * plankHeight;
-    // Natural tone shift per plank
-    const toneShift = (Math.sin(i * 12.3) * 14);
-    const r = Math.min(255, Math.max(0, 115 + toneShift));
-    const g = Math.min(255, Math.max(0, 92 + toneShift * 0.85));
-    const b = Math.min(255, Math.max(0, 74 + toneShift * 0.7));
+    // Tone variation per plank
+    const toneShift = (Math.sin(i * 14.7) * 16);
+    const r = Math.min(255, Math.max(0, 192 + toneShift));
+    const g = Math.min(255, Math.max(0, 155 + toneShift * 0.85));
+    const b = Math.min(255, Math.max(0, 114 + toneShift * 0.7));
 
     ctx.fillStyle = `rgb(${Math.floor(r)}, ${Math.floor(g)}, ${Math.floor(b)})`;
     ctx.fillRect(0, y, width, plankHeight - 2);
 
-    // Wood grain lines
-    ctx.strokeStyle = 'rgba(60, 42, 28, 0.35)';
+    // Fine wood grain lines
+    ctx.strokeStyle = 'rgba(120, 85, 50, 0.28)';
     ctx.lineWidth = 1;
-    for (let gIdx = 0; gIdx < 14; gIdx++) {
-      const lineY = y + (gIdx * 4) + (Math.sin(gIdx + i) * 2);
+    for (let gIdx = 0; gIdx < 12; gIdx++) {
+      const lineY = y + (gIdx * 5) + (Math.sin(gIdx + i) * 2.5);
       ctx.beginPath();
       ctx.moveTo(0, lineY);
       ctx.bezierCurveTo(
@@ -56,13 +56,13 @@ export function getWoodFloorTextures() {
       ctx.stroke();
     }
 
-    // Plank seam / bevel shadow
-    ctx.fillStyle = 'rgba(40, 28, 18, 0.7)';
+    // Plank bevel shadow
+    ctx.fillStyle = 'rgba(70, 48, 28, 0.45)';
     ctx.fillRect(0, y + plankHeight - 2, width, 2);
   }
 
-  // Vertical staggered seams
-  ctx.fillStyle = 'rgba(40, 28, 18, 0.75)';
+  // Staggered vertical plank joints
+  ctx.fillStyle = 'rgba(70, 48, 28, 0.5)';
   for (let i = 0; i < numPlanks; i++) {
     const y = i * plankHeight;
     const offset = (i % 3) * 340;
@@ -76,16 +76,15 @@ export function getWoodFloorTextures() {
   diffuseTex.wrapT = THREE.RepeatWrapping;
   diffuseTex.repeat.set(4, 4);
 
-  // Roughness Map (plank seams have higher roughness, polished center has lower)
+  // Roughness Map (smooth polished finish reflecting daylight, seams rougher)
   const rCanvas = document.createElement('canvas');
   rCanvas.width = 512;
   rCanvas.height = 512;
   const rCtx = rCanvas.getContext('2d');
-  rCtx.fillStyle = '#666666'; // semi-reflective wood finish
+  rCtx.fillStyle = '#444444'; // glossier, more reflective floor
   rCtx.fillRect(0, 0, 512, 512);
 
-  // Grooves are rougher
-  rCtx.fillStyle = '#cccccc';
+  rCtx.fillStyle = '#999999';
   const rPlankH = 512 / (numPlanks / 2);
   for (let i = 0; i < numPlanks / 2; i++) {
     rCtx.fillRect(0, i * rPlankH - 2, 512, 3);
@@ -103,7 +102,8 @@ export function getWoodFloorTextures() {
 }
 
 /**
- * Procedural modern architectural studio wall panel texture.
+ * Procedural modern architectural gallery white / Venetian plaster wall panel texture.
+ * Bright, clean, sophisticated finish matching Reference images 4 & 5.
  */
 export function getWallTexture() {
   if (cachedWallDiffuse) return cachedWallDiffuse;
@@ -113,20 +113,20 @@ export function getWallTexture() {
   canvas.height = 512;
   const ctx = canvas.getContext('2d');
 
-  // Modern architectural warm studio slate gray / soft concrete
-  ctx.fillStyle = '#2d313c';
+  // Architectural bright gallery white / light warm concrete
+  ctx.fillStyle = '#f0f2f5';
   ctx.fillRect(0, 0, 512, 512);
 
-  // Subtle acoustic vertical panel grooves
-  ctx.fillStyle = '#22252e';
+  // Subtle acoustic vertical panel reveals (soft light gray)
+  ctx.fillStyle = '#e2e5eb';
   for (let x = 0; x < 512; x += 32) {
-    ctx.fillRect(x, 0, 3, 512);
+    ctx.fillRect(x, 0, 2, 512);
   }
 
-  // Soft architectural light gradient
+  // Soft daylight gradient
   const grad = ctx.createLinearGradient(0, 0, 0, 512);
-  grad.addColorStop(0, 'rgba(80, 88, 106, 0.25)');
-  grad.addColorStop(1, 'rgba(20, 24, 32, 0.2)');
+  grad.addColorStop(0, 'rgba(255, 255, 255, 0.4)');
+  grad.addColorStop(1, 'rgba(230, 235, 242, 0.2)');
   ctx.fillStyle = grad;
   ctx.fillRect(0, 0, 512, 512);
 
@@ -140,7 +140,8 @@ export function getWallTexture() {
 }
 
 /**
- * Procedural panoramic twilight dusk city skyline seen through floor-to-ceiling windows.
+ * Procedural panoramic brilliant sunlit daylight skyline & park vista.
+ * Clear blue daylight sky with sun-drenched architectural glass towers and lush green park trees.
  */
 export function getSkylineTexture() {
   if (cachedSkyline) return cachedSkyline;
@@ -152,75 +153,82 @@ export function getSkylineTexture() {
   canvas.height = height;
   const ctx = canvas.getContext('2d');
 
-  // Sunset / Dusk gradient
+  // Brilliant sunny daylight sky gradient
   const grad = ctx.createLinearGradient(0, 0, 0, height);
-  grad.addColorStop(0.0, '#06060c'); // Deep night sky
-  grad.addColorStop(0.35, '#161226');
-  grad.addColorStop(0.55, '#3b1c32'); // Purple dusk
-  grad.addColorStop(0.72, '#963d2c'); // Warm amber horizon
-  grad.addColorStop(0.82, '#d96b27'); // Golden sunset rim
-  grad.addColorStop(1.0, '#100a0f'); // Ground dark
+  grad.addColorStop(0.0, '#3a88db'); // Deep rich blue zenith
+  grad.addColorStop(0.4, '#6db5ef'); // Bright sunny cyan
+  grad.addColorStop(0.7, '#bfe1fb'); // Pale horizon sky
+  grad.addColorStop(0.85, '#eef6fc'); // Bright sun glow rim
+  grad.addColorStop(1.0, '#a5cf7a'); // Lush ground lawn
   ctx.fillStyle = grad;
   ctx.fillRect(0, 0, width, height);
 
-  // Distant Mountain Ridges / Foothills
-  ctx.fillStyle = '#180f1d';
-  ctx.beginPath();
-  ctx.moveTo(0, height * 0.76);
-  for (let x = 0; x <= width; x += 50) {
-    const y = height * 0.74 + Math.sin(x * 0.005) * 45 + Math.cos(x * 0.012) * 20;
-    ctx.lineTo(x, y);
-  }
-  ctx.lineTo(width, height);
-  ctx.lineTo(0, height);
-  ctx.closePath();
-  ctx.fill();
+  // Soft sunlit cumulus clouds
+  ctx.fillStyle = 'rgba(255, 255, 255, 0.45)';
+  const cloudPositions = [
+    [150, 180, 200, 60],
+    [550, 140, 260, 70],
+    [1100, 210, 320, 80],
+    [1650, 160, 240, 65]
+  ];
+  cloudPositions.forEach(([cx, cy, cw, ch]) => {
+    ctx.beginPath();
+    ctx.ellipse(cx, cy, cw, ch, 0, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.beginPath();
+    ctx.ellipse(cx + cw * 0.3, cy - ch * 0.3, cw * 0.6, ch * 0.8, 0, 0, Math.PI * 2);
+    ctx.fill();
+  });
 
-  // Modern Architectural City Silhouette
-  const horizon = height * 0.75;
-  ctx.fillStyle = '#0b0910';
+  // Distant modern glass architectural towers
+  const horizon = height * 0.72;
 
-  let curX = 40;
-  while (curX < width - 40) {
-    const bWidth = 25 + Math.random() * 65;
-    const bHeight = 80 + Math.random() * 260;
+  let curX = 30;
+  while (curX < width - 30) {
+    const bWidth = 35 + Math.random() * 75;
+    const bHeight = 100 + Math.random() * 320;
     const bTop = horizon - bHeight;
 
-    ctx.fillRect(curX, bTop, bWidth, bHeight + 150);
+    // Glass tower gradient reflecting daylight
+    const bGrad = ctx.createLinearGradient(curX, bTop, curX + bWidth, horizon);
+    bGrad.addColorStop(0, '#759fc7');
+    bGrad.addColorStop(0.5, '#bad4eb');
+    bGrad.addColorStop(1, '#537d9f');
+    ctx.fillStyle = bGrad;
+    ctx.fillRect(curX, bTop, bWidth, bHeight);
 
-    // Spire / Antenna
-    if (Math.random() > 0.6) {
-      ctx.fillRect(curX + bWidth / 2 - 1, bTop - 35, 2, 35);
-      // Beacon red light
-      ctx.fillStyle = '#ff3344';
-      ctx.fillRect(curX + bWidth / 2 - 2, bTop - 36, 4, 3);
-      ctx.fillStyle = '#0b0910';
+    // Glass panel grid
+    ctx.strokeStyle = 'rgba(255, 255, 255, 0.4)';
+    ctx.lineWidth = 1;
+    for (let py = bTop; py < horizon; py += 16) {
+      ctx.beginPath();
+      ctx.moveTo(curX, py);
+      ctx.lineTo(curX + bWidth, py);
+      ctx.stroke();
+    }
+    for (let px = curX; px < curX + bWidth; px += 14) {
+      ctx.beginPath();
+      ctx.moveTo(px, bTop);
+      ctx.lineTo(px, horizon);
+      ctx.stroke();
     }
 
-    // Windows in building
-    const numRows = Math.floor(bHeight / 14);
-    const numCols = Math.floor(bWidth / 9);
-
-    for (let r = 2; r < numRows - 1; r++) {
-      for (let c = 1; c < numCols - 1; c++) {
-        if (Math.random() > 0.45) {
-          const warm = Math.random() > 0.3;
-          ctx.fillStyle = warm ? 'rgba(255, 215, 140, 0.7)' : 'rgba(160, 210, 255, 0.6)';
-          ctx.fillRect(curX + c * 9, bTop + r * 14, 4, 6);
-        }
-      }
-    }
-    ctx.fillStyle = '#0b0910';
-    curX += bWidth + (8 + Math.random() * 18);
+    curX += bWidth + (12 + Math.random() * 24);
   }
 
-  // Soft atmospheric haze over horizon
-  const haze = ctx.createLinearGradient(0, horizon - 80, 0, horizon + 50);
-  haze.addColorStop(0, 'rgba(217, 107, 39, 0)');
-  haze.addColorStop(0.6, 'rgba(217, 107, 39, 0.22)');
-  haze.addColorStop(1, 'rgba(10, 8, 14, 0.8)');
-  ctx.fillStyle = haze;
-  ctx.fillRect(0, horizon - 80, width, 130);
+  // Midground & Foreground lush green tree canopies (matching Reference 5)
+  for (let x = 0; x <= width + 80; x += 45) {
+    const treeY = horizon - 35 + Math.sin(x * 0.02) * 20;
+    const radius = 55 + Math.sin(x * 0.05) * 20;
+    const treeGrad = ctx.createRadialGradient(x, treeY, 5, x, treeY, radius);
+    treeGrad.addColorStop(0, '#589e42');
+    treeGrad.addColorStop(0.7, '#387328');
+    treeGrad.addColorStop(1, '#1e4813');
+    ctx.fillStyle = treeGrad;
+    ctx.beginPath();
+    ctx.arc(x, treeY, radius, 0, Math.PI * 2);
+    ctx.fill();
+  }
 
   const tex = new THREE.CanvasTexture(canvas);
   cachedSkyline = tex;
@@ -320,94 +328,87 @@ export function getMetricsScreenTexture() {
   canvas.height = 640;
   const ctx = canvas.getContext('2d');
 
-  // Dark dashboard background
+  // Background
   ctx.fillStyle = '#0f1117';
   ctx.fillRect(0, 0, 1024, 640);
 
-  // Header
-  ctx.fillStyle = '#161923';
-  ctx.fillRect(0, 0, 1024, 52);
+  // Header Bar
+  ctx.fillStyle = '#171922';
+  ctx.fillRect(0, 0, 1024, 46);
   ctx.fillStyle = '#ff5722';
-  ctx.font = 'bold 16px sans-serif';
-  ctx.fillText('SYED FARMAN ALI • SYSTEM DIAGNOSTICS & TELEMETRY', 20, 32);
+  ctx.font = 'bold 14px sans-serif';
+  ctx.fillText('SYSTEM HEALTH & TELEMETRY CLOUD', 24, 28);
 
-  // Card 1: Repos & Commits
-  ctx.fillStyle = '#1a1f2e';
-  ctx.fillRect(20, 72, 305, 160);
-  ctx.fillStyle = '#8f9fb6';
-  ctx.font = '13px sans-serif';
-  ctx.fillText('GITHUB ECOSYSTEM', 36, 100);
-  ctx.fillStyle = '#ffffff';
-  ctx.font = 'bold 36px sans-serif';
-  ctx.fillText('41+', 36, 150);
-  ctx.fillStyle = '#51cf66';
-  ctx.font = '13px sans-serif';
-  ctx.fillText('● Active Public Repositories', 36, 180);
-  ctx.fillStyle = '#8f9fb6';
-  ctx.fillText('MERN • Python • ML • Django', 36, 204);
+  ctx.fillStyle = '#40c057';
+  ctx.fillText('● SYSTEM OPTIMAL', 860, 28);
 
-  // Card 2: Research & Citations
-  ctx.fillStyle = '#1a1f2e';
-  ctx.fillRect(345, 72, 305, 160);
-  ctx.fillStyle = '#8f9fb6';
-  ctx.fillText('GOOGLE SCHOLAR RESEARCH', 361, 100);
-  ctx.fillStyle = '#fcc419';
-  ctx.font = 'bold 36px sans-serif';
-  ctx.fillText('SSRN', 361, 150);
-  ctx.fillStyle = '#51cf66';
-  ctx.font = '13px sans-serif';
-  ctx.fillText('● Peer-Reviewed Publication', 361, 180);
-  ctx.fillStyle = '#8f9fb6';
-  ctx.fillText('SKUAST-Kashmir Auscultation & ML', 361, 204);
+  // KPI Cards
+  const kpis = [
+    { title: 'LATENCY', val: '24ms', sub: 'Global Edge Avg' },
+    { title: 'UPTIME', val: '99.98%', sub: 'Last 30 Days' },
+    { title: 'FPS (RENDER)', val: '60+ FPS', sub: 'Target 72Hz VR' },
+    { title: 'REPOS ACTIVE', val: '41', sub: 'GitHub Enterprise' }
+  ];
 
-  // Card 3: Experience & Client Builds
-  ctx.fillStyle = '#1a1f2e';
-  ctx.fillRect(670, 72, 334, 160);
-  ctx.fillStyle = '#8f9fb6';
-  ctx.fillText('COMMERCIAL DEPLOYMENTS', 686, 100);
-  ctx.fillStyle = '#339af0';
-  ctx.font = 'bold 36px sans-serif';
-  ctx.fillText('10+', 686, 150);
-  ctx.fillStyle = '#51cf66';
-  ctx.font = '13px sans-serif';
-  ctx.fillText('● Live Production Systems', 686, 180);
-  ctx.fillStyle = '#8f9fb6';
-  ctx.fillText('CityCabs • Star Beekeepers • MERN', 686, 204);
+  kpis.forEach((kpi, idx) => {
+    const x = 24 + idx * 244;
+    ctx.fillStyle = '#171924';
+    ctx.fillRect(x, 62, 230, 84);
+    ctx.strokeStyle = '#252936';
+    ctx.lineWidth = 1;
+    ctx.strokeRect(x, 62, 230, 84);
 
-  // Lower Section: Architecture Matrix Graph
-  ctx.fillStyle = '#161923';
-  ctx.fillRect(20, 252, 984, 360);
-  ctx.fillStyle = '#ffffff';
-  ctx.font = 'bold 15px sans-serif';
-  ctx.fillText('CORE TECHNICAL COMPETENCIES (VERIFIED)', 40, 285);
+    ctx.fillStyle = '#8b949e';
+    ctx.font = '11px sans-serif';
+    ctx.fillText(kpi.title, x + 16, 84);
+
+    ctx.fillStyle = '#ffffff';
+    ctx.font = 'bold 24px monospace';
+    ctx.fillText(kpi.val, x + 16, 116);
+
+    ctx.fillStyle = '#5c6370';
+    ctx.font = '10px sans-serif';
+    ctx.fillText(kpi.sub, x + 16, 134);
+  });
+
+  // Main Chart: Full-Stack Competency Gauges
+  ctx.fillStyle = '#171924';
+  ctx.fillRect(24, 164, 976, 440);
+  ctx.strokeRect(24, 164, 976, 440);
+
+  ctx.fillStyle = '#abb2bf';
+  ctx.font = 'bold 13px sans-serif';
+  ctx.fillText('CORE TECHNICAL COMPETENCIES (VERIFIED)', 46, 198);
 
   const skills = [
-    { name: 'Python & Django Backend Engine', val: 84, col: '#ff5722' },
-    { name: 'React & React Native Mobile', val: 78, col: '#339af0' },
-    { name: 'JavaScript (ESNext / TypeScript)', val: 76, col: '#fcc419' },
-    { name: 'MERN Stack (Node, Express, MongoDB)', val: 64, col: '#51cf66' },
-    { name: 'Applied Machine Learning (scikit-learn)', val: 58, col: '#e03131' },
-    { name: 'Three.js / WebGL / Spatial WebXR', val: 74, col: '#cc5de8' }
+    { label: 'React / Next.js / Vite / TailwindCSS', pct: 95, color: '#339af0' },
+    { label: 'Python / Django / FastREST APIs', pct: 90, color: '#ff922b' },
+    { label: 'Node.js / Express / MongoDB / PostgreSQL', pct: 92, color: '#51cf66' },
+    { label: 'Machine Learning / Random Forest / Scikit-Learn', pct: 85, color: '#cc5de8' },
+    { label: 'WebXR / Three.js / 3D Graphics & Spatial Computing', pct: 88, color: '#ff6b6b' },
+    { label: 'Docker / CI-CD / Vercel Cloud Deployment', pct: 86, color: '#20c997' }
   ];
 
   skills.forEach((s, idx) => {
-    const y = 320 + idx * 46;
-    ctx.fillStyle = '#cfd7e6';
-    ctx.font = '14px sans-serif';
-    ctx.fillText(s.name, 40, y);
-    ctx.fillText(`${s.val}%`, 500, y);
+    const y = 236 + idx * 56;
+    ctx.fillStyle = '#d0d7de';
+    ctx.font = '13px sans-serif';
+    ctx.fillText(s.label, 46, y);
+
+    ctx.fillStyle = '#8b949e';
+    ctx.font = 'bold 13px monospace';
+    ctx.fillText(`${s.pct}%`, 920, y);
 
     // Track
-    ctx.fillStyle = '#232938';
-    ctx.fillRect(550, y - 12, 410, 14);
+    ctx.fillStyle = '#0f1118';
+    ctx.fillRect(46, y + 10, 890, 12);
 
-    // Fill
-    ctx.fillStyle = s.col;
-    ctx.fillRect(550, y - 12, (410 * s.val) / 100, 14);
+    // Progress
+    ctx.fillStyle = s.color;
+    ctx.fillRect(46, y + 10, (890 * s.pct) / 100, 12);
   });
 
   const tex = new THREE.CanvasTexture(canvas);
   cachedMetricsScreen = tex;
   return tex;
 }
-
