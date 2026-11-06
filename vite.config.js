@@ -8,7 +8,7 @@ export default defineConfig({
     rollupOptions: {
       output: {
         manualChunks(id) {
-          if (id.includes('node_modules/three') || id.includes('@react-three') || id.includes('@react-spring')) {
+          if (id.includes('node_modules/three') || id.includes('@react-three') || id.includes('@pmndrs') || id.includes('@react-spring')) {
             return 'three-scene';
           }
           if (id.includes('node_modules/react') || id.includes('react-router-dom') || id.includes('@reduxjs/toolkit')) {

@@ -27,14 +27,15 @@ function NavBar({ onOpenVR }) {
   return (
     <header className="editorial-navbar">
       <div className="editorial-nav-inner">
-        {/* Logo matching reference style: farman. with orange dot */}
+        {/* FARMAN wordmark */}
         <Link 
           to="/" 
           className="editorial-logo"
+          aria-label="Syed Farman Ali — back to home"
           onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
         >
-          <span className="logo-text">farman</span>
-          <span className="logo-dot" aria-hidden="true" />
+          <span className="logo-text">FARMAN</span>
+          <span className="logo-mark" aria-hidden="true" />
         </Link>
 
         {/* Center Nav Links */}
@@ -89,10 +90,10 @@ function NavBar({ onOpenVR }) {
             type="button"
             className="btn-nav-vr"
             onClick={onOpenVR}
-            title="Experience 3D Virtual Reality Holodeck"
+            title="Experience Photorealistic 3D Developer Office & WebXR VR"
           >
             <span className="vr-nav-icon">🥽</span>
-            <span>VR Mode</span>
+            <span>3D / VR Mode</span>
           </button>
 
           <button 
@@ -134,7 +135,7 @@ function NavBar({ onOpenVR }) {
               onOpenVR();
             }}
           >
-            🥽 Launch 3D / VR Mode
+            🥽 Launch 3D Office &amp; VR
           </button>
           <button 
             type="button" 

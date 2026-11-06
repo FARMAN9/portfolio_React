@@ -117,6 +117,40 @@
   transform: translateY(-2px);
 }
 
+.vr-status-message {
+  position: absolute;
+  z-index: 30;
+  top: 88px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  max-width: min(560px, calc(100vw - 32px));
+  padding: 11px 14px 11px 18px;
+  border: 1px solid rgba(255, 138, 101, 0.38);
+  border-radius: 999px;
+  color: #fff5ef;
+  background: rgba(22, 13, 15, 0.92);
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.35);
+  backdrop-filter: blur(18px);
+  font-size: 13px;
+}
+
+.vr-status-message button {
+  display: grid;
+  place-items: center;
+  flex: 0 0 28px;
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  color: inherit;
+  background: rgba(255, 255, 255, 0.1);
+  cursor: pointer;
+}
+
 .vr-headset-btn {
   background: linear-gradient(135deg, #f76707 0%, #e03131 100%);
   border: none;
@@ -293,6 +327,17 @@
   width: 100%;
   overflow-y: auto;
   max-height: 80vh;
+}
+
+.vr-project-preview {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 13px;
+  background: #211a20;
+  box-shadow: 0 10px 26px rgba(0, 0, 0, 0.28);
 }
 
 .vr-modal-close {
@@ -594,4 +639,17 @@
 .vr-modal-btn.btn-secondary:hover {
   background: rgba(255, 255, 255, 0.18);
   color: #ff8a65;
+}
+
+@media (max-width: 768px) {
+  .vr-status-message {
+    top: 72px;
+    border-radius: 16px;
+  }
+
+  .vr-project-modal {
+    right: 12px;
+    width: min(420px, calc(100vw - 24px));
+    max-height: 70vh;
+  }
 }

@@ -333,8 +333,21 @@
 
 .player-license-tag {
   font-size: 10px;
-  color: #51cf66;
+  color: rgba(255, 255, 255, 0.64);
   font-weight: 500;
+  line-height: 1.4;
+}
+
+.player-license-tag a,
+.playlist-item-credit {
+  color: #90d7ae;
+  text-decoration: none;
+}
+
+.player-license-tag a:hover,
+.playlist-item-credit:hover {
+  color: #c4f3d6;
+  text-decoration: underline;
 }
 
 /* Scrubber */
@@ -488,11 +501,11 @@
 
 .playlist-item {
   display: flex;
+  flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  padding: 6px 8px;
+  padding: 5px 8px;
   border-radius: 8px;
-  cursor: pointer;
   transition: all 0.2s ease;
 }
 
@@ -503,6 +516,32 @@
 .playlist-item.is-active {
   background: rgba(247, 103, 7, 0.15);
   border-left: 2px solid #f76707;
+}
+
+.playlist-item-select {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 2px 0;
+  border: 0;
+  color: inherit;
+  text-align: left;
+  background: transparent;
+  cursor: pointer;
+}
+
+.playlist-item-select:focus-visible {
+  outline: 2px solid #ffa94d;
+  outline-offset: 3px;
+  border-radius: 5px;
+}
+
+.playlist-item-credit {
+  align-self: flex-start;
+  margin: 3px 0 1px 27px;
+  font-size: 9px;
 }
 
 .playlist-item-left {

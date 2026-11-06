@@ -179,8 +179,6 @@ ${projects.map((project) => `- ${project.name}: ${project.description} Tech: ${(
 
 export function answerPortfolioQuestion(question, profile = portfolioProfile, skills = portfolioSkills, projects = portfolioProjects) {
   const q = normalize(question);
-  const topSkills = skills.slice(0, 8).map((skill) => skill.name).join(", ");
-  const featuredProjects = projects.slice(0, 5).map((project) => project.name).join(", ");
 
   // Greetings
   if (q.includes("hi") || q.includes("hello") || q.includes("hey") || q.includes("greetings") || q.includes("salaam") || q.includes("namaste")) {
@@ -242,7 +240,8 @@ export function answerPortfolioQuestion(question, profile = portfolioProfile, sk
 
   // General Skills / Tech stack
   if (q.includes("skill") || q.includes("tech") || q.includes("stack") || q.includes("language") || q.includes("framework")) {
-    return `🛠️ **Technical Arsenal**:\n• Languages: Python (84%), JavaScript (76%), HTML/CSS (82%)\n• Frontend: React (78%), React Native (66%), Redux, Three.js\n• Backend: Django (68%), Node.js/Express, REST APIs\n• Data/AI: Machine Learning (58%), SQLite, MongoDB\n• Tools: Git/GitHub, Vite, Vercel, Docker`;
+    const formattedSkills = skills.map((s) => `${s.name} (${s.value}%)`).join(", ");
+    return `🛠️ **Technical Arsenal**:\n• Skills: ${formattedSkills}\n• Tools: Git/GitHub, Vite, Vercel, Docker`;
   }
 
   // Projects list

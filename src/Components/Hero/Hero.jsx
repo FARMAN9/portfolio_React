@@ -106,10 +106,10 @@ function Hero({ onOpenVR }) {
               type="button"
               className="btn-pill-vr-glow"
               onClick={onOpenVR}
-              title="Experience 3D Virtual Reality Holodeck"
+              title="Experience Photorealistic 3D Developer Office & WebXR VR"
             >
               <span>🥽</span>
-              <span>VR Gallery</span>
+              <span>3D Office &amp; VR</span>
             </button>
             <a
               href={profileData.resumeUrl || "https://rxresu.me/farman9/python-django-developer"}

@@ -7,15 +7,37 @@ import {
   FiSkipBack,
   FiVolume2,
   FiVolumeX,
-  FiMusic,
   FiMaximize2,
   FiMinimize2,
   FiList
 } from 'react-icons/fi';
 
-// Free / Royalty-Free Audio Library Tracks
-// Uses verified public royalty-free streams + built-in Web Audio API Procedural Synth fallback
+// Community-shared recordings plus royalty-free tracks and an original browser synth.
 const AUDIO_TRACKS = [
+  {
+    id: 'urdu-sare-jahan',
+    title: 'Saare Jahan Se Achha',
+    artist: 'Instrumental · Mvkulkarni23',
+    genre: 'Urdu · Patriotic melody',
+    duration: '0:30',
+    src: '/audio/sare-jahan-urdu.ogg',
+    credit: 'Sare Jahan Se Acha - Music by Mvkulkarni23',
+    sourceUrl: 'https://commons.wikimedia.org/wiki/File:Sare_Jahan_Se_Acha_-_Music.ogg',
+    license: 'CC BY-SA 3.0',
+    licenseUrl: 'https://creativecommons.org/licenses/by-sa/3.0/'
+  },
+  {
+    id: 'persian-folk',
+    title: 'Popular Song (1931)',
+    artist: 'Traditional Persian music · archive recording',
+    genre: 'Persian · Traditional',
+    duration: '3:37',
+    src: '/audio/persian-folk-1931.ogg',
+    credit: 'Traditional Persian recording, from Musik des Orients (1931)',
+    sourceUrl: 'https://commons.wikimedia.org/wiki/File:Popular_song_(1931).ogg',
+    license: 'Public domain',
+    licenseUrl: 'https://creativecommons.org/publicdomain/mark/1.0/'
+  },
   {
     id: 'lofi-study',
     title: 'Midnight Coding Lo-Fi',
@@ -23,6 +45,10 @@ const AUDIO_TRACKS = [
     genre: 'Lo-Fi Chill',
     duration: '2:45',
     src: 'https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3?filename=lofi-study-112191.mp3',
+    credit: 'Pixabay audio contributor',
+    sourceUrl: 'https://pixabay.com/music/',
+    license: 'Pixabay Content License',
+    licenseUrl: 'https://pixabay.com/service/license-summary/',
     fallbackProcedural: true
   },
   {
@@ -32,6 +58,10 @@ const AUDIO_TRACKS = [
     genre: 'Synthwave',
     duration: '3:12',
     src: 'https://cdn.pixabay.com/download/audio/2022/01/18/audio_d0a13f69d2.mp3?filename=electronic-future-beats-117997.mp3',
+    credit: 'Pixabay audio contributor',
+    sourceUrl: 'https://pixabay.com/music/',
+    license: 'Pixabay Content License',
+    licenseUrl: 'https://pixabay.com/service/license-summary/',
     fallbackProcedural: true
   },
   {
@@ -41,6 +71,10 @@ const AUDIO_TRACKS = [
     genre: 'Ambient Relax',
     duration: '3:30',
     src: 'https://cdn.pixabay.com/download/audio/2022/03/15/audio_c8c8a73467.mp3?filename=ambient-piano-amp-strings-10711.mp3',
+    credit: 'Pixabay audio contributor',
+    sourceUrl: 'https://pixabay.com/music/',
+    license: 'Pixabay Content License',
+    licenseUrl: 'https://pixabay.com/service/license-summary/',
     fallbackProcedural: true
   },
   {
@@ -50,6 +84,8 @@ const AUDIO_TRACKS = [
     genre: 'Live Synthesizer',
     duration: 'Infinite',
     src: '', // Pure Web Audio API synthesis
+    credit: 'Original sound generated in the browser',
+    license: 'Original procedural audio',
     isProcedural: true
   }
 ];
@@ -75,6 +111,10 @@ export default function MusicPlayer() {
   const isProceduralActiveRef = useRef(false);
 
   const currentTrack = AUDIO_TRACKS[currentTrackIndex];
+
+  useEffect(() => {
+    if (audioRef.current) audioRef.current.volume = isMuted ? 0 : volume;
+  }, [isMuted, volume]);
 
   // Helper to start procedural Lo-Fi synthesizer fallback
   const startProceduralSynth = useCallback(() => {
@@ -180,17 +220,7 @@ export default function MusicPlayer() {
   };
 
   // Next / Previous Track
-  const handleNextTrack = () => {
-    const nextIdx = (currentTrackIndex + 1) % AUDIO_TRACKS.length;
-    changeTrack(nextIdx);
-  };
-
-  const handlePrevTrack = () => {
-    const prevIdx = (currentTrackIndex - 1 + AUDIO_TRACKS.length) % AUDIO_TRACKS.length;
-    changeTrack(prevIdx);
-  };
-
-  const changeTrack = (newIndex) => {
+  const changeTrack = useCallback((newIndex) => {
     stopProceduralSynth();
     setCurrentTrackIndex(newIndex);
     setCurrentTime(0);
@@ -198,21 +228,25 @@ export default function MusicPlayer() {
     const nextTrack = AUDIO_TRACKS[newIndex];
     if (nextTrack.isProcedural || !nextTrack.src) {
       if (audioRef.current) audioRef.current.pause();
+      if (isPlaying) startProceduralSynth();
+    } else if (audioRef.current) {
+      audioRef.current.src = nextTrack.src;
+      audioRef.current.load();
       if (isPlaying) {
-        startProceduralSynth();
-      }
-    } else {
-      if (audioRef.current) {
-        audioRef.current.src = nextTrack.src;
-        audioRef.current.load();
-        if (isPlaying) {
-          audioRef.current.play().catch(() => {
-            startProceduralSynth();
-          });
-        }
+        audioRef.current.play().catch(() => startProceduralSynth());
       }
     }
-  };
+  }, [isPlaying, startProceduralSynth, stopProceduralSynth]);
+
+  const handleNextTrack = useCallback(() => {
+    const nextIdx = (currentTrackIndex + 1) % AUDIO_TRACKS.length;
+    changeTrack(nextIdx);
+  }, [currentTrackIndex, changeTrack]);
+
+  const handlePrevTrack = useCallback(() => {
+    const prevIdx = (currentTrackIndex - 1 + AUDIO_TRACKS.length) % AUDIO_TRACKS.length;
+    changeTrack(prevIdx);
+  }, [currentTrackIndex, changeTrack]);
 
   // Volume Change
   const handleVolumeChange = (e) => {
@@ -255,7 +289,7 @@ export default function MusicPlayer() {
     const onEnded = () => handleNextTrack();
     const onError = () => {
       // Seamlessly fall back to procedural ambient synthesizer on network error
-      startProceduralSynth();
+      if (isPlaying) startProceduralSynth();
     };
 
     audio.addEventListener('timeupdate', onTimeUpdate);
@@ -269,7 +303,7 @@ export default function MusicPlayer() {
       audio.removeEventListener('ended', onEnded);
       audio.removeEventListener('error', onError);
     };
-  }, [handleNextTrack, startProceduralSynth]);
+  }, [handleNextTrack, isPlaying, startProceduralSynth]);
 
   // Audio Visualizer Canvas
   useEffect(() => {
@@ -342,7 +376,7 @@ export default function MusicPlayer() {
           <div className="player-window-header">
             <div className="player-badge">
               <span className="live-indicator-dot" />
-              <span>FREE AUDIO LIBRARY</span>
+              <span>OPEN MUSIC &amp; AMBIENCE</span>
             </div>
             <div className="player-header-actions">
               <button
@@ -385,7 +419,15 @@ export default function MusicPlayer() {
               <div className="player-text-details">
                 <h4 className="player-track-title">{currentTrack.title}</h4>
                 <p className="player-track-artist">{currentTrack.artist} • <span className="player-genre-badge">{currentTrack.genre}</span></p>
-                <span className="player-license-tag">✓ Free &amp; Royalty-Free for browsing</span>
+                {currentTrack.sourceUrl ? (
+                  <span className="player-license-tag">
+                    <a href={currentTrack.sourceUrl} target="_blank" rel="noopener noreferrer">{currentTrack.credit}</a>
+                    {' · '}
+                    <a href={currentTrack.licenseUrl} target="_blank" rel="noopener noreferrer">{currentTrack.license}</a>
+                  </span>
+                ) : (
+                  <span className="player-license-tag">{currentTrack.license}</span>
+                )}
               </div>
             </div>
           </div>
@@ -460,23 +502,29 @@ export default function MusicPlayer() {
           {showPlaylist && (
             <div className="player-playlist-drawer">
               <div className="playlist-drawer-header">
-                <span>Curated Coding Beats ({AUDIO_TRACKS.length})</span>
+                <span>Urdu · Persian · Focus ({AUDIO_TRACKS.length})</span>
               </div>
               <div className="playlist-items-list">
                 {AUDIO_TRACKS.map((track, idx) => (
                   <div
                     key={track.id}
                     className={`playlist-item ${idx === currentTrackIndex ? 'is-active' : ''}`}
-                    onClick={() => changeTrack(idx)}
                   >
-                    <div className="playlist-item-left">
-                      <span className="playlist-item-num">0{idx + 1}</span>
-                      <div className="playlist-item-info">
-                        <span className="playlist-item-title">{track.title}</span>
-                        <span className="playlist-item-artist">{track.artist}</span>
+                    <button type="button" className="playlist-item-select" onClick={() => changeTrack(idx)}>
+                      <div className="playlist-item-left">
+                        <span className="playlist-item-num">{String(idx + 1).padStart(2, '0')}</span>
+                        <div className="playlist-item-info">
+                          <span className="playlist-item-title">{track.title}</span>
+                          <span className="playlist-item-artist">{track.artist}</span>
+                        </div>
                       </div>
-                    </div>
-                    <span className="playlist-item-genre">{track.genre}</span>
+                      <span className="playlist-item-genre">{track.genre}</span>
+                    </button>
+                    {track.sourceUrl && (
+                      <a className="playlist-item-credit" href={track.sourceUrl} target="_blank" rel="noopener noreferrer">
+                        {track.license} · credits
+                      </a>
+                    )}
                   </div>
                 ))}
               </div>

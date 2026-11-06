@@ -3,7 +3,6 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchProfile } from './features/profile/profileSlice';
 import { fetchSkills } from './features/skills/skillsSlice';
-import NavBar from './Components/Navbar/NavBar';
 import Hero from './Components/Hero/Hero';
 import MyWork from './Components/MyWork/MyWork';
 import Services from './Components/Services/Services';
