@@ -1,10 +1,11 @@
-import { useState, useEffect, useRef, Suspense } from 'react';
+import { useState, useEffect, Suspense } from 'react';
 import { Canvas } from '@react-three/fiber';
 import { XR } from '@react-three/xr';
 import * as THREE from 'three';
 import './ImmersiveExperience.css';
 
 import { xrStore, checkVRSupport, enterVRSession, exitVRSession } from './xr/xrStore';
+import soulfulAudio from './audio/SoulfulAudioEngine';
 import OfficeWorld from './world/OfficeWorld';
 import DesktopControls from './controllers/DesktopControls';
 import VRControls from './controllers/VRControls';
@@ -43,9 +44,6 @@ export default function ImmersiveExperience({ isOpen, onClose }) {
   const [isStudioReady, setIsStudioReady] = useState(false);
   const [hasStarted, setHasStarted] = useState(false);
 
-  // Background audio synth / ambience ref
-  const audioContextRef = useRef(null);
-  const ambientGainRef = useRef(null);
 
   // Check WebXR support on mount
   useEffect(() => {
@@ -72,46 +70,18 @@ export default function ImmersiveExperience({ isOpen, onClose }) {
     return () => document.removeEventListener('fullscreenchange', handleFullscreen);
   }, []);
 
-  // Ambient sound synthesizer
+  // Soulful ambient soundscape
   useEffect(() => {
-    if (isMuted) {
-      if (ambientGainRef.current) {
-        ambientGainRef.current.gain.setTargetAtTime(0, audioContextRef.current?.currentTime || 0, 0.1);
-      }
-      return;
-    }
-
-    try {
-      const AudioCtx = window.AudioContext || window.webkitAudioContext;
-      if (!AudioCtx) return;
-      if (!audioContextRef.current) {
-        audioContextRef.current = new AudioCtx();
-        const osc = audioContextRef.current.createOscillator();
-        const gain = audioContextRef.current.createGain();
-        osc.type = 'sine';
-        osc.frequency.setValueAtTime(65.41, audioContextRef.current.currentTime); // C2 deep warm hum
-        gain.gain.setValueAtTime(0.015, audioContextRef.current.currentTime);
-        osc.connect(gain);
-        gain.connect(audioContextRef.current.destination);
-        osc.start();
-        ambientGainRef.current = gain;
-      } else if (audioContextRef.current.state === 'suspended') {
-        audioContextRef.current.resume();
-        ambientGainRef.current?.gain.setTargetAtTime(0.015, audioContextRef.current.currentTime, 0.2);
-      } else {
-        ambientGainRef.current?.gain.setTargetAtTime(0.015, audioContextRef.current.currentTime, 0.2);
-      }
-    } catch {
-      // Audio context blocked
+    if (!isMuted && isOpen) {
+      soulfulAudio.start();
+    } else {
+      soulfulAudio.stop();
     }
 
     return () => {
-      if (audioContextRef.current) {
-        audioContextRef.current.close().catch(() => {});
-        audioContextRef.current = null;
-      }
+      soulfulAudio.stop();
     };
-  }, [isMuted]);
+  }, [isMuted, isOpen]);
 
   // Clean up on unmount or close
   useEffect(() => {
@@ -120,6 +90,7 @@ export default function ImmersiveExperience({ isOpen, onClose }) {
         document.exitPointerLock?.();
       }
       exitVRSession();
+      soulfulAudio.stop();
       setHasStarted(false);
     }
   }, [isOpen, isLocked]);

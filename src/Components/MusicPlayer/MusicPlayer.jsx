@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect, useCallback } from 'react';
 import './MusicPlayer.css';
+import soulfulAudio from '../../experience/audio/SoulfulAudioEngine';
 import {
   FiPlay,
   FiPause,
@@ -14,6 +15,17 @@ import {
 
 // Community-shared recordings plus royalty-free tracks and an original browser synth.
 const AUDIO_TRACKS = [
+  {
+    id: 'soulful-kashmir-ambient',
+    title: 'Soulful Kashmiri Ambient & Santoor',
+    artist: 'Farman Studio · Procedural Meditation',
+    genre: 'Soulful Ambient · Kashmiri Chords',
+    duration: 'Infinite',
+    src: '',
+    credit: 'Generative soulful modal synthesizer with santoor chimes and warm Rhodes pads',
+    license: 'Original generative audio',
+    isProcedural: true
+  },
   {
     id: 'urdu-sare-jahan',
     title: 'Saare Jahan Se Achha',
@@ -37,6 +49,19 @@ const AUDIO_TRACKS = [
     sourceUrl: 'https://commons.wikimedia.org/wiki/File:Popular_song_(1931).ogg',
     license: 'Public domain',
     licenseUrl: 'https://creativecommons.org/publicdomain/mark/1.0/'
+  },
+  {
+    id: 'deep-ambient',
+    title: 'Deep Focus Ambient Flow',
+    artist: 'Kashmir Audio Studio',
+    genre: 'Ambient Relax',
+    duration: '3:30',
+    src: 'https://cdn.pixabay.com/download/audio/2022/03/15/audio_c8c8a73467.mp3?filename=ambient-piano-amp-strings-10711.mp3',
+    credit: 'Pixabay audio contributor',
+    sourceUrl: 'https://pixabay.com/music/',
+    license: 'Pixabay Content License',
+    licenseUrl: 'https://pixabay.com/service/license-summary/',
+    fallbackProcedural: true
   },
   {
     id: 'lofi-study',
@@ -63,30 +88,6 @@ const AUDIO_TRACKS = [
     license: 'Pixabay Content License',
     licenseUrl: 'https://pixabay.com/service/license-summary/',
     fallbackProcedural: true
-  },
-  {
-    id: 'deep-ambient',
-    title: 'Deep Focus Ambient Flow',
-    artist: 'Kashmir Audio Studio',
-    genre: 'Ambient Relax',
-    duration: '3:30',
-    src: 'https://cdn.pixabay.com/download/audio/2022/03/15/audio_c8c8a73467.mp3?filename=ambient-piano-amp-strings-10711.mp3',
-    credit: 'Pixabay audio contributor',
-    sourceUrl: 'https://pixabay.com/music/',
-    license: 'Pixabay Content License',
-    licenseUrl: 'https://pixabay.com/service/license-summary/',
-    fallbackProcedural: true
-  },
-  {
-    id: 'generative-synth',
-    title: 'Generative Ambient Chords',
-    artist: 'Web Audio Procedural',
-    genre: 'Live Synthesizer',
-    duration: 'Infinite',
-    src: '', // Pure Web Audio API synthesis
-    credit: 'Original sound generated in the browser',
-    license: 'Original procedural audio',
-    isProcedural: true
   }
 ];
 
@@ -106,87 +107,26 @@ export default function MusicPlayer() {
   const audioRef = useRef(null);
   const canvasRef = useRef(null);
   const animationFrameRef = useRef(null);
-  const proceduralTimerRef = useRef(null);
-  const audioContextRef = useRef(null);
   const isProceduralActiveRef = useRef(false);
 
   const currentTrack = AUDIO_TRACKS[currentTrackIndex];
 
   useEffect(() => {
     if (audioRef.current) audioRef.current.volume = isMuted ? 0 : volume;
+    soulfulAudio.setVolume(isMuted ? 0 : volume * 0.75);
   }, [isMuted, volume]);
 
-  // Helper to start procedural Lo-Fi synthesizer fallback
+  // Helper to start procedural soulful synthesizer
   const startProceduralSynth = useCallback(() => {
     if (isProceduralActiveRef.current) return;
-    try {
-      const AudioCtx = window.AudioContext || window.webkitAudioContext;
-      if (!AudioCtx) return;
-      if (!audioContextRef.current) {
-        audioContextRef.current = new AudioCtx();
-      }
-      const ctx = audioContextRef.current;
-      if (ctx.state === 'suspended') {
-        ctx.resume();
-      }
-
-      isProceduralActiveRef.current = true;
-      const chords = [
-        [261.63, 329.63, 392.00, 493.88], // Cmaj7
-        [220.00, 261.63, 329.63, 392.00], // Am7
-        [174.61, 220.00, 261.63, 329.63], // Fmaj7
-        [196.00, 246.94, 293.66, 349.23]  // G7
-      ];
-      let chordIdx = 0;
-
-      const playChord = () => {
-        if (!isProceduralActiveRef.current) return;
-        const currentChord = chords[chordIdx % chords.length];
-        chordIdx++;
-
-        currentChord.forEach((freq, idx) => {
-          try {
-            const osc = ctx.createOscillator();
-            const gain = ctx.createGain();
-            const filter = ctx.createBiquadFilter();
-
-            osc.type = 'triangle';
-            osc.frequency.setValueAtTime(freq, ctx.currentTime);
-
-            filter.type = 'lowpass';
-            filter.frequency.setValueAtTime(800, ctx.currentTime);
-
-            const vol = isMuted ? 0 : volume * 0.04;
-            gain.gain.setValueAtTime(0, ctx.currentTime);
-            gain.gain.linearRampToValueAtTime(vol, ctx.currentTime + 0.8 + idx * 0.1);
-            gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + 3.8);
-
-            osc.connect(filter);
-            filter.connect(gain);
-            gain.connect(ctx.destination);
-
-            osc.start(ctx.currentTime + idx * 0.05);
-            osc.stop(ctx.currentTime + 4.0);
-          } catch {
-            // ignore
-          }
-        });
-
-        proceduralTimerRef.current = setTimeout(playChord, 3600);
-      };
-
-      playChord();
-    } catch {
-      // Audio context blocked
-    }
+    isProceduralActiveRef.current = true;
+    soulfulAudio.setVolume(isMuted ? 0 : volume * 0.75);
+    soulfulAudio.start();
   }, [volume, isMuted]);
 
   const stopProceduralSynth = useCallback(() => {
     isProceduralActiveRef.current = false;
-    if (proceduralTimerRef.current) {
-      clearTimeout(proceduralTimerRef.current);
-      proceduralTimerRef.current = null;
-    }
+    soulfulAudio.stop();
   }, []);
 
   // Play / Pause toggle
