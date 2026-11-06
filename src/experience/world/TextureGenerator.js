@@ -22,8 +22,8 @@ export function getWoodFloorTextures() {
   canvas.height = height;
   const ctx = canvas.getContext('2d');
 
-  // Base rich dark walnut wood
-  ctx.fillStyle = '#1c1613';
+  // Base rich warm natural European oak / honey walnut wood
+  ctx.fillStyle = '#6e5644';
   ctx.fillRect(0, 0, width, height);
 
   // Planks
@@ -32,17 +32,17 @@ export function getWoodFloorTextures() {
 
   for (let i = 0; i < numPlanks; i++) {
     const y = i * plankHeight;
-    // Slight color shift per plank
-    const toneShift = (Math.sin(i * 12.3) * 8);
-    const r = Math.min(255, Math.max(0, 32 + toneShift));
-    const g = Math.min(255, Math.max(0, 24 + toneShift * 0.8));
-    const b = Math.min(255, Math.max(0, 19 + toneShift * 0.6));
+    // Natural tone shift per plank
+    const toneShift = (Math.sin(i * 12.3) * 14);
+    const r = Math.min(255, Math.max(0, 115 + toneShift));
+    const g = Math.min(255, Math.max(0, 92 + toneShift * 0.85));
+    const b = Math.min(255, Math.max(0, 74 + toneShift * 0.7));
 
     ctx.fillStyle = `rgb(${Math.floor(r)}, ${Math.floor(g)}, ${Math.floor(b)})`;
     ctx.fillRect(0, y, width, plankHeight - 2);
 
     // Wood grain lines
-    ctx.strokeStyle = 'rgba(10, 6, 4, 0.25)';
+    ctx.strokeStyle = 'rgba(60, 42, 28, 0.35)';
     ctx.lineWidth = 1;
     for (let gIdx = 0; gIdx < 14; gIdx++) {
       const lineY = y + (gIdx * 4) + (Math.sin(gIdx + i) * 2);
@@ -57,12 +57,12 @@ export function getWoodFloorTextures() {
     }
 
     // Plank seam / bevel shadow
-    ctx.fillStyle = 'rgba(6, 4, 3, 0.85)';
+    ctx.fillStyle = 'rgba(40, 28, 18, 0.7)';
     ctx.fillRect(0, y + plankHeight - 2, width, 2);
   }
 
   // Vertical staggered seams
-  ctx.fillStyle = 'rgba(6, 4, 3, 0.9)';
+  ctx.fillStyle = 'rgba(40, 28, 18, 0.75)';
   for (let i = 0; i < numPlanks; i++) {
     const y = i * plankHeight;
     const offset = (i % 3) * 340;
@@ -103,7 +103,7 @@ export function getWoodFloorTextures() {
 }
 
 /**
- * Procedural modern architectural concrete / dark acoustic wall panel texture.
+ * Procedural modern architectural studio wall panel texture.
  */
 export function getWallTexture() {
   if (cachedWallDiffuse) return cachedWallDiffuse;
@@ -113,20 +113,20 @@ export function getWallTexture() {
   canvas.height = 512;
   const ctx = canvas.getContext('2d');
 
-  // Deep architectural slate dark gray
-  ctx.fillStyle = '#141417';
+  // Modern architectural warm studio slate gray / soft concrete
+  ctx.fillStyle = '#2d313c';
   ctx.fillRect(0, 0, 512, 512);
 
-  // Subtle acoustic micro-slits
-  ctx.fillStyle = '#0d0d0f';
-  for (let x = 0; x < 512; x += 16) {
-    ctx.fillRect(x, 0, 2, 512);
+  // Subtle acoustic vertical panel grooves
+  ctx.fillStyle = '#22252e';
+  for (let x = 0; x < 512; x += 32) {
+    ctx.fillRect(x, 0, 3, 512);
   }
 
-  // Soft vertical gradient
+  // Soft architectural light gradient
   const grad = ctx.createLinearGradient(0, 0, 0, 512);
-  grad.addColorStop(0, 'rgba(35, 35, 45, 0.15)');
-  grad.addColorStop(1, 'rgba(5, 5, 8, 0.35)');
+  grad.addColorStop(0, 'rgba(80, 88, 106, 0.25)');
+  grad.addColorStop(1, 'rgba(20, 24, 32, 0.2)');
   ctx.fillStyle = grad;
   ctx.fillRect(0, 0, 512, 512);
 
@@ -410,3 +410,4 @@ export function getMetricsScreenTexture() {
   cachedMetricsScreen = tex;
   return tex;
 }
+

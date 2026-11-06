@@ -57,3 +57,4 @@ export default function VRControls({ speedMultiplier = 1.0, snapAngle = 30 }) {
 
   return null;
 }
+

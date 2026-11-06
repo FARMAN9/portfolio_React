@@ -27,27 +27,31 @@ export default function RoomArchitecture() {
       {/* 2. Architectural Ceiling with Recessed Light Troughs */}
       <mesh rotation={[Math.PI / 2, 0, 0]} position={[0, roomH, 0]}>
         <planeGeometry args={[roomW, roomD]} />
-        <meshStandardMaterial color="#121316" roughness={0.9} metalness={0.05} />
+        <meshStandardMaterial color="#262b36" roughness={0.7} metalness={0.05} />
       </mesh>
 
       {/* Architectural Ceiling Beams / Trim */}
       <mesh position={[0, roomH - 0.05, -roomD / 2 + 0.1]}>
         <boxGeometry args={[roomW, 0.1, 0.2]} />
-        <meshStandardMaterial color="#1d1f24" roughness={0.7} />
+        <meshStandardMaterial color="#323744" roughness={0.6} />
       </mesh>
       <mesh position={[0, roomH - 0.05, roomD / 2 - 0.1]}>
         <boxGeometry args={[roomW, 0.1, 0.2]} />
-        <meshStandardMaterial color="#1d1f24" roughness={0.7} />
+        <meshStandardMaterial color="#323744" roughness={0.6} />
       </mesh>
 
-      {/* Recessed Ceiling LED Strips (Warm glow lines) */}
+      {/* Recessed Ceiling LED Light Panels (Luminous bright white panels) */}
       <mesh position={[-2.4, roomH - 0.02, 0]}>
-        <boxGeometry args={[0.08, 0.02, roomD - 1.6]} />
-        <meshBasicMaterial color="#ffe8d1" />
+        <boxGeometry args={[0.22, 0.02, roomD - 2.0]} />
+        <meshBasicMaterial color="#ffffff" />
       </mesh>
       <mesh position={[2.4, roomH - 0.02, 0]}>
-        <boxGeometry args={[0.08, 0.02, roomD - 1.6]} />
-        <meshBasicMaterial color="#ffe8d1" />
+        <boxGeometry args={[0.22, 0.02, roomD - 2.0]} />
+        <meshBasicMaterial color="#ffffff" />
+      </mesh>
+      <mesh position={[0, roomH - 0.02, 0]}>
+        <boxGeometry args={[0.22, 0.02, roomD - 3.2]} />
+        <meshBasicMaterial color="#ffffff" />
       </mesh>
 
       {/* 3. North Wall: Large Panoramic Glass Window & Skyline Backdrop */}
@@ -57,16 +61,16 @@ export default function RoomArchitecture() {
         <meshBasicMaterial map={skylineTexture} toneMapped={false} />
       </mesh>
 
-      {/* Window Glass Panes */}
+      {/* Window Glass Panes (Crystal clear architectural glass) */}
       <mesh position={[0, roomH / 2, -roomD / 2 + 0.02]}>
         <planeGeometry args={[roomW - 0.4, roomH - 0.4]} />
         <meshPhysicalMaterial
-          color="#0a121e"
+          color="#ffffff"
           transparent
-          opacity={0.18}
-          roughness={0.05}
-          metalness={0.1}
-          transmission={0.85}
+          opacity={0.05}
+          roughness={0.02}
+          metalness={0.05}
+          transmission={0.96}
           ior={1.48}
         />
       </mesh>

@@ -50,3 +50,4 @@ export async function exitVRSession() {
     console.warn('[WebXR] Failed to exit immersive-vr cleanly:', err);
   }
 }
+

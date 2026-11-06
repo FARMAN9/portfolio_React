@@ -99,9 +99,9 @@ export default function ResumeStation({ onInspect }) {
       <mesh position={[0, 0.5, 0]} castShadow receiveShadow>
         <boxGeometry args={[0.7, 1.0, 0.5]} />
         <meshStandardMaterial
-          color="#16181f"
+          color="#282b36"
           roughness={0.4}
-          metalness={0.8}
+          metalness={0.6}
         />
       </mesh>
 
@@ -158,3 +158,4 @@ export default function ResumeStation({ onInspect }) {
     </group>
   );
 }
+

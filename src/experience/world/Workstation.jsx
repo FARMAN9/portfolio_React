@@ -21,9 +21,9 @@ export default function Workstation({ onInspect }) {
       >
         <boxGeometry args={[2.5, 0.05, 1.05]} />
         <meshStandardMaterial
-          color="#221b17"
-          roughness={0.35}
-          metalness={0.15}
+          color="#48382e"
+          roughness={0.3}
+          metalness={0.1}
         />
       </mesh>
 
@@ -256,11 +256,11 @@ export default function Workstation({ onInspect }) {
         <spotLight
           position={[0, 0.48, 0.28]}
           target-position={[0.2, deskY, 0.1]}
-          color="#ffeedb"
-          intensity={2.2}
-          angle={0.65}
+          color="#fff5ea"
+          intensity={3.8}
+          angle={0.7}
           penumbra={0.5}
-          distance={2.4}
+          distance={3.2}
           castShadow
         />
       </group>
@@ -317,3 +317,4 @@ export default function Workstation({ onInspect }) {
     </group>
   );
 }
+

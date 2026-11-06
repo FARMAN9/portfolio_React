@@ -174,10 +174,10 @@ export default function ImmersiveExperience({ isOpen, onClose }) {
           alpha: false,
           powerPreference: 'high-performance',
           toneMapping: THREE.ACESFilmicToneMapping,
-          toneMappingExposure: 1.05
+          toneMappingExposure: 1.42
         }}
         onCreated={({ gl }) => {
-          gl.setClearColor('#0a0c10');
+          gl.setClearColor('#181c24');
           setIsStudioReady(true);
         }}
       >
@@ -359,3 +359,4 @@ export default function ImmersiveExperience({ isOpen, onClose }) {
     </div>
   );
 }
+

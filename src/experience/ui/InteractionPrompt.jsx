@@ -23,3 +23,4 @@ export default function InteractionPrompt({ isLocked, nearbyStation }) {
     </div>
   );
 }
+

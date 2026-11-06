@@ -119,7 +119,7 @@ export default function SkillsWallStation({ onSelectSkill }) {
       {/* Architectural Wall Backing Panel on East Wall */}
       <mesh position={[5.24, 1.7, 0]} rotation={[0, -Math.PI / 2, 0]}>
         <boxGeometry args={[5.8, 2.7, 0.05]} />
-        <meshStandardMaterial color="#0f1116" roughness={0.7} metalness={0.3} />
+        <meshStandardMaterial color="#252832" roughness={0.5} metalness={0.2} />
       </mesh>
 
       {/* Neon/LED Header Ribbon */}
@@ -143,3 +143,4 @@ export default function SkillsWallStation({ onSelectSkill }) {
     </group>
   );
 }
+

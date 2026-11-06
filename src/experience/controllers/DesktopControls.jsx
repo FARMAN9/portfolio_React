@@ -99,6 +99,48 @@ export default function DesktopControls({
     };
   }, [onInteractNearby]);
 
+  // Touch Swipe Rotation for Mobile & Touchscreens
+  useEffect(() => {
+    let lastTouchX = 0;
+    let lastTouchY = 0;
+    let isTouching = false;
+
+    const onTouchStart = (e) => {
+      if (e.touches.length === 1) {
+        lastTouchX = e.touches[0].clientX;
+        lastTouchY = e.touches[0].clientY;
+        isTouching = true;
+      }
+    };
+
+    const onTouchMove = (e) => {
+      if (!isTouching || e.touches.length !== 1) return;
+      const dx = e.touches[0].clientX - lastTouchX;
+      const dy = e.touches[0].clientY - lastTouchY;
+      lastTouchX = e.touches[0].clientX;
+      lastTouchY = e.touches[0].clientY;
+
+      camera.rotation.order = 'YXZ';
+      camera.rotation.y -= dx * 0.004;
+      camera.rotation.x = Math.max(-Math.PI / 3, Math.min(Math.PI / 3, camera.rotation.x - dy * 0.003));
+    };
+
+    const onTouchEnd = () => {
+      isTouching = false;
+    };
+
+    const canvas = gl.domElement;
+    canvas.addEventListener('touchstart', onTouchStart, { passive: true });
+    canvas.addEventListener('touchmove', onTouchMove, { passive: true });
+    canvas.addEventListener('touchend', onTouchEnd, { passive: true });
+
+    return () => {
+      canvas.removeEventListener('touchstart', onTouchStart);
+      canvas.removeEventListener('touchmove', onTouchMove);
+      canvas.removeEventListener('touchend', onTouchEnd);
+    };
+  }, [camera, gl]);
+
   // Handle Teleport Target Interpolation
   const isTeleporting = useRef(false);
   const teleportProgress = useRef(0);
