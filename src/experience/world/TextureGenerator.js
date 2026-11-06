@@ -412,3 +412,258 @@ export function getMetricsScreenTexture() {
   cachedMetricsScreen = tex;
   return tex;
 }
+
+let cachedRug = null;
+let cachedSlattedWood = null;
+let cachedArt1 = null;
+let cachedArt2 = null;
+let cachedArt3 = null;
+
+/**
+ * Procedural circular Persian / Bohemian decorative floor rug texture (Reference Photo 5).
+ */
+export function getRugTexture() {
+  if (cachedRug) return cachedRug;
+
+  const size = 1024;
+  const canvas = document.createElement('canvas');
+  canvas.width = size;
+  canvas.height = size;
+  const ctx = canvas.getContext('2d');
+  const center = size / 2;
+  const maxR = size / 2 - 16;
+
+  // Transparent outer background
+  ctx.clearRect(0, 0, size, size);
+
+  // Outer circular fringe / cream base
+  ctx.fillStyle = '#f0e6d6';
+  ctx.beginPath();
+  ctx.arc(center, center, maxR, 0, Math.PI * 2);
+  ctx.fill();
+
+  // Outer dark navy border ring
+  ctx.fillStyle = '#182638';
+  ctx.beginPath();
+  ctx.arc(center, center, maxR - 14, 0, Math.PI * 2);
+  ctx.fill();
+
+  // Terracotta & gold accent ring
+  ctx.fillStyle = '#c85a2b';
+  ctx.beginPath();
+  ctx.arc(center, center, maxR - 40, 0, Math.PI * 2);
+  ctx.fill();
+
+  // Navy secondary ring
+  ctx.fillStyle = '#1c2d44';
+  ctx.beginPath();
+  ctx.arc(center, center, maxR - 65, 0, Math.PI * 2);
+  ctx.fill();
+
+  // Intricate border petals
+  const numPetals = 48;
+  for (let i = 0; i < numPetals; i++) {
+    const angle = (i * Math.PI * 2) / numPetals;
+    const px = center + Math.cos(angle) * (maxR - 52);
+    const py = center + Math.sin(angle) * (maxR - 52);
+    ctx.fillStyle = (i % 2 === 0) ? '#e6b566' : '#f0e6d6';
+    ctx.beginPath();
+    ctx.arc(px, py, 6, 0, Math.PI * 2);
+    ctx.fill();
+  }
+
+  // Inner field (Rich deep indigo / midnight teal)
+  ctx.fillStyle = '#152233';
+  ctx.beginPath();
+  ctx.arc(center, center, maxR - 90, 0, Math.PI * 2);
+  ctx.fill();
+
+  // Ornate radial rosette rays
+  const numRays = 32;
+  for (let i = 0; i < numRays; i++) {
+    const angle = (i * Math.PI * 2) / numRays;
+    const x1 = center + Math.cos(angle) * 120;
+    const y1 = center + Math.sin(angle) * 120;
+    const x2 = center + Math.cos(angle) * (maxR - 110);
+    const y2 = center + Math.sin(angle) * (maxR - 110);
+
+    ctx.strokeStyle = (i % 2 === 0) ? '#c85a2b' : '#cca362';
+    ctx.lineWidth = 3;
+    ctx.beginPath();
+    ctx.moveTo(x1, y1);
+    ctx.lineTo(x2, y2);
+    ctx.stroke();
+
+    // Floral nodes
+    ctx.fillStyle = (i % 2 === 0) ? '#f0e6d6' : '#e6b566';
+    ctx.beginPath();
+    ctx.arc(x2, y2, 8, 0, Math.PI * 2);
+    ctx.fill();
+  }
+
+  // Medallion secondary circle
+  ctx.fillStyle = '#c85a2b';
+  ctx.beginPath();
+  ctx.arc(center, center, 140, 0, Math.PI * 2);
+  ctx.fill();
+
+  // Central ornate rosette
+  ctx.fillStyle = '#182638';
+  ctx.beginPath();
+  ctx.arc(center, center, 115, 0, Math.PI * 2);
+  ctx.fill();
+
+  ctx.fillStyle = '#e6b566';
+  ctx.beginPath();
+  ctx.arc(center, center, 65, 0, Math.PI * 2);
+  ctx.fill();
+
+  ctx.fillStyle = '#f0e6d6';
+  ctx.beginPath();
+  ctx.arc(center, center, 28, 0, Math.PI * 2);
+  ctx.fill();
+
+  // Central star
+  ctx.fillStyle = '#c85a2b';
+  ctx.beginPath();
+  ctx.arc(center, center, 12, 0, Math.PI * 2);
+  ctx.fill();
+
+  const tex = new THREE.CanvasTexture(canvas);
+  cachedRug = tex;
+  return tex;
+}
+
+/**
+ * Procedural fluted / slatted natural oak wood texture for credenza (Reference Photo 3).
+ */
+export function getSlattedWoodTexture() {
+  if (cachedSlattedWood) return cachedSlattedWood;
+
+  const w = 512;
+  const h = 512;
+  const canvas = document.createElement('canvas');
+  canvas.width = w;
+  canvas.height = h;
+  const ctx = canvas.getContext('2d');
+
+  ctx.fillStyle = '#d6b896';
+  ctx.fillRect(0, 0, w, h);
+
+  // Vertical fluted slats
+  const slatW = 16;
+  for (let x = 0; x < w; x += slatW) {
+    // Slat face
+    const sGrad = ctx.createLinearGradient(x, 0, x + slatW, 0);
+    sGrad.addColorStop(0, '#e5cca8');
+    sGrad.addColorStop(0.5, '#debfa0');
+    sGrad.addColorStop(0.9, '#c7a37e');
+    sGrad.addColorStop(1.0, '#5e432a'); // deep groove shadow
+    ctx.fillStyle = sGrad;
+    ctx.fillRect(x, 0, slatW, h);
+  }
+
+  const tex = new THREE.CanvasTexture(canvas);
+  tex.wrapS = tex.wrapT = THREE.RepeatWrapping;
+  tex.repeat.set(2, 1);
+  cachedSlattedWood = tex;
+  return tex;
+}
+
+/**
+ * Procedural modern wall art prints (Reference Photo 3 & 5).
+ */
+export function getWallArtTextures() {
+  if (cachedArt1 && cachedArt2 && cachedArt3) {
+    return [cachedArt1, cachedArt2, cachedArt3];
+  }
+
+  // Art 1: Botanical Scandinavian Flower (Reference Photo 5 left print)
+  const c1 = document.createElement('canvas');
+  c1.width = 512;
+  c1.height = 680;
+  const x1 = c1.getContext('2d');
+  x1.fillStyle = '#e8ecf2';
+  x1.fillRect(0, 0, 512, 680);
+
+  // Flower petals (amber / navy / teal)
+  const petals = 8;
+  for (let i = 0; i < petals; i++) {
+    const angle = (i * Math.PI * 2) / petals;
+    x1.save();
+    x1.translate(256, 260);
+    x1.rotate(angle);
+    x1.fillStyle = (i % 2 === 0) ? '#d9743b' : '#33506c';
+    x1.beginPath();
+    x1.ellipse(0, 75, 32, 65, 0, 0, Math.PI * 2);
+    x1.fill();
+    x1.restore();
+  }
+  // Center
+  x1.fillStyle = '#e8b84d';
+  x1.beginPath();
+  x1.arc(256, 260, 42, 0, Math.PI * 2);
+  x1.fill();
+  // Stem & Leaves
+  x1.strokeStyle = '#2b3f4f';
+  x1.lineWidth = 8;
+  x1.beginPath();
+  x1.moveTo(256, 302);
+  x1.lineTo(256, 560);
+  x1.stroke();
+
+  // Art 2: Mountain Sunrise Landscape (Reference Photo 5 center print)
+  const c2 = document.createElement('canvas');
+  c2.width = 512;
+  c2.height = 680;
+  const x2 = c2.getContext('2d');
+  x2.fillStyle = '#1e2430';
+  x2.fillRect(0, 0, 512, 680);
+  // Sun
+  x2.fillStyle = '#ea8c38';
+  x2.beginPath();
+  x2.arc(310, 240, 90, 0, Math.PI * 2);
+  x2.fill();
+  // Mountains
+  x2.fillStyle = '#313f56';
+  x2.beginPath();
+  x2.moveTo(40, 540);
+  x2.lineTo(220, 290);
+  x2.lineTo(390, 540);
+  x2.fill();
+  x2.fillStyle = '#1b2332';
+  x2.beginPath();
+  x2.moveTo(180, 540);
+  x2.lineTo(340, 340);
+  x2.lineTo(500, 540);
+  x2.fill();
+
+  // Art 3: Minimalist Modern Botanical Branch (Reference Photo 5 right print)
+  const c3 = document.createElement('canvas');
+  c3.width = 512;
+  c3.height = 680;
+  const x3 = c3.getContext('2d');
+  x3.fillStyle = '#222834';
+  x3.fillRect(0, 0, 512, 680);
+  // Stem
+  x3.strokeStyle = '#61758c';
+  x3.lineWidth = 5;
+  x3.beginPath();
+  x3.moveTo(256, 120);
+  x3.bezierCurveTo(240, 280, 280, 450, 256, 580);
+  x3.stroke();
+  // Orange & cream berries/leaves
+  for (let y = 160; y < 540; y += 45) {
+    const side = (y % 90 === 0) ? -1 : 1;
+    x3.fillStyle = (side > 0) ? '#e6843c' : '#cca362';
+    x3.beginPath();
+    x3.ellipse(256 + side * 45, y, 22, 14, (side * Math.PI) / 6, 0, Math.PI * 2);
+    x3.fill();
+  }
+
+  cachedArt1 = new THREE.CanvasTexture(c1);
+  cachedArt2 = new THREE.CanvasTexture(c2);
+  cachedArt3 = new THREE.CanvasTexture(c3);
+
+  return [cachedArt1, cachedArt2, cachedArt3];
+}

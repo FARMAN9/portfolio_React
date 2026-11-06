@@ -1,6 +1,8 @@
 import RoomArchitecture from './RoomArchitecture';
 import Lighting from './Lighting';
 import Workstation from './Workstation';
+import BotanicalCredenza from './BotanicalCredenza';
+import HangingPlanters from './HangingPlanters';
 import ProjectLabStation from '../stations/ProjectLabStation';
 import SkillsWallStation from '../stations/SkillsWallStation';
 import ResumeStation from '../stations/ResumeStation';
@@ -16,31 +18,37 @@ export default function OfficeWorld({
 }) {
   return (
     <group name="OfficeWorld">
-      {/* 1. Architectural Structure */}
+      {/* 1. Architectural Structure (Hardwood floor, Venetian walls, panoramic glass) */}
       <RoomArchitecture />
 
-      {/* 2. Photorealistic Lighting */}
+      {/* 2. Photorealistic Image-Based Lighting & Sunbeams */}
       <Lighting />
 
-      {/* 3. Executive Workstation (Dual Monitors, PC, Chair) */}
+      {/* 3. Executive Workstation (Dual curved monitors, Scandinavian desk, ergonomic chair with headrest, Persian rug) */}
       <Workstation onInspect={() => onSelectStation('workstation')} />
 
-      {/* 4. Project Laboratory Display Wall */}
+      {/* 4. Overhead Biophilic Suspended Gantry & Cascading Greenery (Reference Photo 4 & 5) */}
+      <HangingPlanters position={[0, 3.4, -2.8]} />
+
+      {/* 5. Modern Slatted Wood Credenza with Botanical Plants (Reference Photo 3) */}
+      <BotanicalCredenza position={[-2.4, 0, 4.6]} rotation={[0, Math.PI, 0]} />
+
+      {/* 6. Project Laboratory Display Wall */}
       <ProjectLabStation onSelectProject={onSelectProject} />
 
-      {/* 5. Technical Skills Wall */}
+      {/* 7. Technical Skills Wall */}
       <SkillsWallStation onSelectSkill={onSelectSkill} />
 
-      {/* 6. Credentials & Resume Station Podium */}
+      {/* 8. Credentials & Resume Station Podium */}
       <ResumeStation onInspect={() => onSelectStation('resume')} />
 
-      {/* 7. Communications Terminal */}
+      {/* 9. Communications Terminal */}
       <ContactStation onInspect={() => onSelectStation('contact')} />
 
-      {/* 8. Welcome Area Monolith */}
+      {/* 10. Welcome Area Monolith */}
       <WelcomeStation onInspect={() => onSelectStation('welcome')} />
 
-      {/* 9. Indoor Architectural Plants & Decor */}
+      {/* 11. Indoor Architectural Plants, Executive Lounge & Decor */}
       <Decorations />
     </group>
   );

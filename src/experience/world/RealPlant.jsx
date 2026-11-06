@@ -19,3 +19,4 @@ export default function RealPlant({ position = [0, 0, 0], scale = 1, rotation = 
 }
 
 useGLTF.preload('/models/plant.glb');
+
