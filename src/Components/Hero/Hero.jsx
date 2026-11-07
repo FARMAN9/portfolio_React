@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import "./Hero.css";
 import profileImg from "../../assets/profile.jpg";
-import seamlessPortrait from "../../assets/farman_seamless.png";
 import NavBar from "../Navbar/NavBar";
 import { useSelector } from "react-redux";
 import { FaGithub, FaLinkedin, FaCode } from "react-icons/fa";
@@ -61,7 +60,7 @@ function Hero({ onOpenVR }) {
       {/* Creator Portrait in Warm Studio Lighting with bottom feather */}
       <div className="editorial-hero-portrait-wrap">
         <img
-          src={seamlessPortrait || profileImg}
+          src={profileImg}
           alt={profileData.name || "Syed Farman Ali"}
           className="editorial-hero-portrait"
         />
