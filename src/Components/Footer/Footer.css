@@ -1,9 +1,12 @@
 /* ======== FOOTER ======== */
 .footer {
-  padding: 50px 6% 0;
+  padding: 60px 6% 32px;
   display: flex;
   flex-direction: column;
   gap: 0;
+  background: #ffffff;
+  border-top: 1px solid #eaeaea;
+  color: #121214;
 }
 
 .footer-top {
@@ -17,7 +20,7 @@
 
 .footer-top > p {
   font-size: clamp(0.85rem, 1.1vw, 1rem);
-  color: rgba(255, 255, 255, 0.65);
+  color: #6c757d;
   max-width: 500px;
   line-height: 1.7;
 }
@@ -37,6 +40,7 @@
   letter-spacing: 2px;
   padding: 0 8px;
   z-index: 1;
+  color: #121214;
 }
 
 .footer .logo img {
@@ -51,7 +55,7 @@
 
 .footer-hr {
   border: none;
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  border-top: 1px solid #eaeaea;
   width: 100%;
   margin: 0;
 }
@@ -61,8 +65,8 @@
   justify-content: space-between;
   align-items: center;
   font-size: clamp(0.8rem, 1vw, 0.95rem);
-  color: rgba(255, 255, 255, 0.55);
-  padding: 20px 0 32px;
+  color: #6c757d;
+  padding: 24px 0 16px;
   flex-wrap: wrap;
   gap: 16px;
 }
@@ -76,13 +80,14 @@
 .footer-bottom-right p {
   cursor: pointer;
   transition: color 0.3s;
+  color: #495057;
 }
 
 .footer-link-button {
   appearance: none;
   border: 0;
   background: transparent;
-  color: inherit;
+  color: #495057;
   font: inherit;
   cursor: pointer;
   padding: 0;
@@ -91,33 +96,29 @@
 
 .footer-bottom-right p:hover,
 .footer-link-button:hover {
-  color: #9fe7d7;
+  color: #f76707;
 }
 
 /* ======== RESPONSIVE ======== */
 @media (max-width: 768px) {
   .footer {
-    padding: 40px 5% 0;
+    padding: 40px 5% 24px;
   }
 
   .footer-top {
     flex-direction: column;
     align-items: flex-start;
-    gap: 24px;
-  }
-
-  .footer-top > p {
-    max-width: 100%;
+    gap: 20px;
   }
 
   .footer-bottom {
-    flex-direction: column-reverse;
+    flex-direction: column;
     align-items: flex-start;
-    gap: 12px;
-    padding-bottom: 24px;
+    gap: 16px;
   }
 
   .footer-bottom-right {
     gap: 20px;
+    font-size: 0.85rem;
   }
 }

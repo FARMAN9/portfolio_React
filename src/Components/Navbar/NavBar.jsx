@@ -24,8 +24,10 @@ function NavBar({ onOpenVR }) {
     scrollToSection(section);
   };
 
+  const isLightNav = location.pathname !== "/";
+
   return (
-    <header className="editorial-navbar">
+    <header className={`editorial-navbar ${isLightNav ? "is-light" : ""}`}>
       <div className="editorial-nav-inner">
         {/* FARMAN wordmark */}
         <Link 

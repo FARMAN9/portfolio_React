@@ -7,6 +7,66 @@
   transition: all 0.3s ease;
 }
 
+/* Standalone Light Page Theme (e.g. /terms, /privacy) */
+.editorial-navbar.is-light {
+  background: rgba(255, 255, 255, 0.96);
+  border-bottom: 1px solid #eaeaea;
+  backdrop-filter: blur(12px);
+}
+
+.editorial-navbar.is-light .editorial-logo {
+  color: #121214;
+  text-shadow: none;
+}
+
+.editorial-navbar.is-light .logo-text {
+  background: linear-gradient(180deg, #121214 0%, #343a40 100%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.editorial-navbar.is-light .logo-mark {
+  background: linear-gradient(90deg, #f76707 0%, #e03131 100%);
+  box-shadow: 0 2px 10px rgba(247, 103, 7, 0.4);
+}
+
+.editorial-navbar.is-light .nav-item {
+  color: #495057;
+  text-shadow: none;
+}
+
+.editorial-navbar.is-light .nav-item:hover,
+.editorial-navbar.is-light .nav-item.is-active {
+  color: #f76707;
+}
+
+.editorial-navbar.is-light .btn-nav-vr {
+  background: #f8f9fa;
+  border-color: #dee2e6;
+  color: #121214;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+.editorial-navbar.is-light .btn-nav-vr:hover {
+  background: #121214;
+  color: #ffffff;
+}
+
+.editorial-navbar.is-light .btn-nav-talk {
+  background: #f76707;
+  color: #ffffff;
+}
+
+.editorial-navbar.is-light .btn-nav-talk:hover {
+  background: #e03131;
+}
+
+.editorial-navbar.is-light .mobile-nav-toggle {
+  color: #121214;
+  border-color: #dee2e6;
+}
+
 .editorial-nav-inner {
   max-width: 100%;
   margin: 0 auto;
