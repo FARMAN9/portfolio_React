@@ -84,3 +84,4 @@ export default function HangingPlanters({ position = [0, 3.4, -2.8] }) {
     </group>
   );
 }
+

@@ -138,7 +138,7 @@ export default function ImmersiveExperience({ isOpen, onClose }) {
     <div className="immersive-experience-container" role="dialog" aria-modal="true" aria-label="Syed Farman Ali 3D Studio">
       {/* Three.js R3F WebGL Canvas */}
       <Canvas
-        shadows={{ type: THREE.PCFSoftShadowMap }}
+        shadows={{ type: THREE.PCFShadowMap }}
         camera={{ position: [0, 1.68, 4.4], fov: 65, near: 0.1, far: 50 }}
         dpr={[1, Math.min(window.devicePixelRatio || 1, 1.75)]}
         gl={{

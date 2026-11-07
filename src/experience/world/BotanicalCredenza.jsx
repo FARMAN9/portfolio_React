@@ -105,3 +105,4 @@ export default function BotanicalCredenza({ position = [-2.8, 0, 4.7], rotation 
     </group>
   );
 }
+

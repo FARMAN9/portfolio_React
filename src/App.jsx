@@ -28,7 +28,16 @@ function Home() {
   const profileStatus = useSelector((state) => state.profile.status);
   const skillsStatus = useSelector((state) => state.skills.status);
   const [showLoader, setShowLoader] = useState(true);
-  const [isVROpen, setIsVROpen] = useState(false);
+  const [isVROpen, setIsVROpen] = useState(() => {
+    if (typeof window !== 'undefined') {
+      return (
+        window.location.search.includes('vr=true') ||
+        window.location.hash === '#vr' ||
+        window.location.hash === '#studio'
+      );
+    }
+    return false;
+  });
   
   useEffect(() => {
     if (profileStatus === 'idle') dispatch(fetchProfile());
