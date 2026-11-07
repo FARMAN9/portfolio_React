@@ -49,37 +49,57 @@ export default function BotanicalCredenza({ position = [-2.8, 0, 4.7], rotation 
         <RealPlant position={[0, 0.32, 0]} scale={1.3} rotation={[0, 0.4, 0]} />
       </group>
 
-      {/* Plant 2: Fiddle-Leaf Fig in Matte Black Cylinder Pot */}
+      {/* Plant 2: Sansevieria Snake Plant in Matte Black Cylinder Pot */}
       <group position={[-0.55, credH + 0.03, 0]}>
         <mesh position={[0, 0.15, 0]} castShadow receiveShadow>
-          <cylinderGeometry args={[0.15, 0.12, 0.3, 24]} />
+          <cylinderGeometry args={[0.15, 0.12, 0.3, 16]} />
           <meshStandardMaterial color="#1a1c22" roughness={0.4} metalness={0.2} />
         </mesh>
-        <RealPlant position={[0, 0.3, 0]} scale={1.15} rotation={[0, -0.9, 0]} />
+        {/* Architectural upright foliage blades */}
+        {[-0.04, 0, 0.04].map((ox, bi) => (
+          <mesh
+            key={`snake-leaf-${bi}`}
+            position={[ox, 0.38 + bi * 0.05, (bi % 2 === 0 ? 0.02 : -0.02)]}
+            rotation={[0.08 * (bi - 1), 0, (bi - 1) * 0.12]}
+          >
+            <cylinderGeometry args={[0.025, 0.04, 0.38, 4]} />
+            <meshStandardMaterial color="#2d5e2e" roughness={0.5} />
+          </mesh>
+        ))}
       </group>
 
       {/* Plant 3: Bird of Paradise in Terracotta Planter with Metal Stand */}
       <group position={[0.25, credH + 0.03, 0]}>
         {/* Metal 4-leg stand */}
         <mesh position={[0, 0.07, 0]}>
-          <cylinderGeometry args={[0.15, 0.15, 0.14, 16]} />
+          <cylinderGeometry args={[0.15, 0.15, 0.14, 12]} />
           <meshStandardMaterial color="#181a20" metalness={0.85} roughness={0.25} />
         </mesh>
         {/* Warm Terracotta Pot */}
         <mesh position={[0, 0.22, 0]} castShadow receiveShadow>
-          <cylinderGeometry args={[0.16, 0.13, 0.28, 24]} />
+          <cylinderGeometry args={[0.16, 0.13, 0.28, 16]} />
           <meshStandardMaterial color="#c86742" roughness={0.85} />
         </mesh>
-        <RealPlant position={[0, 0.36, 0]} scale={1.4} rotation={[0, 1.3, 0]} />
+        <RealPlant position={[0, 0.36, 0]} scale={1.3} rotation={[0, 1.3, 0]} />
       </group>
 
       {/* Plant 4: Golden Palm in Soft Sage Green Pot */}
       <group position={[1.05, credH + 0.03, 0]}>
         <mesh position={[0, 0.14, 0]} castShadow receiveShadow>
-          <cylinderGeometry args={[0.16, 0.14, 0.28, 24]} />
+          <cylinderGeometry args={[0.16, 0.14, 0.28, 16]} />
           <meshStandardMaterial color="#4a5d4e" roughness={0.5} />
         </mesh>
-        <RealPlant position={[0, 0.28, 0]} scale={1.2} rotation={[0, -1.8, 0]} />
+        {/* Delicate fan palm stems */}
+        {[-0.05, 0, 0.05].map((px, pi) => (
+          <mesh
+            key={`palm-stem-${pi}`}
+            position={[px, 0.36 + pi * 0.04, 0]}
+            rotation={[(pi - 1) * 0.15, 0, (pi - 1) * 0.18]}
+          >
+            <coneGeometry args={[0.09, 0.32, 6]} />
+            <meshStandardMaterial color="#4a8539" roughness={0.4} />
+          </mesh>
+        ))}
       </group>
 
       {/* Trailing Vines Cascading Down Front Edge (Reference Photo 3) */}
@@ -93,9 +113,8 @@ export default function BotanicalCredenza({ position = [-2.8, 0, 4.7], rotation 
                 key={`vine-leaf-${leafIdx}`}
                 position={[wave, -drop, 0.015]}
                 rotation={[0.2, 0, Math.sin(leafIdx) * 0.3]}
-                castShadow
               >
-                <circleGeometry args={[0.035, 8]} />
+                <circleGeometry args={[0.035, 6]} />
                 <meshStandardMaterial color="#387a2a" roughness={0.4} side={2} />
               </mesh>
             );

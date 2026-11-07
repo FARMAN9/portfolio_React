@@ -11,14 +11,47 @@ export default function Decorations() {
       {/* North-East Window Corner Planter */}
       <RealPlant position={[4.8, 0, -4.3]} scale={1.85} rotation={[0, -0.6, 0]} />
 
-      {/* South-West Lobby Planter */}
-      <RealPlant position={[-4.8, 0, 4.3]} scale={1.75} rotation={[0, 1.2, 0]} />
+      {/* South-West Lobby Planter (Lightweight Bamboo Cluster) */}
+      <group position={[-4.8, 0, 4.3]}>
+        <mesh position={[0, 0.45, 0]} castShadow receiveShadow>
+          <cylinderGeometry args={[0.3, 0.22, 0.9, 16]} />
+          <meshStandardMaterial color="#1f2229" roughness={0.4} />
+        </mesh>
+        {[-0.08, 0, 0.08].map((bx, bi) => (
+          <mesh key={`bamboo-sw-${bi}`} position={[bx, 1.25 + bi * 0.12, (bi % 2 === 0 ? 0.04 : -0.04)]}>
+            <cylinderGeometry args={[0.02, 0.025, 1.6, 6]} />
+            <meshStandardMaterial color="#3b6e3b" roughness={0.5} />
+          </mesh>
+        ))}
+      </group>
 
-      {/* South-East Entrance Planter */}
-      <RealPlant position={[4.8, 0, 4.3]} scale={1.75} rotation={[0, -1.1, 0]} />
+      {/* South-East Entrance Planter (Lightweight Bamboo Cluster) */}
+      <group position={[4.8, 0, 4.3]}>
+        <mesh position={[0, 0.45, 0]} castShadow receiveShadow>
+          <cylinderGeometry args={[0.3, 0.22, 0.9, 16]} />
+          <meshStandardMaterial color="#1f2229" roughness={0.4} />
+        </mesh>
+        {[-0.08, 0, 0.08].map((bx, bi) => (
+          <mesh key={`bamboo-se-${bi}`} position={[bx, 1.25 + bi * 0.12, (bi % 2 === 0 ? -0.04 : 0.04)]}>
+            <cylinderGeometry args={[0.02, 0.025, 1.6, 6]} />
+            <meshStandardMaterial color="#3b6e3b" roughness={0.5} />
+          </mesh>
+        ))}
+      </group>
 
-      {/* Central Glass Partition Tropical Accent Plant (Matching Reference 5) */}
-      <RealPlant position={[2.5, 0, 0.8]} scale={1.4} rotation={[0, 0.8, 0]} />
+      {/* Central Glass Partition Tropical Accent Plant */}
+      <group position={[2.5, 0, 0.8]}>
+        <mesh position={[0, 0.38, 0]} castShadow receiveShadow>
+          <cylinderGeometry args={[0.26, 0.2, 0.76, 16]} />
+          <meshStandardMaterial color="#c86742" roughness={0.8} />
+        </mesh>
+        {[-0.06, 0.06].map((ox, oi) => (
+          <mesh key={`accent-leaf-${oi}`} position={[ox, 0.9 + oi * 0.1, 0]} rotation={[0, 0, (oi === 0 ? -0.2 : 0.2)]}>
+            <coneGeometry args={[0.14, 0.6, 6]} />
+            <meshStandardMaterial color="#428738" roughness={0.4} />
+          </mesh>
+        ))}
+      </group>
 
       {/* 2. Executive Visitor Lounge Seating (Real Khronos SheenChair Model) */}
       <group position={[-2.8, 0, 3.2]} rotation={[0, Math.PI / 4, 0]}>
@@ -32,21 +65,30 @@ export default function Decorations() {
       <group position={[-2.3, 0, 3.5]}>
         {/* Tabletop */}
         <mesh position={[0, 0.42, 0]} castShadow receiveShadow>
-          <cylinderGeometry args={[0.38, 0.38, 0.025, 32]} />
+          <cylinderGeometry args={[0.38, 0.38, 0.025, 24]} />
           <meshStandardMaterial color="#d8c3a9" roughness={0.35} metalness={0.05} />
         </mesh>
         {/* Central stem */}
         <mesh position={[0, 0.21, 0]}>
-          <cylinderGeometry args={[0.025, 0.025, 0.42, 16]} />
+          <cylinderGeometry args={[0.025, 0.025, 0.42, 12]} />
           <meshStandardMaterial color="#1a1c22" metalness={0.85} roughness={0.25} />
         </mesh>
         {/* Base disc */}
         <mesh position={[0, 0.01, 0]}>
-          <cylinderGeometry args={[0.22, 0.22, 0.02, 32]} />
+          <cylinderGeometry args={[0.22, 0.22, 0.02, 24]} />
           <meshStandardMaterial color="#1a1c22" metalness={0.85} roughness={0.25} />
         </mesh>
-        {/* Coffee Table Mini Plant */}
-        <RealPlant position={[0, 0.43, 0]} scale={0.28} />
+        {/* Coffee Table Mini Succulent Vase */}
+        <group position={[0, 0.42, 0]}>
+          <mesh position={[0, 0.06, 0]}>
+            <cylinderGeometry args={[0.06, 0.04, 0.12, 12]} />
+            <meshStandardMaterial color="#ffffff" roughness={0.3} />
+          </mesh>
+          <mesh position={[0, 0.14, 0]}>
+            <sphereGeometry args={[0.05, 8, 8]} />
+            <meshStandardMaterial color="#4a8539" roughness={0.5} />
+          </mesh>
+        </group>
       </group>
 
       {/* 3. Modern Low Bookshelf on South Wall */}

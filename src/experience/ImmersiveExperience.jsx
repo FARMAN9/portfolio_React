@@ -1,5 +1,6 @@
-import { useState, useEffect, Suspense } from 'react';
+import { useState, useEffect, useMemo, Suspense } from 'react';
 import { Canvas } from '@react-three/fiber';
+import { AdaptiveDpr, AdaptiveEvents } from '@react-three/drei';
 import { XR } from '@react-three/xr';
 import * as THREE from 'three';
 import './ImmersiveExperience.css';
@@ -43,6 +44,20 @@ export default function ImmersiveExperience({ isOpen, onClose }) {
   const [selectedSkill, setSelectedSkill] = useState(null);
   const [isStudioReady, setIsStudioReady] = useState(false);
   const [hasStarted, setHasStarted] = useState(false);
+
+  // Auto-detect low-end hardware, mobile GPUs, and standalone VR headsets
+  const isLowEndDevice = useMemo(() => {
+    if (typeof navigator === 'undefined') return false;
+    return /Mobi|Android|iPhone|iPad|Quest|Oculus|VR/i.test(navigator.userAgent);
+  }, []);
+  const [performanceMode, setPerformanceMode] = useState(() => isLowEndDevice);
+
+  // In VR sessions, enforce high-performance mode for stable 72-90 FPS
+  useEffect(() => {
+    if (inVR) {
+      setPerformanceMode(true);
+    }
+  }, [inVR]);
 
   // Soulful Audio state tracking
   const [audioState, setAudioState] = useState(() => ({
@@ -138,11 +153,11 @@ export default function ImmersiveExperience({ isOpen, onClose }) {
     <div className="immersive-experience-container" role="dialog" aria-modal="true" aria-label="Syed Farman Ali 3D Studio">
       {/* Three.js R3F WebGL Canvas */}
       <Canvas
-        shadows={{ type: THREE.PCFShadowMap }}
-        camera={{ position: [0, 1.68, 4.4], fov: 65, near: 0.1, far: 50 }}
-        dpr={[1, Math.min(window.devicePixelRatio || 1, 1.75)]}
+        shadows={performanceMode ? false : { type: THREE.PCFShadowMap }}
+        camera={{ position: [0, 1.68, 4.4], fov: 65, near: 0.1, far: 45 }}
+        dpr={inVR || performanceMode ? 1 : [1, Math.min(window.devicePixelRatio || 1, 1.35)]}
         gl={{
-          antialias: true,
+          antialias: !performanceMode,
           alpha: false,
           powerPreference: 'high-performance',
           toneMapping: THREE.ACESFilmicToneMapping,
@@ -153,6 +168,9 @@ export default function ImmersiveExperience({ isOpen, onClose }) {
           setIsStudioReady(true);
         }}
       >
+        <AdaptiveDpr pixelated={false} />
+        <AdaptiveEvents />
+
         <XR store={xrStore}>
           {/* Desktop First-Person Controls with Real Collision Detection */}
           <DesktopControls
@@ -177,6 +195,7 @@ export default function ImmersiveExperience({ isOpen, onClose }) {
               onSelectStation={(id) => setActiveStation(id)}
               onSelectProject={(project) => setSelectedProject(project)}
               onSelectSkill={(skill) => setSelectedSkill(skill)}
+              isPerformanceMode={performanceMode}
             />
           </Suspense>
         </XR>
@@ -349,6 +368,8 @@ export default function ImmersiveExperience({ isOpen, onClose }) {
           if (muted) soulfulAudio.stop();
           else soulfulAudio.start();
         }}
+        performanceMode={performanceMode}
+        setPerformanceMode={setPerformanceMode}
       />
     </div>
   );

@@ -14,7 +14,8 @@ import Decorations from './Decorations';
 export default function OfficeWorld({
   onSelectStation,
   onSelectProject,
-  onSelectSkill
+  onSelectSkill,
+  isPerformanceMode = false
 }) {
   return (
     <group name="OfficeWorld">
@@ -22,7 +23,7 @@ export default function OfficeWorld({
       <RoomArchitecture />
 
       {/* 2. Photorealistic Image-Based Lighting & Sunbeams */}
-      <Lighting />
+      <Lighting isPerformanceMode={isPerformanceMode} />
 
       {/* 3. Executive Workstation (Dual curved monitors, Scandinavian desk, ergonomic chair with headrest, Persian rug) */}
       <Workstation onInspect={() => onSelectStation('workstation')} />

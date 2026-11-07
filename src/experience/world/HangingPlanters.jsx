@@ -34,18 +34,8 @@ export default function HangingPlanters({ position = [0, 3.4, -2.8] }) {
         <boxGeometry args={[beamLength - 0.2, 0.012, 0.06]} />
         <meshBasicMaterial color="#fff4db" />
       </mesh>
-      {/* Warm Downward Studio Glow onto the Workstation */}
-      <spotLight
-        position={[0, -beamHeight / 2 - 0.02, 0]}
-        target-position={[0, -2.5, 0]}
-        color="#fff5ea"
-        intensity={2.8}
-        angle={0.9}
-        penumbra={0.5}
-        distance={4.2}
-      />
 
-      {/* 4. Lush Cascading Trailing Green Vines & Foliage (Reference Photo 4 & 5) */}
+      {/* 4. Lush Cascading Trailing Green Vines & Foliage (Optimized for VR) */}
       {[-1.1, -0.7, -0.3, 0.1, 0.5, 0.9].map((vx, i) => {
         const vineLength = 0.55 + (i % 3) * 0.22;
         const numLeaves = 8 + (i % 4) * 3;
@@ -53,7 +43,7 @@ export default function HangingPlanters({ position = [0, 3.4, -2.8] }) {
           <group key={`trailing-vine-${i}`} position={[vx, -beamHeight / 2 + 0.04, (i % 2 === 0 ? beamWidth / 2 : -beamWidth / 2)]}>
             {/* Vine stem */}
             <mesh position={[0, -vineLength / 2, 0]}>
-              <cylinderGeometry args={[0.003, 0.002, vineLength, 8]} />
+              <cylinderGeometry args={[0.003, 0.002, vineLength, 6]} />
               <meshStandardMaterial color="#2f5726" roughness={0.6} />
             </mesh>
             {/* Cascading Ivy / Pothos Leaf Clusters */}
@@ -67,9 +57,8 @@ export default function HangingPlanters({ position = [0, 3.4, -2.8] }) {
                   key={`leaf-${leafIdx}`}
                   position={[side * 0.028, ly, Math.sin(leafIdx) * 0.015]}
                   rotation={[0.3, side * 0.4, Math.sin(leafIdx) * 0.3]}
-                  castShadow
                 >
-                  <circleGeometry args={[leafSize, 7]} />
+                  <circleGeometry args={[leafSize, 6]} />
                   <meshStandardMaterial
                     color={(leafIdx % 2 === 0 ? '#3f802d' : '#4d9937')}
                     roughness={0.4}

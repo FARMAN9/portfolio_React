@@ -103,7 +103,6 @@ export default function Workstation({ onInspect }) {
         <boxGeometry args={[deskW - 0.2, 0.008, 0.015]} />
         <meshBasicMaterial color="#ff922b" />
       </mesh>
-      <pointLight position={[0, deskY + 0.08, -deskD / 2 - 0.06]} color="#ff922b" intensity={2.0} distance={2.2} />
 
       {/* 2. Premium Dark Leather Desk Mat */}
       <mesh position={[-0.1, deskY + 0.024, 0.06]} receiveShadow>
@@ -199,16 +198,6 @@ export default function Workstation({ onInspect }) {
           <boxGeometry args={[0.84, 0.004, 0.016]} />
           <meshBasicMaterial color="#fffbe6" />
         </mesh>
-        {/* Downward Task Spotlight */}
-        <spotLight
-          position={[0, 0.87, 0.36]}
-          target-position={[0, deskY, 0.1]}
-          color="#fffaf0"
-          intensity={3.2}
-          angle={0.65}
-          penumbra={0.4}
-          distance={2.4}
-        />
       </group>
 
       {/* 5. Minimalist Desktop Speakers (Reference Photo 5) */}

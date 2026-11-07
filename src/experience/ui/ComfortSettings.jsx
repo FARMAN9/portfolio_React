@@ -9,7 +9,9 @@ export default function ComfortSettings({
   snapAngle,
   setSnapAngle,
   isMuted,
-  setIsMuted
+  setIsMuted,
+  performanceMode,
+  setPerformanceMode
 }) {
   if (!isOpen) return null;
 
@@ -21,6 +23,29 @@ export default function ComfortSettings({
           <button type="button" onClick={onClose} aria-label="Close settings">
             <FiX size={18} />
           </button>
+        </div>
+
+        {/* Graphics & Performance Mode Toggle */}
+        <div className="settings-group">
+          <label>Graphics Quality &amp; VR Framerate</label>
+          <div className="settings-options-row">
+            <button
+              type="button"
+              className={`settings-opt-btn ${performanceMode ? 'is-active' : ''}`}
+              onClick={() => setPerformanceMode(true)}
+              title="Optimized for smooth 72-90 FPS in VR headsets and low-end devices"
+            >
+              {performanceMode && <FiCheck size={14} />} ⚡ VR Smooth (High FPS)
+            </button>
+            <button
+              type="button"
+              className={`settings-opt-btn ${!performanceMode ? 'is-active' : ''}`}
+              onClick={() => setPerformanceMode(false)}
+              title="Full real-time shadows and reflections for powerful desktop GPUs"
+            >
+              {!performanceMode && <FiCheck size={14} />} ✨ Ultra Visuals
+            </button>
+          </div>
         </div>
 
         <div className="settings-group">
