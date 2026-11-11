@@ -53,16 +53,17 @@ export default function RoomArchitecture() {
 
   return (
     <group name="RoomArchitecture">
-      {/* 1. Photorealistic Polished Hardwood Floor (Reflecting window daylight) */}
+      {/* 1. Photorealistic Polished Hardwood Floor (Warm European Honey Oak matching Reference 4 & 6) */}
       <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, 0, 0]} receiveShadow>
         <planeGeometry args={[roomW, roomD]} />
         <meshStandardMaterial
           map={floorDiffuse}
+          color="#cfb08b"
           bumpMap={realWoodBump}
           bumpScale={0.015}
           roughnessMap={floorRoughness}
-          roughness={0.28}
-          metalness={0.08}
+          roughness={0.34}
+          metalness={0.06}
         />
       </mesh>
 

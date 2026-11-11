@@ -161,7 +161,7 @@ export default function ImmersiveExperience({ isOpen, onClose }) {
           alpha: false,
           powerPreference: 'high-performance',
           toneMapping: THREE.ACESFilmicToneMapping,
-          toneMappingExposure: 1.35
+          toneMappingExposure: 1.05
         }}
         onCreated={({ gl }) => {
           gl.setClearColor('#c8e1f5');

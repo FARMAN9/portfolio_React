@@ -15,6 +15,10 @@ export default function DesktopControls({
   const { camera, gl } = useThree();
   const controlsRef = useRef();
 
+  useEffect(() => {
+    window.__threeCamera = camera;
+  }, [camera]);
+
   const keys = useRef({
     forward: false,
     backward: false,

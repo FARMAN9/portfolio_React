@@ -7,22 +7,22 @@ export default function Lighting({ isPerformanceMode = false }) {
       {/* 0. Photorealistic Image-Based Lighting (IBL) Environment Reflections */}
       <Environment files="/textures/modern_buildings_2_1k.hdr" background={false} environmentIntensity={0.65} />
 
-      {/* 1. Hemispherical Sky-and-Ground Environmental Daylight Bounce (Zero GPU shader cost) */}
+      {/* 1. Hemispherical Sky-and-Ground Environmental Daylight Bounce (Natural ambient fill) */}
       <hemisphereLight
-        skyColor="#ebf5ff"
-        groundColor="#e8d8c8"
-        intensity={2.8}
+        skyColor="#e0f0ff"
+        groundColor="#e0cca8"
+        intensity={1.1}
       />
 
-      {/* 2. Global Crisp Ambient Studio Daylight Fill (Very lightweight) */}
-      <ambientLight color="#ffffff" intensity={1.8} />
+      {/* 2. Global Ambient Studio Daylight Fill */}
+      <ambientLight color="#ffffff" intensity={0.55} />
 
       {/* 3. Window Directional Sunlight (Warm luminous sunbeams through panoramic glass) */}
       <directionalLight
         position={[-1.2, 5.8, -6.0]}
         target-position={[0, 0, -1.0]}
-        color="#fffaf0"
-        intensity={4.2}
+        color="#fff8ed"
+        intensity={2.4}
         castShadow={!isPerformanceMode}
         shadow-mapSize-width={1024}
         shadow-mapSize-height={1024}
@@ -35,22 +35,22 @@ export default function Lighting({ isPerformanceMode = false }) {
         shadow-bias={-0.0002}
       />
 
-      {/* 4. Downward Workstation Desk Spotlight */}
+      {/* 4. Downward Workstation Desk Task Light */}
       <spotLight
-        position={[0, 3.8, -2.4]}
+        position={[0, 3.6, -3.2]}
         target-position={[0, 0.74, -3.0]}
-        color="#fffdf8"
-        intensity={3.4}
+        color="#fff4e6"
+        intensity={0.9}
         angle={0.8}
-        penumbra={0.5}
-        distance={8}
+        penumbra={0.6}
+        distance={7}
       />
 
       {/* 5. Soft Warm Lounge Accent Light (South-West) */}
       <pointLight
         position={[-2.4, 2.2, 3.2]}
         color="#fff6ed"
-        intensity={1.8}
+        intensity={1.4}
         distance={6}
       />
     </group>
